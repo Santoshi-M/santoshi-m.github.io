@@ -6,55 +6,64 @@
     <title>Personal Contact</title>
     <style>
         :root {
-            --bg-color: #fcfaf7; /* Soft cream/off-white */
+            --bg-color: #fcfaf7; 
             --text-color: #2d3436;
             --accent-color: #636e72;
         }
 
         body {
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
         .container {
-            max-width: 400px;
-            padding: 20px;
+            text-align: center;
         }
 
         h1 {
             font-size: 2rem;
             font-weight: 300;
-            letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
         }
 
-        a {
+        /* This centers the icon and text together */
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px; /* Space between icon and text */
             color: var(--accent-color);
             text-decoration: none;
             font-size: 1rem;
-            font-weight: 400;
             transition: color 0.2s ease;
         }
 
-        a:hover {
-            color: #000;
-            text-decoration: underline;
+        .linkedin-link:hover {
+            color: #0077b5; /* Official LinkedIn Blue on hover */
+        }
+
+        .linkedin-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor; /* Matches the text color automatically */
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Santoshi</h1>
-        <a href="mailto:hello@yourdomain.com">hello@yourdomain.com</a>
+        <h1>Santoshi M</h1>
+        <a href="https://www.linkedin.com/in/santoshim/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+            LinkedIn Profile
+        </a>
     </div>
 
 </body>
