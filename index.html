@@ -113,18 +113,74 @@
       flex-shrink: 0;
     }
 
-    /* Nav section group */
-    .sidebar__group { width: 100%; margin-bottom: 0.8rem; }
-    .sidebar__group-label {
+    /* Sidebar profile — clickable */
+    .sidebar__profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .sidebar__avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--rule);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--muted);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .sidebar__avatar:hover { background: #d0c8bc; }
+
+    .sidebar h1 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.18rem;
+      cursor: pointer;
+    }
+    .sidebar h1:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .sidebar__group { width: 100%; margin-bottom: 0.6rem; }
+
+    /* Collapsible group header */
+    .sidebar__group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-family: var(--mono);
       font-size: 0.58rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: #bbb;
-      margin-bottom: 0.4rem;
-      text-align: left;
-      padding-left: 0.5rem;
+      color: #999;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s, color 0.15s;
+      margin-bottom: 0.2rem;
     }
+    .sidebar__group-header:hover { background: var(--rule); color: var(--ink); }
+    .sidebar__group-chevron {
+      font-size: 0.55rem;
+      transition: transform 0.2s;
+      color: #ccc;
+    }
+    .sidebar__group--open .sidebar__group-chevron { transform: rotate(180deg); }
+    .sidebar__group--open .sidebar__group-header { color: var(--ink); }
+
+    /* Collapsible nav links */
+    .sidebar__nav {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.25s ease;
+    }
+    .sidebar__group--open .sidebar__nav { max-height: 400px; }
+
     .sidebar__nav a {
       display: flex;
       align-items: center;
@@ -136,7 +192,7 @@
       padding: 0.35rem 0.6rem;
       border-radius: 4px;
       transition: background 0.15s, color 0.15s;
-      margin-bottom: 0.12rem;
+      margin-bottom: 0.1rem;
     }
     .sidebar__nav a:hover  { background: var(--rule); color: var(--ink); }
     .sidebar__nav a.active { background: var(--ink); color: #fff; }
@@ -160,6 +216,25 @@
       flex: 1;
       overflow-y: auto;
       padding: 3.5rem 2.5rem 5rem;
+    }
+
+    /* Page visibility */
+    .page { display: none; }
+    .page--active { display: block; }
+
+    /* Homepage */
+    .homepage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 90vh;
+    }
+    .homepage__name {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 300;
+      color: var(--ink);
+      letter-spacing: -0.02em;
     }
 
     /* Section divider between ML and DL */
@@ -408,9 +483,11 @@
 
   <!-- ══ SIDEBAR ══ -->
   <aside class="sidebar">
-    <div class="sidebar__avatar">SM</div>
-    <h1>Santoshi M</h1>
-    <p class="sidebar__tagline">Machine Learning Engineer · Canada</p>
+    <div class="sidebar__profile" id="home-btn">
+      <div class="sidebar__avatar" onclick="showPage('home')" title="Go to homepage">SM</div>
+      <h1 onclick="showPage('home')">Santoshi M</h1>
+      <p class="sidebar__tagline">Machine Learning Engineer · Canada</p>
+    </div>
 
     <a href="https://www.linkedin.com/in/santoshim/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
@@ -421,26 +498,32 @@
 
     <hr class="sidebar__divider"/>
 
-    <!-- ML Notes nav -->
-    <div class="sidebar__group">
-      <p class="sidebar__group-label">Basic ML</p>
+    <!-- Basic ML nav -->
+    <div class="sidebar__group sidebar__group--open" id="group-ml">
+      <div class="sidebar__group-header" onclick="toggleGroup('group-ml')">
+        <span>Basic ML</span>
+        <span class="sidebar__group-chevron">▼</span>
+      </div>
       <nav class="sidebar__nav">
-        <a href="#logistic-regression"><span class="dot dot--red"></span>Logistic Regression</a>
-        <a href="#decision-tree"><span class="dot dot--blue"></span>Decision Tree</a>
-        <a href="#decision-forest"><span class="dot dot--green"></span>Decision Forest</a>
+        <a href="#logistic-regression" data-page="notes"><span class="dot dot--red"></span>Logistic Regression</a>
+        <a href="#decision-tree" data-page="notes"><span class="dot dot--blue"></span>Decision Tree</a>
+        <a href="#decision-forest" data-page="notes"><span class="dot dot--green"></span>Decision Forest</a>
       </nav>
     </div>
 
     <!-- Deep Learning nav -->
-    <div class="sidebar__group">
-      <p class="sidebar__group-label">Deep Learning</p>
+    <div class="sidebar__group sidebar__group--open" id="group-dl">
+      <div class="sidebar__group-header" onclick="toggleGroup('group-dl')">
+        <span>Deep Learning</span>
+        <span class="sidebar__group-chevron">▼</span>
+      </div>
       <nav class="sidebar__nav">
-        <a href="#dl-intro"><span class="dot dot--purple"></span>Neural Networks Intro</a>
-        <a href="#dl-logreg"><span class="dot dot--orange"></span>LR &amp; Loss Functions</a>
-        <a href="#dl-gradient"><span class="dot dot--teal"></span>Gradient Descent</a>
-        <a href="#dl-vectorization"><span class="dot dot--blue"></span>Vectorization</a>
-        <a href="#dl-shallow-nn"><span class="dot dot--green"></span>Shallow Neural Nets</a>
-        <a href="#dl-deep-nn"><span class="dot dot--purple"></span>Deep Neural Nets</a>
+        <a href="#dl-intro" data-page="notes"><span class="dot dot--purple"></span>Neural Networks Intro</a>
+        <a href="#dl-logreg" data-page="notes"><span class="dot dot--orange"></span>LR &amp; Loss Functions</a>
+        <a href="#dl-gradient" data-page="notes"><span class="dot dot--teal"></span>Gradient Descent</a>
+        <a href="#dl-vectorization" data-page="notes"><span class="dot dot--blue"></span>Vectorization</a>
+        <a href="#dl-shallow-nn" data-page="notes"><span class="dot dot--green"></span>Shallow Neural Nets</a>
+        <a href="#dl-deep-nn" data-page="notes"><span class="dot dot--purple"></span>Deep Neural Nets</a>
       </nav>
     </div>
   </aside>
@@ -448,9 +531,15 @@
   <!-- ══ MAIN ══ -->
   <main class="main" id="main-scroll">
 
-    <!-- ════════════════════════════════
-         BASIC ML SECTION
-    ════════════════════════════════ -->
+    <!-- ════ HOMEPAGE ════ -->
+    <div class="page page--active" id="page-home">
+      <div class="homepage">
+        <h2 class="homepage__name">Welcome.</h2>
+      </div>
+    </div>
+
+    <!-- ════ NOTES PAGE ════ -->
+    <div class="page" id="page-notes">
     <header class="main__hero">
       <h2>Basic ML</h2>
       <p>Interview prep notes — Logistic Regression · Decision Trees · Ensemble Methods</p>
@@ -854,9 +943,9 @@
         <div class="sub-title purple">Getting Dimensions Right</div>
         <div class="formula-block purple">
           \( W^{[\ell]} \text{ shape: } (n^{[\ell]},\, n^{[\ell-1]}) \qquad b^{[\ell]} \text{ shape: } (n^{[\ell]},\, 1) \)<br><br>
-          \text{For 1 example: } z^{[\ell]} \text{ shape: } (n^{[\ell]}, 1) = a^{[\ell]}<br><br>
-          \text{For m examples: } Z^{[\ell]} \text{ shape: } (n^{[\ell]}, m) = A^{[\ell]}<br><br>
-          X \text{ shape: } (n^{[0]}, m)
+          \( \text{For 1 example: } z^{[\ell]} \text{ shape } (n^{[\ell]}, 1) = a^{[\ell]} \)<br><br>
+          \( \text{For m examples: } Z^{[\ell]} \text{ shape } (n^{[\ell]}, m) = A^{[\ell]} \)<br><br>
+          \( X \text{ shape: } (n^{[0]}, m) \)
         </div>
 
         <div class="sub-title purple">Why Deep Representations?</div>
@@ -891,33 +980,63 @@
     </section>
 
     <footer class="main__footer">handwritten → html · Basic ML &amp; Deep Learning notes</footer>
+
+    </div><!-- end page-notes -->
   </main>
 
   <script>
+    /* ── Topic card toggle ── */
     function toggle(header) {
       header.closest('.topic').classList.toggle('topic--open');
     }
 
-    // Active nav highlighting on scroll
+    /* ── Sidebar group collapse ── */
+    function toggleGroup(id) {
+      document.getElementById(id).classList.toggle('sidebar__group--open');
+    }
+
+    /* ── Page switching ── */
+    function showPage(name) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('page--active'));
+      document.getElementById('page-' + name).classList.add('page--active');
+      // Reset scroll
+      document.getElementById('main-scroll').scrollTop = 0;
+      // Update profile highlight
+      document.getElementById('home-btn').classList.toggle('active', name === 'home');
+      // Clear nav active states when home
+      if (name === 'home') {
+        document.querySelectorAll('.sidebar__nav a').forEach(a => a.classList.remove('active'));
+      }
+    }
+
+    /* ── Nav links: switch to notes page then scroll ── */
+    document.querySelectorAll('.sidebar__nav a[data-page]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = a.getAttribute('href');
+        showPage('notes');
+        // Wait for page to render then scroll
+        requestAnimationFrame(() => {
+          const target = document.querySelector(targetId);
+          const scroller = document.getElementById('main-scroll');
+          if (target) scroller.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
+        });
+      });
+    });
+
+    /* ── Active nav highlighting on scroll ── */
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.sidebar__nav a');
     const scroller = document.getElementById('main-scroll');
 
     scroller.addEventListener('scroll', () => {
+      if (!document.getElementById('page-notes').classList.contains('page--active')) return;
       let current = sections[0].id;
       sections.forEach(sec => {
         if (scroller.scrollTop >= sec.offsetTop - 120) current = sec.id;
       });
       navLinks.forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
-      });
-    });
-
-    navLinks.forEach(a => {
-      a.addEventListener('click', e => {
-        e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) scroller.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
       });
     });
   </script>
