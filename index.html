@@ -1,70 +1,557 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Contact</title>
-    <style>
-        :root {
-            --bg-color: #fcfaf7; 
-            --text-color: #2d3436;
-            --accent-color: #636e72;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Santoshi M</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+      options: { skipHtmlTags: ['script','noscript','style','textarea'] }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-        }
+  <style>
+    :root {
+      --bg:      #fcfaf7;
+      --ink:     #2d3436;
+      --muted:   #636e72;
+      --sidebar-bg: #f5f1eb;
+      --accent:  #c0392b;
+      --accent2: #2980b9;
+      --accent3: #27ae60;
+      --rule:    #e0d6c8;
+      --mono:    'IBM Plex Mono', monospace;
+      --serif:   'Lora', Georgia, serif;
+      --sidebar-w: 260px;
+    }
 
-        .container {
-            text-align: center;
-        }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
 
-        h1 {
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 0.5rem;
-        }
+    body {
+      display: flex;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.75;
+    }
 
-        /* This centers the icon and text together */
-        .linkedin-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px; /* Space between icon and text */
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.2s ease;
-        }
+    /* ══════════════════════════════════════
+       SIDEBAR
+    ══════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      height: 100vh;
+      background: var(--sidebar-bg);
+      border-right: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      position: sticky;
+      top: 0;
+      flex-shrink: 0;
+    }
 
-        .linkedin-link:hover {
-            color: #0077b5; /* Official LinkedIn Blue on hover */
-        }
+    .sidebar__avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: var(--rule);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.1rem;
+      font-family: var(--mono);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: -0.03em;
+    }
 
-        .linkedin-link svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor; /* Matches the text color automatically */
-        }
-    </style>
+    .sidebar h1 {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .sidebar__tagline {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+
+    .linkedin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-family: var(--mono);
+      transition: color 0.2s, border-color 0.2s;
+      padding: 0.42rem 0.85rem;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      background: #fff;
+    }
+    .linkedin-link:hover { color: #0077b5; border-color: #0077b5; }
+    .linkedin-link svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+
+    .sidebar__divider {
+      width: 30px;
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 1.8rem auto;
+    }
+
+    .sidebar__nav { width: 100%; }
+    .sidebar__nav-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #bbb;
+      margin-bottom: 0.5rem;
+      text-align: left;
+      padding-left: 0.5rem;
+    }
+    .sidebar__nav a {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.38rem 0.65rem;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+      margin-bottom: 0.15rem;
+    }
+    .sidebar__nav a:hover  { background: var(--rule); color: var(--ink); }
+    .sidebar__nav a.active { background: var(--ink); color: #fff; }
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot--red   { background: var(--accent); }
+    .dot--blue  { background: var(--accent2); }
+    .dot--green { background: var(--accent3); }
+
+    /* ══════════════════════════════════════
+       MAIN
+    ══════════════════════════════════════ */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 3.5rem 2.5rem 5rem;
+    }
+
+    .main__hero {
+      border-left: 4px solid var(--accent);
+      padding-left: 1.2rem;
+      margin-bottom: 2.4rem;
+    }
+    .main__hero h2 {
+      font-family: var(--mono);
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .main__hero p {
+      font-style: italic;
+      color: #999;
+      font-size: 0.86rem;
+      margin-top: 0.25rem;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      margin-bottom: 2rem;
+    }
+    .badge {
+      font-family: var(--mono);
+      font-size: 0.63rem;
+      background: #fff8e1;
+      color: #7d5a00;
+      border: 1px solid #e8c84a;
+      border-radius: 3px;
+      padding: 0.15rem 0.48rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Topic cards ── */
+    .topic {
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      margin-bottom: 1.4rem;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+      transition: box-shadow 0.2s;
+    }
+    .topic:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.07); }
+
+    .topic__header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.9rem 1.2rem;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: background 0.15s;
+    }
+    .topic__header:hover { background: #fafafa; }
+    .topic--open .topic__header { border-bottom-color: var(--rule); }
+
+    .topic__num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 50%;
+      width: 1.55rem; height: 1.55rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .topic--blue  .topic__num { background: var(--accent2); }
+    .topic--green .topic__num { background: var(--accent3); }
+
+    .topic__title {
+      font-family: var(--mono);
+      font-size: 0.86rem;
+      font-weight: 600;
+      flex: 1;
+    }
+    .topic__chevron { font-size: 0.68rem; color: #bbb; transition: transform 0.25s; }
+    .topic--open .topic__chevron { transform: rotate(180deg); }
+
+    .topic__body { display: none; padding: 1.2rem 1.3rem 1.5rem; }
+    .topic--open .topic__body { display: block; }
+
+    .note { font-size: 0.9rem; margin-bottom: 0.8rem; }
+
+    .formula-block {
+      background: var(--bg);
+      border-left: 3px solid var(--accent);
+      border-radius: 4px;
+      padding: 0.72rem 1rem;
+      margin: 0.8rem 0;
+      font-family: var(--mono);
+      font-size: 0.83rem;
+      overflow-x: auto;
+    }
+    .formula-block.blue  { border-left-color: var(--accent2); }
+    .formula-block.green { border-left-color: var(--accent3); }
+
+    .sub-title {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin: 1.1rem 0 0.28rem;
+      font-weight: 600;
+    }
+    .sub-title.blue  { color: var(--accent2); }
+    .sub-title.green { color: var(--accent3); }
+
+    ul.notes-list { padding-left: 1.15rem; font-size: 0.88rem; }
+    ul.notes-list li { margin-bottom: 0.3rem; }
+    ul.notes-list li::marker { color: var(--accent); }
+
+    .callout {
+      background: #eaf4ff;
+      border: 1px solid #b3d7f5;
+      border-radius: 6px;
+      padding: 0.62rem 0.9rem;
+      margin: 0.8rem 0;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: #1a5276;
+    }
+
+    table.entropy-table {
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 0.76rem;
+      margin: 0.8rem 0;
+      width: 100%;
+    }
+    table.entropy-table th {
+      background: var(--ink); color: #fff;
+      padding: 0.36rem 0.68rem; text-align: left;
+    }
+    table.entropy-table td {
+      padding: 0.33rem 0.68rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    table.entropy-table tr:last-child td { border-bottom: none; }
+
+    .deriv-step {
+      display: flex; align-items: flex-start;
+      gap: 0.75rem; margin-bottom: 0.42rem; font-size: 0.87rem;
+    }
+    .step-num {
+      font-family: var(--mono); font-size: 0.63rem;
+      color: #aaa; padding-top: 0.15rem;
+      flex-shrink: 0; width: 1.1rem;
+    }
+
+    .main__footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: #bbb;
+      text-align: right;
+    }
+
+    /* ══ MOBILE ══ */
+    @media (max-width: 680px) {
+      body { flex-direction: column; }
+      .sidebar {
+        width: 100%; height: auto; min-height: unset;
+        position: static;
+        flex-direction: row; flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 1rem 1.2rem;
+        border-right: none; border-bottom: 1px solid var(--rule);
+        gap: 0.6rem;
+      }
+      .sidebar__avatar, .sidebar__tagline,
+      .sidebar__divider, .sidebar__nav { display: none; }
+      .sidebar h1 { margin-bottom: 0; font-size: 1rem; }
+      .main { padding: 2rem 1.1rem 3rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Santoshi M</h1>
-        <a href="https://www.linkedin.com/in/santoshim/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-            </svg>
-            LinkedIn Profile
-        </a>
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sidebar__avatar">SM</div>
+    <h1>Santoshi M</h1>
+    <p class="sidebar__tagline">ML · Basics</p>
+
+    <a href="https://www.linkedin.com/in/santoshim/" class="linkedin-link" target="_blank" rel="noopener noreferrer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+      </svg>
+      LinkedIn
+    </a>
+
+    <hr class="sidebar__divider"/>
+
+    <nav class="sidebar__nav">
+      <p class="sidebar__nav-label">ML Notes</p>
+      <a href="#logistic-regression" class="active">
+        <span class="dot dot--red"></span>Logistic Regression
+      </a>
+      <a href="#decision-tree">
+        <span class="dot dot--blue"></span>Decision Tree
+      </a>
+      <a href="#decision-forest">
+        <span class="dot dot--green"></span>Decision Forest
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ══ MAIN ══ -->
+  <main class="main" id="main-scroll">
+
+    <header class="main__hero">
+      <h2>ML</h2>
+      <p>Basic ML Notes — Logistic Regression · Decision Trees · Ensemble Methods</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge">Logistic Regression</span>
+      <span class="badge">Log-Loss</span>
+      <span class="badge">L2 Regularization</span>
+      <span class="badge">Decision Tree</span>
+      <span class="badge">Entropy</span>
+      <span class="badge">Information Gain</span>
+      <span class="badge">Random Forest</span>
+      <span class="badge">Gradient Boosting</span>
     </div>
+
+    <!-- ① LOGISTIC REGRESSION -->
+    <section class="topic topic--open" id="logistic-regression">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">1</span>
+        <span class="topic__title">Logistic Regression</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <p class="note">Regression model that <strong>outputs a probability</strong>.</p>
+        <p class="note">Probability ensured by the <strong>sigmoid function</strong> (logistic function class). S-shaped curve, range 0–1.</p>
+        <div class="formula-block">$$f(x) = \frac{1}{1 + e^{-x}}$$</div>
+
+        <div class="sub-title">Log-Odds (z)</div>
+        <p class="note">\( z = b + w_1x_1 + w_2x_2 + \cdots + w_nx_n \) &nbsp;(bias + weights · inputs)</p>
+        <div class="formula-block">$$\hat{y} = \frac{1}{1 + e^{-z}}$$</div>
+
+        <div class="sub-title">Why z is called "log-odds" — derivation</div>
+        <div class="deriv-step"><span class="step-num">①</span><span>\( 1 + e^{-z} = \dfrac{1}{\hat{y}} \)</span></div>
+        <div class="deriv-step"><span class="step-num">②</span><span>\( e^{-z} = \dfrac{1-\hat{y}}{\hat{y}} \)</span></div>
+        <div class="deriv-step"><span class="step-num">③</span><span>\( -z = \log\!\left(\dfrac{1-\hat{y}}{\hat{y}}\right) \)</span></div>
+        <div class="deriv-step"><span class="step-num">④</span><span>\( z = \log\!\left(\dfrac{\hat{y}}{1-\hat{y}}\right) \) — <strong>log-odds</strong></span></div>
+
+        <div class="sub-title">Log-Loss (Cross-Entropy)</div>
+        <p class="note">Used over squared loss because output is not linear. Near \(z=0\), small changes cause large swings in \(\hat{y}\).</p>
+        <div class="formula-block blue">$$\text{log-loss} = -\frac{1}{N}\sum_{i=1}^{N}\left[y\log\hat{y} + (1-y)\log(1-\hat{y})\right]$$</div>
+
+        <div class="sub-title blue">L2 Regularization</div>
+        <div class="formula-block blue">$$\text{Loss} + \lambda \sum w_i^2 \qquad (\lambda = \text{regularization rate})$$</div>
+        <ul class="notes-list">
+          <li>Pushes weights toward zero but <em>not exactly</em> zero (square term).</li>
+          <li>Near-zero weights: diminished effect — e.g., \(0.1 \to 0.01\) vs L1's \(0.1 \to 0.1\).</li>
+          <li>Balance <strong>learning rate</strong> &amp; <strong>regularization rate</strong> (performance vs. complexity).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ② DECISION TREE -->
+    <section class="topic topic--blue topic--open" id="decision-tree">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">2</span>
+        <span class="topic__title">Decision Tree</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <ul class="notes-list">
+          <li><strong>Leaf node</strong> → prediction</li>
+          <li><strong>Non-leaf node</strong> → condition (split)</li>
+        </ul>
+
+        <div class="sub-title blue">Conditions</div>
+        <ul class="notes-list">
+          <li><strong>Axis-aligned</strong> — single feature used.</li>
+          <li><strong>Oblique</strong> — combination of features used.</li>
+        </ul>
+
+        <div class="sub-title blue">Splitters</div>
+        <p class="note">Algorithms that find the <strong>optimal split</strong> at each node.</p>
+
+        <div class="sub-title blue">Entropy</div>
+        <p class="note">Measure of randomness. 0 entropy = all samples in one class.</p>
+        <div class="formula-block blue">$$H = -p\log p - (1-p)\log(1-p)$$</div>
+
+        <div class="sub-title blue">Information Gain</div>
+        <div class="formula-block blue">$$IG = H(D) - \frac{|T|}{|D|}\,H(T) - \frac{|F|}{|D|}\,H(F)$$</div>
+
+        <div class="sub-title blue">Worked Example</div>
+        <table class="entropy-table">
+          <thead><tr><th>Node</th><th># +ve</th><th># −ve</th></tr></thead>
+          <tbody>
+            <tr><td>Root (D)</td><td>10</td><td>6</td></tr>
+            <tr><td>Left (T)</td><td>8</td><td>2</td></tr>
+            <tr><td>Right (F)</td><td>2</td><td>4</td></tr>
+          </tbody>
+        </table>
+        <div class="formula-block blue">
+          \( H(D) = -\dfrac{10}{16}\log\dfrac{10}{16} - \dfrac{6}{16}\log\dfrac{6}{16} \approx -0.2937 - 0.3648 \)<br><br>
+          \( H(\text{Left}) = -\dfrac{8}{10}\log\dfrac{8}{10} - \dfrac{2}{10}\log\dfrac{2}{10} \)<br><br>
+          \( H(\text{Right}) = -\dfrac{2}{6}\log\dfrac{2}{6} - \dfrac{4}{6}\log\dfrac{4}{6} \)
+        </div>
+
+        <div class="sub-title blue">Overfitting Prevention</div>
+        <ul class="notes-list">
+          <li>Prune the tree</li>
+          <li>Set <code>max_depth</code></li>
+          <li>Set minimum samples per node</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ③ DECISION FOREST -->
+    <section class="topic topic--green topic--open" id="decision-forest">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">3</span>
+        <span class="topic__title">Decision Forest</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="callout">"Wisdom of the crowd"</div>
+
+        <div class="sub-title green">Advantages</div>
+        <ul class="notes-list">
+          <li>Easy to configure (fewer hyperparameters)</li>
+          <li>Natively handles numeric &amp; categorical data (no preprocessing)</li>
+          <li>Robust to noisy data</li>
+          <li>Trains &amp; infers faster than NNs on small datasets</li>
+        </ul>
+
+        <div class="sub-title green">Random Forest</div>
+        <ul class="notes-list">
+          <li>Creates <em>n</em> independent decision trees.</li>
+          <li>Same # examples per tree, different subsets via <strong>bootstrapping</strong>.</li>
+          <li><strong>Bagging</strong> = Bootstrap AGGregation</li>
+          <li><strong>Feature sampling</strong> — each tree sees a random feature subset.</li>
+          <li>Individual trees are <strong>not pruned</strong>.</li>
+          <li>Does <strong>not overfit</strong> as more trees are added — accuracy saturates.</li>
+          <li><strong>OOB evaluation</strong> — evaluated on Out-Of-Bag examples.</li>
+        </ul>
+
+        <div class="sub-title green">Gradient Boosting</div>
+        <p class="note">\( F \) = strong model &nbsp;·&nbsp; \( f \) = weak model</p>
+        <div class="formula-block green">$$F_{i+1} = F_i - f_i$$</div>
+        <p class="note">At step 0: \( F_0 = 0 \). Label for \( f_0 \) = error of \( F_0 \) = \( F_0 - y \). Then \( F_1 = F_0 - f_0 \).</p>
+
+        <div class="sub-title green">With Shrinkage (learning rate \(\gamma\))</div>
+        <div class="formula-block green">$$F_{i+1} = F_i - \gamma f_i$$</div>
+        <p class="note">Slows learning, improves generalisation. Similar to learning rate in NNs.</p>
+      </div>
+    </section>
+
+    <footer class="main__footer">handwritten → html · Basic ML notes</footer>
+  </main>
+
+  <script>
+    function toggle(header) {
+      header.closest('.topic').classList.toggle('topic--open');
+    }
+
+    // Active nav highlighting on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.sidebar__nav a');
+    const scroller = document.getElementById('main-scroll');
+
+    scroller.addEventListener('scroll', () => {
+      let current = sections[0].id;
+      sections.forEach(sec => {
+        if (scroller.scrollTop >= sec.offsetTop - 100) current = sec.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Smooth scroll
+    navLinks.forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) scroller.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
+      });
+    });
+  </script>
 
 </body>
 </html>
