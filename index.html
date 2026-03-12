@@ -15,17 +15,18 @@
 
   <style>
     :root {
-      --bg:      #fcfaf7;
-      --ink:     #2d3436;
-      --muted:   #636e72;
+      --bg:         #fcfaf7;
+      --ink:        #2d3436;
+      --muted:      #636e72;
       --sidebar-bg: #f5f1eb;
-      --accent:  #c0392b;
-      --accent2: #2980b9;
-      --accent3: #27ae60;
-      --rule:    #e0d6c8;
-      --mono:    'IBM Plex Mono', monospace;
-      --serif:   'Lora', Georgia, serif;
-      --sidebar-w: 260px;
+      --accent:     #c0392b;
+      --accent2:    #2980b9;
+      --accent3:    #27ae60;
+      --accent4:    #8e44ad;
+      --rule:       #e0d6c8;
+      --mono:       'IBM Plex Mono', monospace;
+      --serif:      'Lora', Georgia, serif;
+      --sidebar-w:  270px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,108 +45,113 @@
     ══════════════════════════════════════ */
     .sidebar {
       width: var(--sidebar-w);
-      min-height: 100vh;
       height: 100vh;
       background: var(--sidebar-bg);
       border-right: 1px solid var(--rule);
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 2.5rem 1.5rem;
+      padding: 2rem 1.4rem 1.5rem;
       position: sticky;
       top: 0;
       flex-shrink: 0;
+      overflow-y: auto;
     }
 
     .sidebar__avatar {
-      width: 60px; height: 60px;
+      width: 56px; height: 56px;
       border-radius: 50%;
       background: var(--rule);
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.1rem;
+      margin-bottom: 1rem;
       font-family: var(--mono);
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: var(--muted);
-      letter-spacing: -0.03em;
+      flex-shrink: 0;
     }
 
     .sidebar h1 {
       font-family: var(--serif);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.18rem;
     }
 
     .sidebar__tagline {
       font-family: var(--mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: var(--muted);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.4rem;
     }
 
     .linkedin-link {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
+      gap: 6px;
       color: var(--muted);
       text-decoration: none;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-family: var(--mono);
       transition: color 0.2s, border-color 0.2s;
-      padding: 0.42rem 0.85rem;
+      padding: 0.4rem 0.8rem;
       border: 1px solid var(--rule);
       border-radius: 4px;
       background: #fff;
     }
     .linkedin-link:hover { color: #0077b5; border-color: #0077b5; }
-    .linkedin-link svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+    .linkedin-link svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
 
     .sidebar__divider {
-      width: 30px;
+      width: 28px;
       border: none;
       border-top: 1px solid var(--rule);
-      margin: 1.8rem auto;
+      margin: 1.5rem auto;
+      flex-shrink: 0;
     }
 
-    .sidebar__nav { width: 100%; }
-    .sidebar__nav-label {
+    /* Nav section group */
+    .sidebar__group { width: 100%; margin-bottom: 0.8rem; }
+    .sidebar__group-label {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: #bbb;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       text-align: left;
       padding-left: 0.5rem;
     }
     .sidebar__nav a {
       display: flex;
       align-items: center;
-      gap: 0.55rem;
+      gap: 0.5rem;
       font-family: var(--mono);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--muted);
       text-decoration: none;
-      padding: 0.38rem 0.65rem;
+      padding: 0.35rem 0.6rem;
       border-radius: 4px;
       transition: background 0.15s, color 0.15s;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.12rem;
     }
     .sidebar__nav a:hover  { background: var(--rule); color: var(--ink); }
     .sidebar__nav a.active { background: var(--ink); color: #fff; }
     .dot {
-      width: 7px; height: 7px;
+      width: 6px; height: 6px;
       border-radius: 50%;
       flex-shrink: 0;
     }
-    .dot--red   { background: var(--accent); }
-    .dot--blue  { background: var(--accent2); }
-    .dot--green { background: var(--accent3); }
+    .dot--red    { background: var(--accent); }
+    .dot--blue   { background: var(--accent2); }
+    .dot--green  { background: var(--accent3); }
+    .dot--purple { background: var(--accent4); }
+    .dot--orange { background: #e67e22; }
+    .dot--teal   { background: #16a085; }
+    .dot--gray   { background: #7f8c8d; }
 
     /* ══════════════════════════════════════
        MAIN
@@ -156,47 +162,71 @@
       padding: 3.5rem 2.5rem 5rem;
     }
 
+    /* Section divider between ML and DL */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3.5rem 0 2.5rem;
+    }
+    .section-divider__line { flex: 1; border: none; border-top: 1px solid var(--rule); }
+    .section-divider__label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #bbb;
+      white-space: nowrap;
+    }
+
     .main__hero {
       border-left: 4px solid var(--accent);
       padding-left: 1.2rem;
-      margin-bottom: 2.4rem;
+      margin-bottom: 2.2rem;
     }
+    .main__hero.purple { border-left-color: var(--accent4); }
+
     .main__hero h2 {
       font-family: var(--mono);
-      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
       font-weight: 600;
       letter-spacing: -0.02em;
     }
     .main__hero p {
       font-style: italic;
       color: #999;
-      font-size: 0.86rem;
-      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
     }
 
     .badge-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.38rem;
+      gap: 0.36rem;
       margin-bottom: 2rem;
     }
     .badge {
       font-family: var(--mono);
-      font-size: 0.63rem;
+      font-size: 0.62rem;
       background: #fff8e1;
       color: #7d5a00;
       border: 1px solid #e8c84a;
       border-radius: 3px;
-      padding: 0.15rem 0.48rem;
+      padding: 0.14rem 0.46rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+    .badge.purple {
+      background: #f5eef8;
+      color: #6c3483;
+      border-color: #c39bd3;
     }
 
     /* ── Topic cards ── */
     .topic {
       border: 1px solid var(--rule);
       border-radius: 8px;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.3rem;
       overflow: hidden;
       background: #fff;
       box-shadow: 0 1px 6px rgba(0,0,0,0.04);
@@ -208,7 +238,7 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      padding: 0.9rem 1.2rem;
+      padding: 0.85rem 1.15rem;
       cursor: pointer;
       user-select: none;
       border-bottom: 1px solid transparent;
@@ -219,105 +249,138 @@
 
     .topic__num {
       font-family: var(--mono);
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 600;
       color: #fff;
       background: var(--accent);
       border-radius: 50%;
-      width: 1.55rem; height: 1.55rem;
+      width: 1.5rem; height: 1.5rem;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .topic--blue  .topic__num { background: var(--accent2); }
-    .topic--green .topic__num { background: var(--accent3); }
+    .topic--blue   .topic__num { background: var(--accent2); }
+    .topic--green  .topic__num { background: var(--accent3); }
+    .topic--purple .topic__num { background: var(--accent4); }
+    .topic--orange .topic__num { background: #e67e22; }
+    .topic--teal   .topic__num { background: #16a085; }
+    .topic--gray   .topic__num { background: #7f8c8d; }
 
     .topic__title {
       font-family: var(--mono);
-      font-size: 0.86rem;
+      font-size: 0.84rem;
       font-weight: 600;
       flex: 1;
     }
-    .topic__chevron { font-size: 0.68rem; color: #bbb; transition: transform 0.25s; }
+    .topic__chevron { font-size: 0.66rem; color: #bbb; transition: transform 0.25s; }
     .topic--open .topic__chevron { transform: rotate(180deg); }
 
-    .topic__body { display: none; padding: 1.2rem 1.3rem 1.5rem; }
+    .topic__body { display: none; padding: 1.15rem 1.25rem 1.45rem; }
     .topic--open .topic__body { display: block; }
 
-    .note { font-size: 0.9rem; margin-bottom: 0.8rem; }
+    /* ── Content helpers ── */
+    .note { font-size: 0.9rem; margin-bottom: 0.75rem; }
 
     .formula-block {
       background: var(--bg);
       border-left: 3px solid var(--accent);
       border-radius: 4px;
-      padding: 0.72rem 1rem;
-      margin: 0.8rem 0;
+      padding: 0.7rem 1rem;
+      margin: 0.75rem 0;
       font-family: var(--mono);
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       overflow-x: auto;
     }
-    .formula-block.blue  { border-left-color: var(--accent2); }
-    .formula-block.green { border-left-color: var(--accent3); }
+    .formula-block.blue   { border-left-color: var(--accent2); }
+    .formula-block.green  { border-left-color: var(--accent3); }
+    .formula-block.purple { border-left-color: var(--accent4); }
+    .formula-block.orange { border-left-color: #e67e22; }
+    .formula-block.teal   { border-left-color: #16a085; }
 
     .sub-title {
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--accent);
-      margin: 1.1rem 0 0.28rem;
+      margin: 1.05rem 0 0.26rem;
       font-weight: 600;
     }
-    .sub-title.blue  { color: var(--accent2); }
-    .sub-title.green { color: var(--accent3); }
+    .sub-title.blue   { color: var(--accent2); }
+    .sub-title.green  { color: var(--accent3); }
+    .sub-title.purple { color: var(--accent4); }
+    .sub-title.orange { color: #e67e22; }
+    .sub-title.teal   { color: #16a085; }
 
-    ul.notes-list { padding-left: 1.15rem; font-size: 0.88rem; }
-    ul.notes-list li { margin-bottom: 0.3rem; }
+    ul.notes-list { padding-left: 1.1rem; font-size: 0.87rem; }
+    ul.notes-list li { margin-bottom: 0.28rem; }
     ul.notes-list li::marker { color: var(--accent); }
 
     .callout {
       background: #eaf4ff;
       border: 1px solid #b3d7f5;
       border-radius: 6px;
-      padding: 0.62rem 0.9rem;
-      margin: 0.8rem 0;
-      font-size: 0.88rem;
+      padding: 0.6rem 0.88rem;
+      margin: 0.75rem 0;
+      font-size: 0.87rem;
       font-style: italic;
       color: #1a5276;
     }
+    .callout.purple {
+      background: #f5eef8;
+      border-color: #c39bd3;
+      color: #4a235a;
+    }
 
-    table.entropy-table {
+    table.data-table {
       border-collapse: collapse;
       font-family: var(--mono);
-      font-size: 0.76rem;
-      margin: 0.8rem 0;
+      font-size: 0.75rem;
+      margin: 0.75rem 0;
       width: 100%;
     }
-    table.entropy-table th {
+    table.data-table th {
       background: var(--ink); color: #fff;
-      padding: 0.36rem 0.68rem; text-align: left;
+      padding: 0.34rem 0.65rem; text-align: left;
     }
-    table.entropy-table td {
-      padding: 0.33rem 0.68rem;
+    table.data-table td {
+      padding: 0.3rem 0.65rem;
       border-bottom: 1px solid var(--rule);
     }
-    table.entropy-table tr:last-child td { border-bottom: none; }
+    table.data-table tr:last-child td { border-bottom: none; }
 
     .deriv-step {
       display: flex; align-items: flex-start;
-      gap: 0.75rem; margin-bottom: 0.42rem; font-size: 0.87rem;
+      gap: 0.7rem; margin-bottom: 0.4rem; font-size: 0.86rem;
     }
     .step-num {
-      font-family: var(--mono); font-size: 0.63rem;
+      font-family: var(--mono); font-size: 0.62rem;
       color: #aaa; padding-top: 0.15rem;
       flex-shrink: 0; width: 1.1rem;
     }
+
+    /* Two-column layout for side-by-side content */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 0.75rem 0;
+    }
+    .two-col .col-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #aaa;
+      margin-bottom: 0.4rem;
+    }
+    @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
 
     .main__footer {
       margin-top: 2.5rem;
       padding-top: 1rem;
       border-top: 1px solid var(--rule);
       font-family: var(--mono);
-      font-size: 0.68rem;
+      font-size: 0.67rem;
       color: #bbb;
       text-align: right;
     }
@@ -326,16 +389,16 @@
     @media (max-width: 680px) {
       body { flex-direction: column; }
       .sidebar {
-        width: 100%; height: auto; min-height: unset;
+        width: 100%; height: auto;
         position: static;
         flex-direction: row; flex-wrap: wrap;
         justify-content: space-between;
         padding: 1rem 1.2rem;
         border-right: none; border-bottom: 1px solid var(--rule);
-        gap: 0.6rem;
+        gap: 0.6rem; overflow-y: visible;
       }
       .sidebar__avatar, .sidebar__tagline,
-      .sidebar__divider, .sidebar__nav { display: none; }
+      .sidebar__divider, .sidebar__group { display: none; }
       .sidebar h1 { margin-bottom: 0; font-size: 1rem; }
       .main { padding: 2rem 1.1rem 3rem; }
     }
@@ -358,26 +421,39 @@
 
     <hr class="sidebar__divider"/>
 
-    <nav class="sidebar__nav">
-      <p class="sidebar__nav-label">ML Notes</p>
-      <a href="#logistic-regression" class="active">
-        <span class="dot dot--red"></span>Logistic Regression
-      </a>
-      <a href="#decision-tree">
-        <span class="dot dot--blue"></span>Decision Tree
-      </a>
-      <a href="#decision-forest">
-        <span class="dot dot--green"></span>Decision Forest
-      </a>
-    </nav>
+    <!-- ML Notes nav -->
+    <div class="sidebar__group">
+      <p class="sidebar__group-label">Basic ML</p>
+      <nav class="sidebar__nav">
+        <a href="#logistic-regression"><span class="dot dot--red"></span>Logistic Regression</a>
+        <a href="#decision-tree"><span class="dot dot--blue"></span>Decision Tree</a>
+        <a href="#decision-forest"><span class="dot dot--green"></span>Decision Forest</a>
+      </nav>
+    </div>
+
+    <!-- Deep Learning nav -->
+    <div class="sidebar__group">
+      <p class="sidebar__group-label">Deep Learning</p>
+      <nav class="sidebar__nav">
+        <a href="#dl-intro"><span class="dot dot--purple"></span>Neural Networks Intro</a>
+        <a href="#dl-logreg"><span class="dot dot--orange"></span>LR &amp; Loss Functions</a>
+        <a href="#dl-gradient"><span class="dot dot--teal"></span>Gradient Descent</a>
+        <a href="#dl-vectorization"><span class="dot dot--blue"></span>Vectorization</a>
+        <a href="#dl-shallow-nn"><span class="dot dot--green"></span>Shallow Neural Nets</a>
+        <a href="#dl-deep-nn"><span class="dot dot--purple"></span>Deep Neural Nets</a>
+      </nav>
+    </div>
   </aside>
 
   <!-- ══ MAIN ══ -->
   <main class="main" id="main-scroll">
 
+    <!-- ════════════════════════════════
+         BASIC ML SECTION
+    ════════════════════════════════ -->
     <header class="main__hero">
-      <h2>ML</h2>
-      <p>Basic ML Notes — Logistic Regression · Decision Trees · Ensemble Methods</p>
+      <h2>Basic ML</h2>
+      <p>Interview prep notes — Logistic Regression · Decision Trees · Ensemble Methods</p>
     </header>
 
     <div class="badge-row">
@@ -439,25 +515,20 @@
           <li><strong>Leaf node</strong> → prediction</li>
           <li><strong>Non-leaf node</strong> → condition (split)</li>
         </ul>
-
         <div class="sub-title blue">Conditions</div>
         <ul class="notes-list">
           <li><strong>Axis-aligned</strong> — single feature used.</li>
           <li><strong>Oblique</strong> — combination of features used.</li>
         </ul>
-
         <div class="sub-title blue">Splitters</div>
         <p class="note">Algorithms that find the <strong>optimal split</strong> at each node.</p>
-
         <div class="sub-title blue">Entropy</div>
         <p class="note">Measure of randomness. 0 entropy = all samples in one class.</p>
         <div class="formula-block blue">$$H = -p\log p - (1-p)\log(1-p)$$</div>
-
         <div class="sub-title blue">Information Gain</div>
         <div class="formula-block blue">$$IG = H(D) - \frac{|T|}{|D|}\,H(T) - \frac{|F|}{|D|}\,H(F)$$</div>
-
         <div class="sub-title blue">Worked Example</div>
-        <table class="entropy-table">
+        <table class="data-table">
           <thead><tr><th>Node</th><th># +ve</th><th># −ve</th></tr></thead>
           <tbody>
             <tr><td>Root (D)</td><td>10</td><td>6</td></tr>
@@ -470,7 +541,6 @@
           \( H(\text{Left}) = -\dfrac{8}{10}\log\dfrac{8}{10} - \dfrac{2}{10}\log\dfrac{2}{10} \)<br><br>
           \( H(\text{Right}) = -\dfrac{2}{6}\log\dfrac{2}{6} - \dfrac{4}{6}\log\dfrac{4}{6} \)
         </div>
-
         <div class="sub-title blue">Overfitting Prevention</div>
         <ul class="notes-list">
           <li>Prune the tree</li>
@@ -489,7 +559,6 @@
       </div>
       <div class="topic__body">
         <div class="callout">"Wisdom of the crowd"</div>
-
         <div class="sub-title green">Advantages</div>
         <ul class="notes-list">
           <li>Easy to configure (fewer hyperparameters)</li>
@@ -497,7 +566,6 @@
           <li>Robust to noisy data</li>
           <li>Trains &amp; infers faster than NNs on small datasets</li>
         </ul>
-
         <div class="sub-title green">Random Forest</div>
         <ul class="notes-list">
           <li>Creates <em>n</em> independent decision trees.</li>
@@ -508,19 +576,321 @@
           <li>Does <strong>not overfit</strong> as more trees are added — accuracy saturates.</li>
           <li><strong>OOB evaluation</strong> — evaluated on Out-Of-Bag examples.</li>
         </ul>
-
         <div class="sub-title green">Gradient Boosting</div>
         <p class="note">\( F \) = strong model &nbsp;·&nbsp; \( f \) = weak model</p>
         <div class="formula-block green">$$F_{i+1} = F_i - f_i$$</div>
         <p class="note">At step 0: \( F_0 = 0 \). Label for \( f_0 \) = error of \( F_0 \) = \( F_0 - y \). Then \( F_1 = F_0 - f_0 \).</p>
-
         <div class="sub-title green">With Shrinkage (learning rate \(\gamma\))</div>
         <div class="formula-block green">$$F_{i+1} = F_i - \gamma f_i$$</div>
         <p class="note">Slows learning, improves generalisation. Similar to learning rate in NNs.</p>
       </div>
     </section>
 
-    <footer class="main__footer">handwritten → html · Basic ML notes</footer>
+    <!-- ════════════════════════════════
+         DEEP LEARNING SECTION DIVIDER
+    ════════════════════════════════ -->
+    <div class="section-divider">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Deep Learning (deeplearning.ai)</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero purple">
+      <h2>Deep Learning</h2>
+      <p>deeplearning.ai course notes — Weeks 1–4 · Neural Networks, Backprop, Activation Fns, DNNs</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge purple">Neural Networks</span>
+      <span class="badge purple">Supervised Learning</span>
+      <span class="badge purple">Loss Functions</span>
+      <span class="badge purple">Gradient Descent</span>
+      <span class="badge purple">Backpropagation</span>
+      <span class="badge purple">Vectorization</span>
+      <span class="badge purple">Activation Functions</span>
+      <span class="badge purple">Deep NNs</span>
+    </div>
+
+    <!-- ④ NEURAL NETWORKS INTRO (Week 1) -->
+    <section class="topic topic--purple topic--open" id="dl-intro">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W1</span>
+        <span class="topic__title">What is a Neural Network?</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <p class="note">A <strong>neuron</strong> takes an input (e.g. size) and outputs a prediction (e.g. price). This is a Rectified Linear Unit (ReLU).</p>
+        <p class="note">A <strong>neural network</strong> stacks many neurons — inputs feed into a <em>hidden layer</em> which feeds into the output. The network is <strong>densely connected</strong> — every input connects to every hidden unit, and the model chooses what to learn.</p>
+
+        <div class="sub-title purple">Supervised Learning use cases</div>
+        <table class="data-table">
+          <thead><tr><th>Network type</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>Standard NN</td><td>CTR prediction, tabular data</td></tr>
+            <tr><td>CNN</td><td>Image recognition</td></tr>
+            <tr><td>RNN</td><td>Audio, text sequences</td></tr>
+            <tr><td>Hybrid</td><td>Autonomous driving</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-title purple">Why now?</div>
+        <ul class="notes-list">
+          <li>Large NNs perform well on large data; small NNs ≈ traditional algos (SVM, log reg) on small data.</li>
+          <li>We have more data, better computation, and better algorithms.</li>
+          <li>Key algorithmic improvement: <strong>sigmoid → ReLU</strong> for faster training (no vanishing gradient).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ⑤ LR & LOSS FUNCTIONS (Week 2) -->
+    <section class="topic topic--orange topic--open" id="dl-logreg">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W2</span>
+        <span class="topic__title">Logistic Regression &amp; Loss Functions</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title orange">Binary Classification setup</div>
+        <p class="note">
+          \((x, y)\) where \(x \in \mathbb{R}^{n_x}\), \(y \in \{0,1\}\).
+          \(m\) training examples: \(\{(x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)})\}\)
+        </p>
+        <div class="formula-block orange">
+          \( X = \begin{bmatrix} \cdots \end{bmatrix}_{n \times m} \qquad Y = [y^{(1)}, y^{(2)}, \ldots, y^{(m)}]_{1 \times m} \)
+        </div>
+
+        <div class="sub-title orange">Logistic Regression</div>
+        <p class="note">\( \hat{y} = P(y=1 \mid x) \), &nbsp; \(0 \leq \hat{y} \leq 1\)</p>
+        <p class="note">\( \hat{y} \approx (wx + b) \) passed through sigmoid: &nbsp; \( \sigma(z) = \dfrac{1}{1+e^{-z}} \)</p>
+        <ul class="notes-list">
+          <li>\(\sigma(z) \to 1\) when \(z\) is large</li>
+          <li>\(\sigma(z) \to 0\) when \(z\) is very negative</li>
+        </ul>
+
+        <div class="sub-title orange">Loss Function (single example)</div>
+        <p class="note">MSE makes gradient descent non-convex, so <strong>log-loss</strong> is used instead:</p>
+        <div class="formula-block orange">$$L(\hat{y}, y) = -\left(y \log \hat{y} + (1-y)\log(1-\hat{y})\right)$$</div>
+        <ul class="notes-list">
+          <li>When \(y=0\): want \(-\log(1-\hat{y})\) small → \(\hat{y}\) should be small (close to 0)</li>
+          <li>When \(y=1\): want \(-\log\hat{y}\) small → \(\hat{y}\) should be large (close to 1)</li>
+        </ul>
+
+        <div class="sub-title orange">Cost Function (all examples)</div>
+        <div class="formula-block orange">$$J(w,b) = \frac{1}{m}\sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)})$$</div>
+        <p class="note">Cost function = average of all loss functions applied to each training example.</p>
+
+        <div class="sub-title orange">LR Cost Function — probabilistic view</div>
+        <p class="note">\( P(y \mid x) = \hat{y}^y (1-\hat{y})^{(1-y)} \)</p>
+        <p class="note">Since log is strictly monotonically increasing: maximising \(\log P(y\mid x)\) = minimising \(-L\).</p>
+        <div class="formula-block orange">$$\log P(y \mid x) = y\log\hat{y} + (1-y)\log(1-\hat{y}) = -L(\hat{y}, y)$$</div>
+      </div>
+    </section>
+
+    <!-- ⑥ GRADIENT DESCENT + DERIVATIVES (Week 2 cont.) -->
+    <section class="topic topic--teal topic--open" id="dl-gradient">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W2</span>
+        <span class="topic__title">Gradient Descent &amp; Derivatives</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title teal">Gradient Descent</div>
+        <p class="note">Goal: find the <strong>global minimum</strong> of cost function \(J(w,b)\) — that's why cost functions need to be <strong>convex</strong>.</p>
+        <p class="note">At each step, find the steepest way down. Initialize at zero or random, then repeat:</p>
+        <div class="formula-block teal">
+          $$w := w - \alpha \frac{dJ(w)}{dw} \qquad b := b - \alpha \frac{dJ(w,b)}{db}$$
+          <br><small>(\(\alpha\) = learning rate)</small>
+        </div>
+
+        <div class="sub-title teal">Derivatives</div>
+        <p class="note">Derivative = slope. When \(x\) moves \(\Delta x\), \(y\) moves \(\Delta y\): &nbsp; \(\text{slope} = \dfrac{\Delta y}{\Delta x}\)</p>
+        <p class="note">Example: \(f(a) = a^2 \Rightarrow \dfrac{df(a)}{da} = 2a\) — slope is different at each point.</p>
+
+        <div class="sub-title teal">Computation Graph</div>
+        <p class="note">Breaks a function into sequential steps to make derivatives easier. Example: \(J(a,b,c) = 3(a+bc)\)</p>
+        <div class="formula-block teal">
+          \( u = bc, \quad v = a+u, \quad J = 3v \)<br><br>
+          \( \dfrac{dJ}{dv} = 3, \quad \dfrac{dJ}{da} = \dfrac{dJ}{dv}\cdot\dfrac{dv}{da} = 3\cdot1 = 3 \)<br><br>
+          \( \dfrac{dJ}{du} = 3, \quad \dfrac{dJ}{db} = c \cdot \dfrac{dJ}{du}, \quad \dfrac{dJ}{dc} = b \cdot \dfrac{dJ}{du} \)
+        </div>
+
+        <div class="sub-title teal">Logistic Regression Gradient Descent</div>
+        <p class="note">Forward pass: \(z = w_1x_1 + w_2x_2 + b \to \hat{y} = \sigma(z) \to L(\hat{y}, y)\)</p>
+        <p class="note">Key results from backprop through LR:</p>
+        <div class="formula-block teal">
+          \( \dfrac{dL}{dz} = \hat{y} - y \)<br><br>
+          \( \dfrac{dL}{dw_1} = \dfrac{dL}{dz} \cdot x_1, \quad \dfrac{dL}{dw_2} = \dfrac{dL}{dz} \cdot x_2, \quad \dfrac{dL}{db} = \dfrac{dL}{dz} \)
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑦ VECTORIZATION (Week 2 cont.) -->
+    <section class="topic topic--blue topic--open" id="dl-vectorization">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W2</span>
+        <span class="topic__title">Vectorization &amp; Python Tips</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title blue">Vectorization</div>
+        <p class="note">Instead of a for loop to compute \(z = w^T x + b\), use NumPy's <code>np.dot</code> — much faster (SIMD).</p>
+
+        <div class="sub-title blue">Vectorizing Logistic Regression</div>
+        <p class="note">Naive gradient descent has 2 for loops: one over \(m\) examples, one for dot product. <code>np.dot</code> eliminates the second.</p>
+        <div class="formula-block blue">
+          \( Z = [z^{(1)}, z^{(2)}, \ldots, z^{(m)}] = w^T X + [b^{(1)}, b^{(2)}, \ldots, b^{(m)}] \)<br><br>
+          \( dw = \dfrac{1}{m} \sum dx^T\,dz \qquad db = \dfrac{1}{m}\sum dz \)
+        </div>
+
+        <div class="sub-title blue">Broadcasting</div>
+        <p class="note">If we have an \(m \times n\) matrix, we can \(+\), \(-\), \(\times\), \(\div\) it by a \((1,n)\) or \((m,1)\) vector — Python copies it \(m\) or \(n\) times and does elementwise ops.</p>
+
+        <div class="sub-title blue">Tips for Python Vectors</div>
+        <ul class="notes-list">
+          <li>Avoid rank-1 arrays (shape \(= (n,)\)) — always explicitly use \((n,1)\) or \((1,n)\).</li>
+          <li>Use <code>assert a.shape == (m, n)</code> to verify dimensions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ⑧ SHALLOW NEURAL NETWORKS (Week 3) -->
+    <section class="topic topic--green topic--open" id="dl-shallow-nn">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W3</span>
+        <span class="topic__title">Shallow Neural Networks</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="callout purple">Stacking multiple sigmoids</div>
+
+        <div class="sub-title green">NN Representation</div>
+        <p class="note">Notation: \(W^{[\ell]}_{\text{node}}\) — superscript = layer, subscript = node. Input layer not counted → a 2-input + 1-hidden network is called <strong>2-layer</strong>.</p>
+        <div class="formula-block green">
+          \( z^{[1]} = W^{[1]T}a^{[0]} + b^{[1]} \)<br><br>
+          \( W^{T[1]} = 4\times3 \text{ matrix}, \quad a^{[0]} = 3\times1, \quad b^{[1]} = 4\times1, \quad z^{[1]} = 4\times1 \)<br><br>
+          \( z^{[2]} = W^{[2]}a^{[1]} + b^{[2]}, \quad W^{T[2]} = 1\times4, \quad a^{[1]} = 4\times1, \quad z^{[2]} = 1\times1 \)
+        </div>
+
+        <div class="sub-title green">Activation Functions</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Sigmoid</div>
+            <div class="formula-block green">\(\sigma(z) = \dfrac{1}{1+e^{-z}}\)</div>
+            <p class="note" style="font-size:0.82rem">Rarely used now. Better for binary classification output layer.</p>
+          </div>
+          <div>
+            <div class="col-label">Tanh</div>
+            <div class="formula-block green">\(\tanh(z) = \dfrac{e^z - e^{-z}}{e^z + e^{-z}}\)</div>
+            <p class="note" style="font-size:0.82rem">Centers mean of data → helps next layer. Almost always preferred over sigmoid.</p>
+          </div>
+          <div>
+            <div class="col-label">ReLU (commonly used)</div>
+            <div class="formula-block green">\(\max(0, z)\)</div>
+            <p class="note" style="font-size:0.82rem">Faster learning — no vanishing gradient.</p>
+          </div>
+          <div>
+            <div class="col-label">Leaky ReLU</div>
+            <div class="formula-block green">\(\max(0.01z, z)\)</div>
+            <p class="note" style="font-size:0.82rem">Small slope for \(z &lt; 0\).</p>
+          </div>
+        </div>
+        <p class="note">When \(z\) is very large or small, slope is close to zero → slows learning (vanishing gradient). This is why ReLU is preferred.</p>
+
+        <div class="sub-title green">Why non-linear activations?</div>
+        <p class="note">If \(a = g = \text{just } z\) (identity activation), the NN becomes linear — essentially just logistic regression. Non-linearity is what gives NNs expressive power.</p>
+
+        <div class="sub-title green">Derivatives of Activation Functions</div>
+        <div class="formula-block green">
+          Sigmoid: \(\quad \dfrac{da}{dz} = a(1-a)\)<br><br>
+          Tanh: \(\quad \dfrac{da}{dz} = 1 - (\tanh(z))^2\)<br><br>
+          ReLU: \(\quad g'(z) = \begin{cases} 0 & z < 0 \\ 1 & z > 0 \end{cases}\)<br><br>
+          Leaky ReLU: \(\quad g'(z) = \begin{cases} 0.01 & z < 0 \\ 1 & z \geq 0 \end{cases}\)
+        </div>
+
+        <div class="sub-title green">GD for NN — Forward &amp; Backprop</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Forward Propagation</div>
+            <div class="formula-block green">
+              \( Z^{[1]} = W^{[1]}A^{[0]} + B^{[1]} \)<br>
+              \( A^{[1]} = g^{[1]}(Z^{[1]}) \)<br>
+              \( Z^{[2]} = W^{[2]}A^{[1]} + B^{[2]} \)<br>
+              \( A^{[2]} = g^{[2]}(Z^{[2]}) \) &nbsp;<small>(sigmoid for output)</small>
+            </div>
+          </div>
+          <div>
+            <div class="col-label">Backpropagation</div>
+            <div class="formula-block green">
+              \( dZ^{[2]} = A^{[2]} - Y \)<br>
+              \( dW^{[2]} = \tfrac{1}{m}\,dZ^{[2]} \cdot A^{[1]T} \)<br>
+              \( dB^{[2]} = \tfrac{1}{m}\sum dZ^{[2]} \)<br>
+              \( dZ^{[1]} = W^{[2]T} dZ^{[2]} \cdot g'^{[1]}(Z^{[1]}) \)<br>
+              \( dW^{[1]} = \tfrac{1}{m}\,dZ^{[1]} \cdot X^T \)<br>
+              \( dB^{[1]} = \tfrac{1}{m}\sum dZ^{[1]} \)
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-title green">Random Initialization</div>
+        <p class="note">If all weights = 0, all nodes are symmetric (same computation) → useless to have multiple nodes.</p>
+        <ul class="notes-list">
+          <li>OK to initialize <strong>b</strong> as zeros.</li>
+          <li>Initialize <strong>W</strong> randomly, multiply by <strong>0.01</strong> (small weights) so extreme ends of sigmoid/tanh are not reached (avoids slow learning from near-zero gradients).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ⑨ DEEP NEURAL NETWORKS (Week 4) -->
+    <section class="topic topic--purple topic--open" id="dl-deep-nn">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W4</span>
+        <span class="topic__title">Deep Neural Networks</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title purple">Deep L-layer NN</div>
+        <p class="note">A "deep" NN has many hidden layers (e.g. 4 layers). Notation: \(z^{[\ell]}, a^{[\ell]}\) computed for each layer \(\ell\).</p>
+
+        <div class="sub-title purple">Getting Dimensions Right</div>
+        <div class="formula-block purple">
+          \( W^{[\ell]} \text{ shape: } (n^{[\ell]},\, n^{[\ell-1]}) \qquad b^{[\ell]} \text{ shape: } (n^{[\ell]},\, 1) \)<br><br>
+          \text{For 1 example: } z^{[\ell]} \text{ shape: } (n^{[\ell]}, 1) = a^{[\ell]}<br><br>
+          \text{For m examples: } Z^{[\ell]} \text{ shape: } (n^{[\ell]}, m) = A^{[\ell]}<br><br>
+          X \text{ shape: } (n^{[0]}, m)
+        </div>
+
+        <div class="sub-title purple">Why Deep Representations?</div>
+        <ul class="notes-list">
+          <li>Multiple hidden layers learn <strong>different aspects</strong> (e.g. edges → faces → people in vision).</li>
+          <li>Early layers detect simple features; later layers detect increasingly complex functions.</li>
+          <li><strong>Going deep</strong> is better than going wide — a shallow network needs exponentially more hidden units to compute the same function.</li>
+        </ul>
+
+        <div class="sub-title purple">Building a DNN — Layer \(\ell\) block</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Forward pass (cache z<sup>[ℓ]</sup>)</div>
+            <div class="formula-block purple">
+              Input: \(a^{[\ell-1]}\)<br>
+              \( z^{[\ell]} = W^{[\ell]}a^{[\ell-1]} + b^{[\ell]} \)<br>
+              Output: \(a^{[\ell]}\)<br>
+              Cache: \(z^{[\ell]},\, W^{[\ell]},\, b^{[\ell]}\)
+            </div>
+          </div>
+          <div>
+            <div class="col-label">Backward pass</div>
+            <div class="formula-block purple">
+              Input: \(da^{[\ell]}\)<br>
+              \( dz^{[\ell]} \to dW^{[\ell]},\, db^{[\ell]} \)<br>
+              Output: \(da^{[\ell-1]}\)
+            </div>
+          </div>
+        </div>
+        <p class="note">The cached \(z^{[\ell]}\) from forward pass is used in backward pass to compute \(g'^{[\ell]}(z^{[\ell]})\).</p>
+      </div>
+    </section>
+
+    <footer class="main__footer">handwritten → html · Basic ML &amp; Deep Learning notes</footer>
   </main>
 
   <script>
@@ -536,14 +906,13 @@
     scroller.addEventListener('scroll', () => {
       let current = sections[0].id;
       sections.forEach(sec => {
-        if (scroller.scrollTop >= sec.offsetTop - 100) current = sec.id;
+        if (scroller.scrollTop >= sec.offsetTop - 120) current = sec.id;
       });
       navLinks.forEach(a => {
         a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
     });
 
-    // Smooth scroll
     navLinks.forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
