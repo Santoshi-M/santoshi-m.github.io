@@ -23,6 +23,9 @@
       --accent2:    #2980b9;
       --accent3:    #27ae60;
       --accent4:    #8e44ad;
+      --accent5:    #d35400;
+      --accent6:    #16a085;
+      --accent7:    #2471a3;
       --rule:       #e0d6c8;
       --mono:       'IBM Plex Mono', monospace;
       --serif:      'Lora', Georgia, serif;
@@ -169,9 +172,21 @@
       font-size: 0.55rem;
       transition: transform 0.2s;
       color: #ccc;
+      padding: 0.2rem 0.3rem;
+      border-radius: 3px;
+      cursor: pointer;
     }
+    .sidebar__group-chevron:hover { background: #d0c8bc; color: var(--ink); }
     .sidebar__group--open .sidebar__group-chevron { transform: rotate(180deg); }
     .sidebar__group--open .sidebar__group-header { color: var(--ink); }
+
+    /* Clickable label inside group header */
+    .sidebar__group-label {
+      cursor: pointer;
+      flex: 1;
+      text-align: left;
+    }
+    .sidebar__group-label:hover { text-decoration: underline; text-underline-offset: 3px; }
 
     /* Collapsible nav links */
     .sidebar__nav {
@@ -208,6 +223,9 @@
     .dot--orange { background: #e67e22; }
     .dot--teal   { background: #16a085; }
     .dot--gray   { background: #7f8c8d; }
+    .dot--burnt  { background: var(--accent5); }
+    .dot--cyan   { background: var(--accent6); }
+    .dot--navy   { background: var(--accent7); }
 
     /* ══════════════════════════════════════
        MAIN
@@ -237,7 +255,7 @@
       letter-spacing: -0.02em;
     }
 
-    /* Section divider between ML and DL */
+    /* Section divider between sections */
     .section-divider {
       display: flex;
       align-items: center;
@@ -260,6 +278,9 @@
       margin-bottom: 2.2rem;
     }
     .main__hero.purple { border-left-color: var(--accent4); }
+    .main__hero.burnt  { border-left-color: var(--accent5); }
+    .main__hero.cyan   { border-left-color: var(--accent6); }
+    .main__hero.navy   { border-left-color: var(--accent7); }
 
     .main__hero h2 {
       font-family: var(--mono);
@@ -295,6 +316,21 @@
       background: #f5eef8;
       color: #6c3483;
       border-color: #c39bd3;
+    }
+    .badge.burnt {
+      background: #fdf2e9;
+      color: #784212;
+      border-color: #e59866;
+    }
+    .badge.cyan {
+      background: #e8f8f5;
+      color: #0e6655;
+      border-color: #76d7c4;
+    }
+    .badge.navy {
+      background: #eaf2ff;
+      color: #1a4a7a;
+      border-color: #85b8e8;
     }
 
     /* ── Topic cards ── */
@@ -339,6 +375,9 @@
     .topic--orange .topic__num { background: #e67e22; }
     .topic--teal   .topic__num { background: #16a085; }
     .topic--gray   .topic__num { background: #7f8c8d; }
+    .topic--burnt  .topic__num { background: var(--accent5); }
+    .topic--cyan   .topic__num { background: var(--accent6); }
+    .topic--navy   .topic__num { background: var(--accent7); }
 
     .topic__title {
       font-family: var(--mono);
@@ -354,6 +393,39 @@
 
     /* ── Content helpers ── */
     .note { font-size: 0.9rem; margin-bottom: 0.75rem; }
+
+    /* Empty section placeholder */
+    .empty-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+      gap: 0.6rem;
+      border: 1.5px dashed var(--rule);
+      border-radius: 8px;
+      background: #fdfcfa;
+      color: #bbb;
+      text-align: center;
+    }
+    .empty-placeholder__icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      opacity: 0.4;
+    }
+    .empty-placeholder__label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ccc;
+    }
+    .empty-placeholder__sub {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.82rem;
+      color: #d5cfc8;
+    }
 
     .formula-block {
       background: var(--bg);
@@ -500,9 +572,9 @@
 
     <!-- Basic ML nav -->
     <div class="sidebar__group sidebar__group--open" id="group-ml">
-      <div class="sidebar__group-header" onclick="toggleGroup('group-ml')">
-        <span>Basic ML</span>
-        <span class="sidebar__group-chevron">▼</span>
+      <div class="sidebar__group-header">
+        <span class="sidebar__group-label" data-scroll="ml-anchor" data-page="notes">Basic ML</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-ml')">▼</span>
       </div>
       <nav class="sidebar__nav">
         <a href="#logistic-regression" data-page="notes"><span class="dot dot--red"></span>Logistic Regression</a>
@@ -513,9 +585,9 @@
 
     <!-- Deep Learning nav -->
     <div class="sidebar__group sidebar__group--open" id="group-dl">
-      <div class="sidebar__group-header" onclick="toggleGroup('group-dl')">
-        <span>Deep Learning</span>
-        <span class="sidebar__group-chevron">▼</span>
+      <div class="sidebar__group-header">
+        <span class="sidebar__group-label" data-scroll="dl-anchor" data-page="notes">Deep Learning</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-dl')">▼</span>
       </div>
       <nav class="sidebar__nav">
         <a href="#dl-intro" data-page="notes"><span class="dot dot--purple"></span>Neural Networks Intro</a>
@@ -524,6 +596,36 @@
         <a href="#dl-vectorization" data-page="notes"><span class="dot dot--blue"></span>Vectorization</a>
         <a href="#dl-shallow-nn" data-page="notes"><span class="dot dot--green"></span>Shallow Neural Nets</a>
         <a href="#dl-deep-nn" data-page="notes"><span class="dot dot--purple"></span>Deep Neural Nets</a>
+      </nav>
+    </div>
+
+    <!-- RecSys nav -->
+    <div class="sidebar__group" id="group-recsys">
+      <div class="sidebar__group-header">
+        <span class="sidebar__group-label" data-scroll="recsys-anchor" data-page="notes">RecSys</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-recsys')">▼</span>
+      </div>
+      <nav class="sidebar__nav">
+      </nav>
+    </div>
+
+    <!-- LLM nav -->
+    <div class="sidebar__group" id="group-llm">
+      <div class="sidebar__group-header">
+        <span class="sidebar__group-label" data-scroll="llm-anchor" data-page="notes">LLM</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-llm')">▼</span>
+      </div>
+      <nav class="sidebar__nav">
+      </nav>
+    </div>
+
+    <!-- Agentic AI nav -->
+    <div class="sidebar__group" id="group-agentic">
+      <div class="sidebar__group-header">
+        <span class="sidebar__group-label" data-scroll="agentic-anchor" data-page="notes">Agentic AI</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-agentic')">▼</span>
+      </div>
+      <nav class="sidebar__nav">
       </nav>
     </div>
   </aside>
@@ -540,6 +642,7 @@
 
     <!-- ════ NOTES PAGE ════ -->
     <div class="page" id="page-notes">
+    <div id="ml-anchor"></div>
     <header class="main__hero">
       <h2>Basic ML</h2>
       <p>Interview prep notes — Logistic Regression · Decision Trees · Ensemble Methods</p>
@@ -678,7 +781,7 @@
     <!-- ════════════════════════════════
          DEEP LEARNING SECTION DIVIDER
     ════════════════════════════════ -->
-    <div class="section-divider">
+    <div class="section-divider" id="dl-anchor">
       <hr class="section-divider__line"/>
       <span class="section-divider__label">Deep Learning (deeplearning.ai)</span>
       <hr class="section-divider__line"/>
@@ -979,7 +1082,79 @@
       </div>
     </section>
 
-    <footer class="main__footer">handwritten → html · Basic ML &amp; Deep Learning notes</footer>
+    <!-- ════════════════════════════════
+         RECSYS SECTION DIVIDER
+    ════════════════════════════════ -->
+    <div class="section-divider" id="recsys-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Recommender Systems</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero burnt">
+      <h2>RecSys</h2>
+      <p>Notes coming soon — Collaborative Filtering · Content-Based · Matrix Factorization · Two-Tower Models</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge burnt">Collaborative Filtering</span>
+      <span class="badge burnt">Content-Based</span>
+      <span class="badge burnt">Matrix Factorization</span>
+      <span class="badge burnt">Embeddings</span>
+      <span class="badge burnt">Two-Tower</span>
+    </div>
+
+    <!-- RecSys topic cards will be added here -->
+
+    <!-- ════════════════════════════════
+         LLM SECTION DIVIDER
+    ════════════════════════════════ -->
+    <div class="section-divider" id="llm-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Large Language Models</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero cyan">
+      <h2>LLM</h2>
+      <p>Notes coming soon — Transformers · Attention · Pre-training · Fine-tuning · RLHF</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge cyan">Transformers</span>
+      <span class="badge cyan">Self-Attention</span>
+      <span class="badge cyan">Pre-training</span>
+      <span class="badge cyan">Fine-tuning</span>
+      <span class="badge cyan">RLHF</span>
+    </div>
+
+    <!-- LLM topic cards will be added here -->
+
+    <!-- ════════════════════════════════
+         AGENTIC AI SECTION DIVIDER
+    ════════════════════════════════ -->
+    <div class="section-divider" id="agentic-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Agentic AI</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero navy">
+      <h2>Agentic AI</h2>
+      <p>Notes coming soon — Tool Use · ReAct · Planning · Memory · Multi-Agent Systems</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge navy">Tool Use</span>
+      <span class="badge navy">ReAct</span>
+      <span class="badge navy">Planning</span>
+      <span class="badge navy">Memory</span>
+      <span class="badge navy">Multi-Agent</span>
+    </div>
+
+    <!-- Agentic AI topic cards will be added here -->
+
+    <footer class="main__footer">handwritten → html · Basic ML · Deep Learning · RecSys · LLM · Agentic AI</footer>
 
     </div><!-- end page-notes -->
   </main>
@@ -997,9 +1172,12 @@
 
     /* ── Page switching ── */
     function showPage(name) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('page--active'));
-      document.getElementById('page-' + name).classList.add('page--active');
-      // Reset scroll
+      const current = document.querySelector('.page--active');
+      const next = document.getElementById('page-' + name);
+      if (current === next) return; // already on this page — don't reset scroll
+      current.classList.remove('page--active');
+      next.classList.add('page--active');
+      // Only reset scroll when switching pages (e.g. home → notes)
       document.getElementById('main-scroll').scrollTop = 0;
       // Update profile highlight
       document.getElementById('home-btn').classList.toggle('active', name === 'home');
@@ -1009,18 +1187,36 @@
       }
     }
 
+    /* ── Shared scroll helper: show notes page then jump instantly to target ── */
+    function scrollToSection(targetId) {
+      const notesPage = document.getElementById('page-notes');
+      const scroller  = document.getElementById('main-scroll');
+      const alreadyOn = notesPage.classList.contains('page--active');
+
+      showPage('notes'); // no-op if already on notes (won't reset scroll)
+
+      function doScroll() {
+        const target = document.getElementById(targetId);
+        if (target) scroller.scrollTo({ top: target.offsetTop - 24, behavior: alreadyOn ? 'smooth' : 'instant' });
+      }
+
+      if (alreadyOn) {
+        doScroll(); // page already visible, scroll immediately
+      } else {
+        setTimeout(doScroll, 0); // wait one tick for page to render
+      }
+    }
+
+    /* ── Sidebar group labels: navigate to section ── */
+    document.querySelectorAll('.sidebar__group-label[data-scroll]').forEach(label => {
+      label.addEventListener('click', () => scrollToSection(label.getAttribute('data-scroll')));
+    });
+
     /* ── Nav links: switch to notes page then scroll ── */
     document.querySelectorAll('.sidebar__nav a[data-page]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
-        const targetId = a.getAttribute('href');
-        showPage('notes');
-        // Wait for page to render then scroll
-        requestAnimationFrame(() => {
-          const target = document.querySelector(targetId);
-          const scroller = document.getElementById('main-scroll');
-          if (target) scroller.scrollTo({ top: target.offsetTop - 24, behavior: 'smooth' });
-        });
+        scrollToSection(a.getAttribute('href').replace('#', ''));
       });
     });
 
