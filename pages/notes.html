@@ -1,0 +1,720 @@
+<div id="ml-anchor"></div>
+    <header class="main__hero">
+      <h2>Machine Learning</h2>
+      <p>Interview prep notes — Logistic Regression · Decision Trees · Ensemble Methods &nbsp;·&nbsp;
+        <a href="https://developers.google.com/machine-learning" target="_blank" rel="noopener noreferrer">Google Machine Learning Education ↗</a>
+      </p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge">Logistic Regression</span>
+      <span class="badge">Log-Loss</span>
+      <span class="badge">L2 Regularization</span>
+      <span class="badge">Decision Tree</span>
+      <span class="badge">Entropy</span>
+      <span class="badge">Information Gain</span>
+      <span class="badge">Random Forest</span>
+      <span class="badge">Gradient Boosting</span>
+    </div>
+
+    <section class="topic topic--open" id="logistic-regression">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">1</span>
+        <span class="topic__title">Logistic Regression</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <p class="note">Regression model that <strong>outputs a probability</strong>.</p>
+        <p class="note">Probability ensured by the <strong>sigmoid function</strong> (logistic function class). S-shaped curve, range 0–1.</p>
+        <div class="formula-block">$$f(x) = \frac{1}{1 + e^{-x}}$$</div>
+        <div class="sub-title">Log-Odds (z)</div>
+        <p class="note">\( z = b + w_1x_1 + w_2x_2 + \cdots + w_nx_n \) &nbsp;(bias + weights · inputs)</p>
+        <div class="formula-block">$$\hat{y} = \frac{1}{1 + e^{-z}}$$</div>
+        <div class="sub-title">Why z is called "log-odds" — derivation</div>
+        <div class="deriv-step"><span class="step-num">①</span><span>\( 1 + e^{-z} = \dfrac{1}{\hat{y}} \)</span></div>
+        <div class="deriv-step"><span class="step-num">②</span><span>\( e^{-z} = \dfrac{1-\hat{y}}{\hat{y}} \)</span></div>
+        <div class="deriv-step"><span class="step-num">③</span><span>\( -z = \log\!\left(\dfrac{1-\hat{y}}{\hat{y}}\right) \)</span></div>
+        <div class="deriv-step"><span class="step-num">④</span><span>\( z = \log\!\left(\dfrac{\hat{y}}{1-\hat{y}}\right) \) — <strong>log-odds</strong></span></div>
+        <div class="sub-title">Log-Loss (Cross-Entropy)</div>
+        <p class="note">Used over squared loss because output is not linear. Near \(z=0\), small changes cause large swings in \(\hat{y}\).</p>
+        <div class="formula-block blue">$$\text{log-loss} = -\frac{1}{N}\sum_{i=1}^{N}\left[y\log\hat{y} + (1-y)\log(1-\hat{y})\right]$$</div>
+        <div class="sub-title blue">L2 Regularization</div>
+        <div class="formula-block blue">$$\text{Loss} + \lambda \sum w_i^2 \qquad (\lambda = \text{regularization rate})$$</div>
+        <ul class="notes-list">
+          <li>Pushes weights toward zero but <em>not exactly</em> zero (square term).</li>
+          <li>Near-zero weights: diminished effect — e.g., \(0.1 \to 0.01\) vs L1's \(0.1 \to 0.1\).</li>
+          <li>Balance <strong>learning rate</strong> &amp; <strong>regularization rate</strong> (performance vs. complexity).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="topic topic--blue topic--open" id="decision-tree">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">2</span>
+        <span class="topic__title">Decision Tree</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <ul class="notes-list">
+          <li><strong>Leaf node</strong> → prediction</li>
+          <li><strong>Non-leaf node</strong> → condition (split)</li>
+        </ul>
+        <div class="sub-title blue">Conditions</div>
+        <ul class="notes-list">
+          <li><strong>Axis-aligned</strong> — single feature used.</li>
+          <li><strong>Oblique</strong> — combination of features used.</li>
+        </ul>
+        <div class="sub-title blue">Splitters</div>
+        <p class="note">Algorithms that find the <strong>optimal split</strong> at each node.</p>
+        <div class="sub-title blue">Entropy</div>
+        <p class="note">Measure of randomness. 0 entropy = all samples in one class.</p>
+        <div class="formula-block blue">$$H = -p\log p - (1-p)\log(1-p)$$</div>
+        <div class="sub-title blue">Information Gain</div>
+        <div class="formula-block blue">$$IG = H(D) - \frac{|T|}{|D|}\,H(T) - \frac{|F|}{|D|}\,H(F)$$</div>
+        <div class="sub-title blue">Worked Example</div>
+        <table class="data-table">
+          <thead><tr><th>Node</th><th># +ve</th><th># −ve</th></tr></thead>
+          <tbody>
+            <tr><td>Root (D)</td><td>10</td><td>6</td></tr>
+            <tr><td>Left (T)</td><td>8</td><td>2</td></tr>
+            <tr><td>Right (F)</td><td>2</td><td>4</td></tr>
+          </tbody>
+        </table>
+        <div class="formula-block blue">
+          \( H(D) = -\dfrac{10}{16}\log\dfrac{10}{16} - \dfrac{6}{16}\log\dfrac{6}{16} \approx -0.2937 - 0.3648 \)<br><br>
+          \( H(\text{Left}) = -\dfrac{8}{10}\log\dfrac{8}{10} - \dfrac{2}{10}\log\dfrac{2}{10} \)<br><br>
+          \( H(\text{Right}) = -\dfrac{2}{6}\log\dfrac{2}{6} - \dfrac{4}{6}\log\dfrac{4}{6} \)
+        </div>
+        <div class="sub-title blue">Overfitting Prevention</div>
+        <ul class="notes-list">
+          <li>Prune the tree</li>
+          <li>Set <code>max_depth</code></li>
+          <li>Set minimum samples per node</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="topic topic--green topic--open" id="decision-forest">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">3</span>
+        <span class="topic__title">Decision Forest</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="callout">"Wisdom of the crowd"</div>
+        <div class="sub-title green">Advantages</div>
+        <ul class="notes-list">
+          <li>Easy to configure (fewer hyperparameters)</li>
+          <li>Natively handles numeric &amp; categorical data (no preprocessing)</li>
+          <li>Robust to noisy data</li>
+          <li>Trains &amp; infers faster than NNs on small datasets</li>
+        </ul>
+        <div class="sub-title green">Random Forest</div>
+        <ul class="notes-list">
+          <li>Creates <em>n</em> independent decision trees.</li>
+          <li>Same # examples per tree, different subsets via <strong>bootstrapping</strong>.</li>
+          <li><strong>Bagging</strong> = Bootstrap AGGregation</li>
+          <li><strong>Feature sampling</strong> — each tree sees a random feature subset.</li>
+          <li>Individual trees are <strong>not pruned</strong>.</li>
+          <li>Does <strong>not overfit</strong> as more trees are added — accuracy saturates.</li>
+          <li><strong>OOB evaluation</strong> — evaluated on Out-Of-Bag examples.</li>
+        </ul>
+        <div class="sub-title green">Gradient Boosting</div>
+        <p class="note">\( F \) = strong model &nbsp;·&nbsp; \( f \) = weak model</p>
+        <div class="formula-block green">$$F_{i+1} = F_i - f_i$$</div>
+        <p class="note">At step 0: \( F_0 = 0 \). Label for \( f_0 \) = error of \( F_0 \) = \( F_0 - y \). Then \( F_1 = F_0 - f_0 \).</p>
+        <div class="sub-title green">With Shrinkage (learning rate \(\gamma\))</div>
+        <div class="formula-block green">$$F_{i+1} = F_i - \gamma f_i$$</div>
+        <p class="note">Slows learning, improves generalisation. Similar to learning rate in NNs.</p>
+      </div>
+    </section>
+
+    <div class="section-divider" id="dl-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Deep Learning (deeplearning.ai)</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero purple">
+      <h2>Deep Learning</h2>
+      <p>deeplearning.ai course notes — Weeks 1–4 · Neural Networks, Backprop, Activation Fns, DNNs &nbsp;·&nbsp;
+        <a href="https://www.deeplearning.ai/courses/deep-learning-specialization/" target="_blank" rel="noopener noreferrer">deeplearning.ai · DL Specialization ↗</a>
+      </p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge purple">Neural Networks</span>
+      <span class="badge purple">Supervised Learning</span>
+      <span class="badge purple">Loss Functions</span>
+      <span class="badge purple">Gradient Descent</span>
+      <span class="badge purple">Backpropagation</span>
+      <span class="badge purple">Vectorization</span>
+      <span class="badge purple">Activation Functions</span>
+      <span class="badge purple">Deep NNs</span>
+    </div>
+
+    <section class="topic topic--purple topic--open" id="dl-intro">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W1</span>
+        <span class="topic__title">What is a Neural Network?</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <p class="note">A <strong>neuron</strong> takes an input (e.g. size) and outputs a prediction (e.g. price). This is a Rectified Linear Unit (ReLU).</p>
+        <p class="note">A <strong>neural network</strong> stacks many neurons — inputs feed into a <em>hidden layer</em> which feeds into the output. The network is <strong>densely connected</strong> — every input connects to every hidden unit, and the model chooses what to learn.</p>
+        <div class="sub-title purple">Supervised Learning use cases</div>
+        <table class="data-table">
+          <thead><tr><th>Network type</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>Standard NN</td><td>CTR prediction, tabular data</td></tr>
+            <tr><td>CNN</td><td>Image recognition</td></tr>
+            <tr><td>RNN</td><td>Audio, text sequences</td></tr>
+            <tr><td>Hybrid</td><td>Autonomous driving</td></tr>
+          </tbody>
+        </table>
+        <div class="sub-title purple">Why now?</div>
+        <ul class="notes-list">
+          <li>Large NNs perform well on large data; small NNs ≈ traditional algos (SVM, log reg) on small data.</li>
+          <li>We have more data, better computation, and better algorithms.</li>
+          <li>Key algorithmic improvement: <strong>sigmoid → ReLU</strong> for faster training (no vanishing gradient).</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="topic topic--orange topic--open" id="dl-logreg">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W2</span>
+        <span class="topic__title">Logistic Regression &amp; Loss Functions</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title orange">Binary Classification setup</div>
+        <p class="note">\((x, y)\) where \(x \in \mathbb{R}^{n_x}\), \(y \in \{0,1\}\). \(m\) training examples: \(\{(x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)})\}\)</p>
+        <div class="formula-block orange">\( X = \begin{bmatrix} \cdots \end{bmatrix}_{n \times m} \qquad Y = [y^{(1)}, y^{(2)}, \ldots, y^{(m)}]_{1 \times m} \)</div>
+        <div class="sub-title orange">Logistic Regression</div>
+        <p class="note">\( \hat{y} = P(y=1 \mid x) \), &nbsp; \(0 \leq \hat{y} \leq 1\)</p>
+        <p class="note">\( \hat{y} \approx (wx + b) \) passed through sigmoid: &nbsp; \( \sigma(z) = \dfrac{1}{1+e^{-z}} \)</p>
+        <ul class="notes-list">
+          <li>\(\sigma(z) \to 1\) when \(z\) is large</li>
+          <li>\(\sigma(z) \to 0\) when \(z\) is very negative</li>
+        </ul>
+        <div class="sub-title orange">Loss Function (single example)</div>
+        <p class="note">MSE makes gradient descent non-convex, so <strong>log-loss</strong> is used instead:</p>
+        <div class="formula-block orange">$$L(\hat{y}, y) = -\left(y \log \hat{y} + (1-y)\log(1-\hat{y})\right)$$</div>
+        <ul class="notes-list">
+          <li>When \(y=0\): want \(-\log(1-\hat{y})\) small → \(\hat{y}\) should be small (close to 0)</li>
+          <li>When \(y=1\): want \(-\log\hat{y}\) small → \(\hat{y}\) should be large (close to 1)</li>
+        </ul>
+        <div class="sub-title orange">Cost Function (all examples)</div>
+        <div class="formula-block orange">$$J(w,b) = \frac{1}{m}\sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)})$$</div>
+        <p class="note">Cost function = average of all loss functions applied to each training example.</p>
+        <div class="sub-title orange">LR Cost Function — probabilistic view</div>
+        <p class="note">\( P(y \mid x) = \hat{y}^y (1-\hat{y})^{(1-y)} \)</p>
+        <div class="formula-block orange">$$\log P(y \mid x) = y\log\hat{y} + (1-y)\log(1-\hat{y}) = -L(\hat{y}, y)$$</div>
+      </div>
+    </section>
+
+    <section class="topic topic--teal topic--open" id="dl-gradient">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W2</span>
+        <span class="topic__title">Gradient Descent &amp; Derivatives</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title teal">Gradient Descent</div>
+        <p class="note">Goal: find the <strong>global minimum</strong> of cost function \(J(w,b)\) — that's why cost functions need to be <strong>convex</strong>.</p>
+        <div class="formula-block teal">$$w := w - \alpha \frac{dJ(w)}{dw} \qquad b := b - \alpha \frac{dJ(w,b)}{db}$$<br><small>(\(\alpha\) = learning rate)</small></div>
+        <div class="sub-title teal">Derivatives</div>
+        <p class="note">Derivative = slope. \(\text{slope} = \dfrac{\Delta y}{\Delta x}\). Example: \(f(a) = a^2 \Rightarrow \dfrac{df(a)}{da} = 2a\).</p>
+        <div class="sub-title teal">Computation Graph</div>
+        <p class="note">Breaks a function into sequential steps. Example: \(J(a,b,c) = 3(a+bc)\)</p>
+        <div class="formula-block teal">
+          \( u = bc, \quad v = a+u, \quad J = 3v \)<br><br>
+          \( \dfrac{dJ}{dv} = 3, \quad \dfrac{dJ}{da} = 3, \quad \dfrac{dJ}{db} = c \cdot 3, \quad \dfrac{dJ}{dc} = b \cdot 3 \)
+        </div>
+        <div class="sub-title teal">Logistic Regression Gradient Descent</div>
+        <div class="formula-block teal">
+          \( \dfrac{dL}{dz} = \hat{y} - y \)<br><br>
+          \( \dfrac{dL}{dw_1} = \dfrac{dL}{dz} \cdot x_1, \quad \dfrac{dL}{dw_2} = \dfrac{dL}{dz} \cdot x_2, \quad \dfrac{dL}{db} = \dfrac{dL}{dz} \)
+        </div>
+      </div>
+    </section>
+
+    <section class="topic topic--blue topic--open" id="dl-vectorization">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W2</span>
+        <span class="topic__title">Vectorization &amp; Python Tips</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title blue">Vectorization</div>
+        <p class="note">Instead of a for loop to compute \(z = w^T x + b\), use NumPy's <code>np.dot</code> — much faster (SIMD).</p>
+        <div class="sub-title blue">Vectorizing Logistic Regression</div>
+        <div class="formula-block blue">
+          \( Z = w^T X + [b, b, \ldots, b] \)<br><br>
+          \( dw = \dfrac{1}{m} \sum dx^T\,dz \qquad db = \dfrac{1}{m}\sum dz \)
+        </div>
+        <div class="sub-title blue">Broadcasting</div>
+        <p class="note">An \(m \times n\) matrix can be +/−/×/÷ by a \((1,n)\) or \((m,1)\) vector — Python copies it \(m\) or \(n\) times and does elementwise ops.</p>
+        <div class="sub-title blue">Tips for Python Vectors</div>
+        <ul class="notes-list">
+          <li>Avoid rank-1 arrays (shape \(= (n,)\)) — always explicitly use \((n,1)\) or \((1,n)\).</li>
+          <li>Use <code>assert a.shape == (m, n)</code> to verify dimensions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="topic topic--green topic--open" id="dl-shallow-nn">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W3</span>
+        <span class="topic__title">Shallow Neural Networks</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="callout purple">Stacking multiple sigmoids</div>
+        <div class="sub-title green">NN Representation</div>
+        <p class="note">Notation: \(W^{[\ell]}_{\text{node}}\) — superscript = layer, subscript = node. Input layer not counted.</p>
+        <div class="formula-block green">
+          \( z^{[1]} = W^{[1]T}a^{[0]} + b^{[1]} \)<br><br>
+          \( W^{T[1]} = 4\times3, \quad a^{[0]} = 3\times1, \quad b^{[1]} = 4\times1, \quad z^{[1]} = 4\times1 \)
+        </div>
+        <div class="sub-title green">Activation Functions</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Sigmoid</div>
+            <div class="formula-block green">\(\sigma(z) = \dfrac{1}{1+e^{-z}}\)</div>
+            <p class="note" style="font-size:0.82rem">Rarely used now. Better for binary output layer.</p>
+          </div>
+          <div>
+            <div class="col-label">Tanh</div>
+            <div class="formula-block green">\(\tanh(z) = \dfrac{e^z - e^{-z}}{e^z + e^{-z}}\)</div>
+            <p class="note" style="font-size:0.82rem">Centers mean of data. Almost always preferred over sigmoid.</p>
+          </div>
+          <div>
+            <div class="col-label">ReLU (commonly used)</div>
+            <div class="formula-block green">\(\max(0, z)\)</div>
+            <p class="note" style="font-size:0.82rem">Faster learning — no vanishing gradient.</p>
+          </div>
+          <div>
+            <div class="col-label">Leaky ReLU</div>
+            <div class="formula-block green">\(\max(0.01z, z)\)</div>
+            <p class="note" style="font-size:0.82rem">Small slope for \(z &lt; 0\).</p>
+          </div>
+        </div>
+        <div class="sub-title green">Derivatives of Activation Functions</div>
+        <div class="formula-block green">
+          Sigmoid: \(\dfrac{da}{dz} = a(1-a)\) &nbsp;&nbsp; Tanh: \(\dfrac{da}{dz} = 1 - (\tanh z)^2\)<br><br>
+          ReLU: \(g'(z) = \begin{cases}0 & z{<}0 \\ 1 & z{>}0\end{cases}\) &nbsp;&nbsp; Leaky: \(g'(z) = \begin{cases}0.01 & z{<}0 \\ 1 & z{\geq}0\end{cases}\)
+        </div>
+        <div class="sub-title green">GD for NN — Forward &amp; Backprop</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Forward Propagation</div>
+            <div class="formula-block green">
+              \( Z^{[1]} = W^{[1]}A^{[0]} + B^{[1]} \)<br>
+              \( A^{[1]} = g^{[1]}(Z^{[1]}) \)<br>
+              \( Z^{[2]} = W^{[2]}A^{[1]} + B^{[2]} \)<br>
+              \( A^{[2]} = \sigma(Z^{[2]}) \)
+            </div>
+          </div>
+          <div>
+            <div class="col-label">Backpropagation</div>
+            <div class="formula-block green">
+              \( dZ^{[2]} = A^{[2]} - Y \)<br>
+              \( dW^{[2]} = \tfrac{1}{m}\,dZ^{[2]} A^{[1]T} \)<br>
+              \( dZ^{[1]} = W^{[2]T} dZ^{[2]} \cdot g'^{[1]}(Z^{[1]}) \)<br>
+              \( dW^{[1]} = \tfrac{1}{m}\,dZ^{[1]} X^T \)
+            </div>
+          </div>
+        </div>
+        <div class="sub-title green">Random Initialization</div>
+        <ul class="notes-list">
+          <li>If all weights = 0, all nodes are symmetric → useless to have multiple nodes.</li>
+          <li>OK to initialize <strong>b</strong> as zeros. Initialize <strong>W</strong> randomly × <strong>0.01</strong>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="topic topic--purple topic--open" id="dl-deep-nn">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">W4</span>
+        <span class="topic__title">Deep Neural Networks</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title purple">Getting Dimensions Right</div>
+        <div class="formula-block purple">
+          \( W^{[\ell]} \text{ shape: } (n^{[\ell]},\, n^{[\ell-1]}) \qquad b^{[\ell]} \text{ shape: } (n^{[\ell]},\, 1) \)<br><br>
+          \( Z^{[\ell]},\, A^{[\ell]} \text{ shape: } (n^{[\ell]}, m) \qquad X \text{ shape: } (n^{[0]}, m) \)
+        </div>
+        <div class="sub-title purple">Why Deep Representations?</div>
+        <ul class="notes-list">
+          <li>Multiple hidden layers learn <strong>different aspects</strong> (edges → faces → people in vision).</li>
+          <li><strong>Going deep</strong> is better than going wide — a shallow network needs exponentially more hidden units.</li>
+        </ul>
+        <div class="sub-title purple">Building a DNN — Layer \(\ell\) block</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Forward pass (cache z<sup>[ℓ]</sup>)</div>
+            <div class="formula-block purple">
+              Input: \(a^{[\ell-1]}\)<br>
+              \( z^{[\ell]} = W^{[\ell]}a^{[\ell-1]} + b^{[\ell]} \)<br>
+              Output: \(a^{[\ell]}\) · Cache: \(z^{[\ell]}, W^{[\ell]}, b^{[\ell]}\)
+            </div>
+          </div>
+          <div>
+            <div class="col-label">Backward pass</div>
+            <div class="formula-block purple">
+              Input: \(da^{[\ell]}\)<br>
+              \( dz^{[\ell]} \to dW^{[\ell]},\, db^{[\ell]} \)<br>
+              Output: \(da^{[\ell-1]}\)
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider" id="recsys-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Recommender Systems</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero burnt">
+      <h2>RecSys</h2>
+      <p>Notes coming soon — Collaborative Filtering · Content-Based · Matrix Factorization · Two-Tower Models</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge burnt">Collaborative Filtering</span>
+      <span class="badge burnt">Content-Based</span>
+      <span class="badge burnt">Matrix Factorization</span>
+      <span class="badge burnt">Embeddings</span>
+      <span class="badge burnt">Two-Tower</span>
+    </div>
+
+    <div class="section-divider" id="llm-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Large Language Models</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero cyan">
+      <h2>LLM</h2>
+      <p>Notes coming soon — Transformers · Attention · Pre-training · Fine-tuning · RLHF</p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge cyan">Transformers</span>
+      <span class="badge cyan">Self-Attention</span>
+      <span class="badge cyan">Pre-training</span>
+      <span class="badge cyan">Fine-tuning</span>
+      <span class="badge cyan">RLHF</span>
+    </div>
+
+    <!-- ════════════════════════════════
+         AGENTIC AI
+    ════════════════════════════════ -->
+    <div class="section-divider" id="agentic-anchor">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Agentic AI (deeplearning.ai — Andrew Ng)</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <header class="main__hero navy">
+      <h2>Agentic AI</h2>
+      <p>Course notes — Agentic Design Patterns · Tool Use · Planning · Multi-Agent Systems &nbsp;·&nbsp;
+        <a href="https://www.deeplearning.ai/courses/agentic-ai/" target="_blank" rel="noopener noreferrer">deeplearning.ai/courses/agentic-ai ↗</a>
+      </p>
+    </header>
+
+    <div class="badge-row">
+      <span class="badge navy">Agentic Workflows</span>
+      <span class="badge navy">Reflection</span>
+      <span class="badge navy">Tool Use</span>
+      <span class="badge navy">MCP</span>
+      <span class="badge navy">Planning</span>
+      <span class="badge navy">Multi-Agent</span>
+      <span class="badge navy">Highly Autonomous</span>
+      <span class="badge navy">Evals</span>
+    </div>
+
+    <!-- 1. INTRODUCTION -->
+    <section class="topic topic--navy topic--open" id="agentic-intro">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">1</span>
+        <span class="topic__title">Introduction</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title navy">Zero-shot vs Agentic Workflow</div>
+        <div class="flow-diagram">
+          <div class="flow-column">
+            <div class="col-label">Zero-shot Workflow</div>
+            <div class="flow-box">prompt</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-annotation">output</div>
+          </div>
+          <div class="flow-column">
+            <div class="col-label">Agentic Workflow</div>
+            <div class="flow-box">LLM</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM + web search</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM + human review</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-annotation">output</div>
+          </div>
+        </div>
+
+        <div class="sub-title navy">Degrees of Autonomy</div>
+        <table class="data-table">
+          <thead><tr><th>Level</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>Less autonomous</td><td>Predetermined steps · Hard-coded tools</td></tr>
+            <tr><td>Semi-autonomous</td><td>Agents can choose tools · All tools predefined</td></tr>
+            <tr><td>Highly autonomous</td><td>Agents make decisions · Create tools on the fly</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="font-size:0.83rem;"><strong>Less autonomous:</strong> Prompt → LLM → Preselected tool → Action → LLM → output</p>
+        <p class="note" style="font-size:0.83rem;"><strong>More autonomous:</strong> Prompt → LLM + choice of tools → Action → LLM → output</p>
+
+        <div class="sub-title navy">Benefits of Agentic AI</div>
+        <ul class="notes-list">
+          <li>Better performance — agentic older model can perform similarly to a non-agentic newer-generation model.</li>
+          <li>Multiple LLMs running in parallel.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. DESIGN PATTERNS OVERVIEW -->
+    <section class="topic topic--navy topic--open" id="agentic-design-patterns">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">2</span>
+        <span class="topic__title">Agentic Design Patterns — Overview</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title navy">Suitable Tasks</div>
+        <ul class="notes-list">
+          <li>Step-by-step processes</li>
+          <li>Standard procedure to follow</li>
+          <li>Text asset only</li>
+          <li>Other cases are still possible but just harder</li>
+        </ul>
+
+        <div class="sub-title navy">Building Blocks</div>
+        <table class="data-table">
+          <thead><tr><th>Type</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>Models</td><td>LLMs, other models (image to text, etc.)</td></tr>
+            <tr><td>Tools</td><td>API, information retrieval, code execution</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-title navy">Evaluation Cycle</div>
+        <div class="flow-diagram" style="flex-direction:row;align-items:center;gap:0.5rem;">
+          <div class="flow-box" style="font-size:0.68rem;padding:0.25rem 0.6rem;">Build workflow</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="font-size:0.68rem;padding:0.25rem 0.6rem;">Examine errors</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="font-size:0.68rem;padding:0.25rem 0.6rem;">Define what to improve</div>
+        </div>
+        <ul class="notes-list" style="margin-top:0.5rem;">
+          <li><strong>Objective errors</strong> — can be fixed by adding rules</li>
+          <li><strong>Subjective errors</strong> — use LLM as a judge</li>
+        </ul>
+
+        <div class="sub-title navy">The 4 Agentic Design Patterns</div>
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Pattern</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>①</td><td>Reflection</td><td>Task LLM and a critic LLM</td></tr>
+            <tr><td>②</td><td>Tool Use</td><td>LLM using tools to accomplish task</td></tr>
+            <tr><td>③</td><td>Planning</td><td>LLM doing planning on what tasks to execute</td></tr>
+            <tr><td>④</td><td>Multi-agent Workflows</td><td>Multiple LLMs working together</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. REFLECTION -->
+    <section class="topic topic--blue topic--open" id="agentic-reflection">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P1</span>
+        <span class="topic__title">Reflection Design Pattern</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="callout">Example: Ask LLM to write a draft email, then pass the draft in the next prompt to get feedback, and use the feedback to write the final email.</div>
+
+        <div class="sub-title blue">Key Properties</div>
+        <ul class="notes-list">
+          <li>Reflection works better when <strong>additional input</strong> is given — e.g. passing error along with code.</li>
+          <li>Reflection is shown to provide <strong>better results</strong>.</li>
+          <li>Can use one model to do the task and <strong>another to critique</strong>.</li>
+        </ul>
+
+        <div class="sub-title blue">Evaluating Reflection</div>
+        <p class="note">Evaluate whether improvement is worth the extra cost:</p>
+        <ul class="notes-list">
+          <li><strong>Objective tasks</strong> — accuracy %</li>
+          <li><strong>Subjective tasks</strong> — LLM as a Judge</li>
+        </ul>
+        <div class="callout">LLM as a Judge works better for 1/0 answers. Instead of asking for a scale of 1–10, ask multiple 1/0 questions and sum them to get a score.</div>
+
+        <div class="sub-title blue">External Feedback</div>
+        <p class="note">Spectrum: <strong>No reflection</strong> &lt; <strong>With Reflection</strong> &lt; <strong>Reflection with feedback</strong></p>
+        <ul class="notes-list">
+          <li>Feedbacks are facts provided alongside task output to the reflection LLM.</li>
+          <li>Feedbacks are usually code-generated — e.g. fact checker.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. TOOL USE -->
+    <section class="topic topic--teal topic--open" id="agentic-tool-use">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P2</span>
+        <span class="topic__title">Tool Use</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <p class="note">Letting LLMs call functions — their performance can improve significantly.</p>
+        <div class="callout navy">Example: LLM does not have access to current time, but you can pass code to return current time &amp; LLM can use the tool to get the answer.</div>
+
+        <div class="sub-title teal">Tool Examples</div>
+        <ul class="notes-list">
+          <li>Web search</li>
+          <li>DB query</li>
+          <li>Custom functions</li>
+        </ul>
+        <p class="note">LLMs can choose whether or not to use a certain tool. <strong>Tools are executed by us</strong> (not by the LLM).</p>
+
+        <div class="sub-title teal">Code Execution</div>
+        <ul class="notes-list">
+          <li>Ask LLM to <strong>generate the code</strong> to create the tool — avoids hardcoding all possible needed tools.</li>
+          <li>Can also ask LLM to execute code, but run it in a <strong>sandbox environment</strong> to avoid catastrophic errors.</li>
+        </ul>
+
+        <div class="sub-title teal">MCP — Model Context Protocol</div>
+        <ul class="notes-list">
+          <li>MCP <strong>server</strong> is a wrapper for a tool.</li>
+          <li>MCP <strong>client</strong> is the app that is calling the tool.</li>
+        </ul>
+        <div class="formula-block teal" style="font-family:var(--serif);font-size:0.83rem;">
+          <strong>Example:</strong> &nbsp; Client = Claude Desktop &nbsp;·&nbsp; Server = Slack
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PLANNING -->
+    <section class="topic topic--purple topic--open" id="agentic-planning">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P3</span>
+        <span class="topic__title">Planning — Highly Autonomous Agents</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title purple">Planning with LLMs</div>
+        <ul class="notes-list">
+          <li>LLM creates a <strong>plan</strong> to execute the task.</li>
+          <li>Use system prompt to ask LLM to create a step-by-step plan and return it in <strong>JSON format</strong>.</li>
+          <li>Parse the plan JSON to execute steps in <strong>downstream components</strong>.</li>
+        </ul>
+
+        <div class="sub-title purple">Code Execution Alternative</div>
+        <p class="note">Instead of JSON, ask LLM to return <strong>executable code</strong>. This method outperforms planning in JSON or plain text.</p>
+
+        <div class="sub-title purple">Latency &amp; Cost Optimization</div>
+        <ul class="notes-list">
+          <li><strong>Latency</strong> — use a smaller model or a faster LLM provider.</li>
+          <li><strong>Cost</strong> — benchmark cost of each component and decide whether it's needed.</li>
+          <li>Try multiple LLMs and use evals to choose.</li>
+          <li>Split the task into smaller steps.</li>
+          <li>Fine-tune a model on internal data.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. MULTI-AGENT WORKFLOWS -->
+    <section class="topic topic--navy topic--open" id="agentic-multiagent">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P4</span>
+        <span class="topic__title">Multi-Agent Workflows</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title navy">Why Multi-Agent?</div>
+        <ul class="notes-list">
+          <li>Breaking down an agent into <strong>multiple components</strong> helps maintain, improve, and reuse those agents.</li>
+          <li>Agents can be passed as <strong>"tools"</strong> for each other.</li>
+          <li>Planning communication patterns between agents is a complex task.</li>
+        </ul>
+
+        <div class="sub-title navy">Common Communication Patterns</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Hierarchy</div>
+            <div class="formula-block navy" style="text-align:center;font-size:0.82rem;font-family:var(--serif);">
+              <strong style="font-family:var(--mono);">Manager</strong><br>
+              <span style="font-size:1rem;">↙ &nbsp; ↓ &nbsp; ↘</span><br>
+              <span style="font-family:var(--mono);font-size:0.75rem;">Agent &nbsp; Agent &nbsp; Agent</span><br>
+              <em style="font-size:0.7rem;color:var(--muted);">Manager delegates to sub-agents</em>
+            </div>
+          </div>
+          <div>
+            <div class="col-label">All-to-all</div>
+            <div class="formula-block navy" style="text-align:center;font-size:0.82rem;font-family:var(--serif);">
+              <strong style="font-family:var(--mono);">Manager</strong><br>
+              <span style="font-size:0.9rem;">↕ ↗↙ ↘↖</span><br>
+              <span style="font-family:var(--mono);font-size:0.75rem;">A ↔ B ↔ C</span><br>
+              <em style="font-size:0.7rem;color:var(--muted);">All agents communicate with each other</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. PRACTICAL TIPS -->
+    <section class="topic topic--orange topic--open" id="agentic-practical">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">4</span>
+        <span class="topic__title">Practical Tips for Building Agentic AI</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title orange">Evaluations (10–20 examples)</div>
+        <ul class="notes-list">
+          <li>Eyeball example inputs &amp; outputs to find common error types, write code to get them fixed, meanwhile tracking via an <strong>eval function</strong>.</li>
+          <li>For example: use regex or simple code to determine the <strong>correctness of the output</strong>.</li>
+          <li>For subjective error types (e.g. missing certain points in essay generation), use <strong>LLM as a Judge</strong> to measure against gold standard failing points.</li>
+        </ul>
+
+        <div class="sub-title orange">Error Analysis</div>
+        <ul class="notes-list">
+          <li>Examine traces to identify <strong>which step in the flow</strong> to focus efforts on.</li>
+          <li>Manually count up the errors of each component.</li>
+          <li>Build <strong>component-level evals</strong>.</li>
+        </ul>
+
+        <div class="sub-title orange">Improving Components</div>
+        <ul class="notes-list">
+          <li><strong>Non-LLM components</strong> — tune hyperparameters (e.g. increasing number of search results).</li>
+          <li><strong>LLM components</strong> can be improved by:
+            <ul class="notes-list" style="margin-top:0.3rem;">
+              <li>Improving prompts — few-shot prompting, more explicit examples</li>
+              <li>Trying new models — try multiple LLMs &amp; use evals to choose</li>
+              <li>Splitting the task into smaller steps</li>
+              <li>Fine-tuning a model on internal data</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="main__footer">handwritten → html · Machine Learning · Deep Learning · RecSys · LLM · Agentic AI</footer>
