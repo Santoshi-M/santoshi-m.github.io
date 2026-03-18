@@ -209,6 +209,36 @@
       text-transform: uppercase;
     }
 
+    .homepage__intro {
+      font-family: var(--serif);
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: -1.6rem;
+    }
+
+    /* ── Homepage section nav ── */
+    .homepage__nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .homepage__nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      width: fit-content;
+    }
+    .homepage__nav-link:hover { background: var(--rule); color: var(--ink); }
+
     /* ── Quote block ── */
     .homepage__quote-wrap {
       max-width: 560px;
