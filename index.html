@@ -167,7 +167,7 @@
       max-height: 0;
       transition: max-height 0.25s ease;
     }
-    .sidebar__group--open .sidebar__nav { max-height: 600px; }
+    .sidebar__group--open .sidebar__nav { max-height: 800px; }
 
     .sidebar__nav a {
       display: flex;
@@ -196,6 +196,7 @@
     .dot--cyan   { background: var(--accent6); }
     .dot--navy   { background: var(--accent7); }
 
+
     .main {
       flex: 1;
       overflow-y: auto;
@@ -221,44 +222,6 @@
       color: var(--ink);
       letter-spacing: -0.02em;
     }
-    .homepage__sources {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .homepage__sources-label {
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #bbb;
-    }
-    .homepage__links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-    }
-    .course-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 0.32rem 0.75rem;
-      border: 1px solid var(--rule);
-      border-radius: 100px;
-      background: #fff;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-    }
-    .course-pill:hover { border-color: var(--ink); color: var(--ink); }
-    .course-pill--purple { border-color: #c39bd3; color: var(--accent4); }
-    .course-pill--purple:hover { background: #f5eef8; }
-    .course-pill--navy { border-color: #85b8e8; color: var(--accent7); }
-    .course-pill--navy:hover { background: #eaf2ff; }
 
     /* ── Section divider ── */
     .section-divider {
@@ -541,14 +504,6 @@
     <div class="page page--active" id="page-home">
       <div class="homepage">
         <h2 class="homepage__name">Welcome.</h2>
-        <div class="homepage__sources">
-          <p class="homepage__sources-label">Source Courses</p>
-          <div class="homepage__links">
-            <a href="https://www.deeplearning.ai/courses/machine-learning-specialization/" class="course-pill course-pill--purple" target="_blank" rel="noopener noreferrer">deeplearning.ai · Machine Learning</a>
-            <a href="https://www.deeplearning.ai/courses/deep-learning-specialization/" class="course-pill course-pill--purple" target="_blank" rel="noopener noreferrer">deeplearning.ai · Deep Learning</a>
-            <a href="https://www.deeplearning.ai/courses/agentic-ai/" class="course-pill course-pill--navy" target="_blank" rel="noopener noreferrer">deeplearning.ai · Agentic AI</a>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -557,7 +512,9 @@
     <div id="ml-anchor"></div>
     <header class="main__hero">
       <h2>Machine Learning</h2>
-      <p>Interview prep notes — Logistic Regression · Decision Trees · Ensemble Methods</p>
+      <p>Interview prep notes — Logistic Regression · Decision Trees · Ensemble Methods &nbsp;·&nbsp;
+        <a href="https://developers.google.com/machine-learning" target="_blank" rel="noopener noreferrer">Google Machine Learning Education ↗</a>
+      </p>
     </header>
 
     <div class="badge-row">
@@ -691,7 +648,9 @@
 
     <header class="main__hero purple">
       <h2>Deep Learning</h2>
-      <p>deeplearning.ai course notes — Weeks 1–4 · Neural Networks, Backprop, Activation Fns, DNNs</p>
+      <p>deeplearning.ai course notes — Weeks 1–4 · Neural Networks, Backprop, Activation Fns, DNNs &nbsp;·&nbsp;
+        <a href="https://www.deeplearning.ai/courses/deep-learning-specialization/" target="_blank" rel="noopener noreferrer">deeplearning.ai · DL Specialization ↗</a>
+      </p>
     </header>
 
     <div class="badge-row">
