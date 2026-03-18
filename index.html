@@ -43,9 +43,6 @@
       line-height: 1.75;
     }
 
-    /* ══════════════════════════════════════
-       SIDEBAR
-    ══════════════════════════════════════ */
     .sidebar {
       width: var(--sidebar-w);
       height: 100vh;
@@ -60,26 +57,6 @@
       top: 0;
       flex-shrink: 0;
       overflow-y: auto;
-    }
-
-    .sidebar__avatar {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: var(--rule);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
-      font-family: var(--mono);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .sidebar h1 {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.18rem;
     }
 
     .sidebar__tagline {
@@ -116,7 +93,6 @@
       flex-shrink: 0;
     }
 
-    /* Sidebar profile — clickable */
     .sidebar__profile {
       display: flex;
       flex-direction: column;
@@ -150,7 +126,6 @@
     .sidebar h1:hover { text-decoration: underline; text-underline-offset: 3px; }
     .sidebar__group { width: 100%; margin-bottom: 0.6rem; }
 
-    /* Collapsible group header */
     .sidebar__group-header {
       display: flex;
       align-items: center;
@@ -180,7 +155,6 @@
     .sidebar__group--open .sidebar__group-chevron { transform: rotate(180deg); }
     .sidebar__group--open .sidebar__group-header { color: var(--ink); }
 
-    /* Clickable label inside group header */
     .sidebar__group-label {
       cursor: pointer;
       flex: 1;
@@ -188,13 +162,12 @@
     }
     .sidebar__group-label:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-    /* Collapsible nav links */
     .sidebar__nav {
       overflow: hidden;
       max-height: 0;
       transition: max-height 0.25s ease;
     }
-    .sidebar__group--open .sidebar__nav { max-height: 400px; }
+    .sidebar__group--open .sidebar__nav { max-height: 600px; }
 
     .sidebar__nav a {
       display: flex;
@@ -211,11 +184,7 @@
     }
     .sidebar__nav a:hover  { background: var(--rule); color: var(--ink); }
     .sidebar__nav a.active { background: var(--ink); color: #fff; }
-    .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
     .dot--red    { background: var(--accent); }
     .dot--blue   { background: var(--accent2); }
     .dot--green  { background: var(--accent3); }
@@ -227,25 +196,23 @@
     .dot--cyan   { background: var(--accent6); }
     .dot--navy   { background: var(--accent7); }
 
-    /* ══════════════════════════════════════
-       MAIN
-    ══════════════════════════════════════ */
     .main {
       flex: 1;
       overflow-y: auto;
       padding: 3.5rem 2.5rem 5rem;
     }
 
-    /* Page visibility */
     .page { display: none; }
     .page--active { display: block; }
 
-    /* Homepage */
+    /* ── Homepage ── */
     .homepage {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 90vh;
+      gap: 1.8rem;
     }
     .homepage__name {
       font-family: var(--serif);
@@ -254,8 +221,46 @@
       color: var(--ink);
       letter-spacing: -0.02em;
     }
+    .homepage__sources {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .homepage__sources-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #bbb;
+    }
+    .homepage__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .course-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.32rem 0.75rem;
+      border: 1px solid var(--rule);
+      border-radius: 100px;
+      background: #fff;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .course-pill:hover { border-color: var(--ink); color: var(--ink); }
+    .course-pill--purple { border-color: #c39bd3; color: var(--accent4); }
+    .course-pill--purple:hover { background: #f5eef8; }
+    .course-pill--navy { border-color: #85b8e8; color: var(--accent7); }
+    .course-pill--navy:hover { background: #eaf2ff; }
 
-    /* Section divider between sections */
+    /* ── Section divider ── */
     .section-divider {
       display: flex;
       align-items: center;
@@ -294,80 +299,49 @@
       font-size: 0.85rem;
       margin-top: 0.2rem;
     }
-
-    .badge-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.36rem;
-      margin-bottom: 2rem;
-    }
-    .badge {
+    .main__hero a {
+      color: var(--accent7);
+      text-decoration: none;
+      font-style: normal;
       font-family: var(--mono);
-      font-size: 0.62rem;
-      background: #fff8e1;
-      color: #7d5a00;
-      border: 1px solid #e8c84a;
-      border-radius: 3px;
-      padding: 0.14rem 0.46rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 0.7rem;
+      border-bottom: 1px dotted var(--accent7);
     }
-    .badge.purple {
-      background: #f5eef8;
-      color: #6c3483;
-      border-color: #c39bd3;
+    .main__hero a:hover { opacity: 0.7; }
+
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.36rem; margin-bottom: 2rem; }
+    .badge {
+      font-family: var(--mono); font-size: 0.62rem;
+      background: #fff8e1; color: #7d5a00; border: 1px solid #e8c84a;
+      border-radius: 3px; padding: 0.14rem 0.46rem;
+      text-transform: uppercase; letter-spacing: 0.05em;
     }
-    .badge.burnt {
-      background: #fdf2e9;
-      color: #784212;
-      border-color: #e59866;
-    }
-    .badge.cyan {
-      background: #e8f8f5;
-      color: #0e6655;
-      border-color: #76d7c4;
-    }
-    .badge.navy {
-      background: #eaf2ff;
-      color: #1a4a7a;
-      border-color: #85b8e8;
-    }
+    .badge.purple { background: #f5eef8; color: #6c3483; border-color: #c39bd3; }
+    .badge.burnt  { background: #fdf2e9; color: #784212; border-color: #e59866; }
+    .badge.cyan   { background: #e8f8f5; color: #0e6655; border-color: #76d7c4; }
+    .badge.navy   { background: #eaf2ff; color: #1a4a7a; border-color: #85b8e8; }
 
     /* ── Topic cards ── */
     .topic {
-      border: 1px solid var(--rule);
-      border-radius: 8px;
-      margin-bottom: 1.3rem;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-      transition: box-shadow 0.2s;
+      border: 1px solid var(--rule); border-radius: 8px; margin-bottom: 1.3rem;
+      overflow: hidden; background: #fff;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.04); transition: box-shadow 0.2s;
     }
     .topic:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.07); }
 
     .topic__header {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      padding: 0.85rem 1.15rem;
-      cursor: pointer;
-      user-select: none;
-      border-bottom: 1px solid transparent;
-      transition: background 0.15s;
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.85rem 1.15rem; cursor: pointer; user-select: none;
+      border-bottom: 1px solid transparent; transition: background 0.15s;
     }
     .topic__header:hover { background: #fafafa; }
     .topic--open .topic__header { border-bottom-color: var(--rule); }
 
     .topic__num {
-      font-family: var(--mono);
-      font-size: 0.58rem;
-      font-weight: 600;
-      color: #fff;
-      background: var(--accent);
-      border-radius: 50%;
+      font-family: var(--mono); font-size: 0.58rem; font-weight: 600;
+      color: #fff; background: var(--accent); border-radius: 50%;
       width: 1.5rem; height: 1.5rem;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .topic--blue   .topic__num { background: var(--accent2); }
     .topic--green  .topic__num { background: var(--accent3); }
@@ -379,173 +353,105 @@
     .topic--cyan   .topic__num { background: var(--accent6); }
     .topic--navy   .topic__num { background: var(--accent7); }
 
-    .topic__title {
-      font-family: var(--mono);
-      font-size: 0.84rem;
-      font-weight: 600;
-      flex: 1;
-    }
+    .topic__title { font-family: var(--mono); font-size: 0.84rem; font-weight: 600; flex: 1; }
     .topic__chevron { font-size: 0.66rem; color: #bbb; transition: transform 0.25s; }
     .topic--open .topic__chevron { transform: rotate(180deg); }
-
     .topic__body { display: none; padding: 1.15rem 1.25rem 1.45rem; }
     .topic--open .topic__body { display: block; }
 
-    /* ── Content helpers ── */
     .note { font-size: 0.9rem; margin-bottom: 0.75rem; }
 
-    /* Empty section placeholder */
-    .empty-placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2.5rem 1.5rem;
-      gap: 0.6rem;
-      border: 1.5px dashed var(--rule);
-      border-radius: 8px;
-      background: #fdfcfa;
-      color: #bbb;
-      text-align: center;
-    }
-    .empty-placeholder__icon {
-      font-size: 1.6rem;
-      line-height: 1;
-      opacity: 0.4;
-    }
-    .empty-placeholder__label {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #ccc;
-    }
-    .empty-placeholder__sub {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 0.82rem;
-      color: #d5cfc8;
-    }
-
     .formula-block {
-      background: var(--bg);
-      border-left: 3px solid var(--accent);
-      border-radius: 4px;
-      padding: 0.7rem 1rem;
-      margin: 0.75rem 0;
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      overflow-x: auto;
+      background: var(--bg); border-left: 3px solid var(--accent);
+      border-radius: 4px; padding: 0.7rem 1rem; margin: 0.75rem 0;
+      font-family: var(--mono); font-size: 0.82rem; overflow-x: auto;
     }
     .formula-block.blue   { border-left-color: var(--accent2); }
     .formula-block.green  { border-left-color: var(--accent3); }
     .formula-block.purple { border-left-color: var(--accent4); }
     .formula-block.orange { border-left-color: #e67e22; }
     .formula-block.teal   { border-left-color: #16a085; }
+    .formula-block.navy   { border-left-color: var(--accent7); }
 
     .sub-title {
-      font-family: var(--mono);
-      font-size: 0.67rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      margin: 1.05rem 0 0.26rem;
-      font-weight: 600;
+      font-family: var(--mono); font-size: 0.67rem; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--accent); margin: 1.05rem 0 0.26rem; font-weight: 600;
     }
     .sub-title.blue   { color: var(--accent2); }
     .sub-title.green  { color: var(--accent3); }
     .sub-title.purple { color: var(--accent4); }
     .sub-title.orange { color: #e67e22; }
     .sub-title.teal   { color: #16a085; }
+    .sub-title.navy   { color: var(--accent7); }
 
     ul.notes-list { padding-left: 1.1rem; font-size: 0.87rem; }
     ul.notes-list li { margin-bottom: 0.28rem; }
     ul.notes-list li::marker { color: var(--accent); }
+    .topic--navy   ul.notes-list li::marker { color: var(--accent7); }
+    .topic--blue   ul.notes-list li::marker { color: var(--accent2); }
+    .topic--green  ul.notes-list li::marker { color: var(--accent3); }
+    .topic--orange ul.notes-list li::marker { color: #e67e22; }
+    .topic--teal   ul.notes-list li::marker { color: #16a085; }
+    .topic--purple ul.notes-list li::marker { color: var(--accent4); }
 
     .callout {
-      background: #eaf4ff;
-      border: 1px solid #b3d7f5;
-      border-radius: 6px;
-      padding: 0.6rem 0.88rem;
-      margin: 0.75rem 0;
-      font-size: 0.87rem;
-      font-style: italic;
-      color: #1a5276;
+      background: #eaf4ff; border: 1px solid #b3d7f5; border-radius: 6px;
+      padding: 0.6rem 0.88rem; margin: 0.75rem 0; font-size: 0.87rem;
+      font-style: italic; color: #1a5276;
     }
-    .callout.purple {
-      background: #f5eef8;
-      border-color: #c39bd3;
-      color: #4a235a;
-    }
+    .callout.purple { background: #f5eef8; border-color: #c39bd3; color: #4a235a; }
+    .callout.navy   { background: #eaf2ff; border-color: #85b8e8; color: #1a4a7a; }
 
     table.data-table {
-      border-collapse: collapse;
-      font-family: var(--mono);
-      font-size: 0.75rem;
-      margin: 0.75rem 0;
-      width: 100%;
+      border-collapse: collapse; font-family: var(--mono); font-size: 0.75rem;
+      margin: 0.75rem 0; width: 100%;
     }
-    table.data-table th {
-      background: var(--ink); color: #fff;
-      padding: 0.34rem 0.65rem; text-align: left;
-    }
-    table.data-table td {
-      padding: 0.3rem 0.65rem;
-      border-bottom: 1px solid var(--rule);
-    }
+    table.data-table th { background: var(--ink); color: #fff; padding: 0.34rem 0.65rem; text-align: left; }
+    table.data-table td { padding: 0.3rem 0.65rem; border-bottom: 1px solid var(--rule); }
     table.data-table tr:last-child td { border-bottom: none; }
 
-    .deriv-step {
-      display: flex; align-items: flex-start;
-      gap: 0.7rem; margin-bottom: 0.4rem; font-size: 0.86rem;
-    }
-    .step-num {
-      font-family: var(--mono); font-size: 0.62rem;
-      color: #aaa; padding-top: 0.15rem;
-      flex-shrink: 0; width: 1.1rem;
-    }
+    .deriv-step { display: flex; align-items: flex-start; gap: 0.7rem; margin-bottom: 0.4rem; font-size: 0.86rem; }
+    .step-num { font-family: var(--mono); font-size: 0.62rem; color: #aaa; padding-top: 0.15rem; flex-shrink: 0; width: 1.1rem; }
 
-    /* Two-column layout for side-by-side content */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin: 0.75rem 0;
-    }
-    .two-col .col-label {
-      font-family: var(--mono);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #aaa;
-      margin-bottom: 0.4rem;
-    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.75rem 0; }
+    .two-col .col-label { font-family: var(--mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em; color: #aaa; margin-bottom: 0.4rem; }
     @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
 
+    /* ── Agentic-specific ── */
+    .flow-diagram {
+      display: flex; align-items: flex-start; gap: 2rem;
+      margin: 1rem 0; flex-wrap: wrap;
+    }
+    .flow-column {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.3rem; flex: 1; min-width: 140px;
+    }
+    .flow-column .col-label {
+      font-family: var(--mono); font-size: 0.62rem; text-transform: uppercase;
+      letter-spacing: 0.07em; color: #aaa; margin-bottom: 0.4rem; text-align: center;
+    }
+    .flow-box {
+      font-family: var(--mono); font-size: 0.72rem; font-weight: 600;
+      color: var(--ink); border: 1.5px solid var(--ink); border-radius: 4px;
+      padding: 0.3rem 0.9rem; background: #fff; min-width: 80px; text-align: center;
+    }
+    .flow-arrow { font-size: 0.9rem; color: #bbb; line-height: 1; }
+    .flow-annotation { font-family: var(--mono); font-size: 0.64rem; color: var(--muted); font-style: italic; }
+
     .main__footer {
-      margin-top: 2.5rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--rule);
-      font-family: var(--mono);
-      font-size: 0.67rem;
-      color: #bbb;
-      text-align: right;
+      margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+      font-family: var(--mono); font-size: 0.67rem; color: #bbb; text-align: right;
     }
 
-    /* ══ MOBILE ══ */
     @media (max-width: 680px) {
       body { flex-direction: column; }
       .sidebar {
-        width: 100%; height: auto;
-        position: static;
-        flex-direction: row; flex-wrap: wrap;
-        justify-content: space-between;
-        padding: 1rem 1.2rem;
-        border-right: none; border-bottom: 1px solid var(--rule);
+        width: 100%; height: auto; position: static;
+        flex-direction: row; flex-wrap: wrap; justify-content: space-between;
+        padding: 1rem 1.2rem; border-right: none; border-bottom: 1px solid var(--rule);
         gap: 0.6rem; overflow-y: visible;
       }
-      .sidebar__avatar, .sidebar__tagline,
-      .sidebar__divider, .sidebar__group { display: none; }
+      .sidebar__avatar, .sidebar__tagline, .sidebar__divider, .sidebar__group { display: none; }
       .sidebar h1 { margin-bottom: 0; font-size: 1rem; }
       .main { padding: 2rem 1.1rem 3rem; }
     }
@@ -553,7 +459,6 @@
 </head>
 <body>
 
-  <!-- ══ SIDEBAR ══ -->
   <aside class="sidebar">
     <div class="sidebar__profile" id="home-btn">
       <div class="sidebar__avatar" onclick="showPage('home')" title="Go to homepage">SM</div>
@@ -570,7 +475,6 @@
 
     <hr class="sidebar__divider"/>
 
-    <!-- Machine Learning nav -->
     <div class="sidebar__group sidebar__group--open" id="group-ml">
       <div class="sidebar__group-header">
         <span class="sidebar__group-label" data-scroll="ml-anchor" data-page="notes">Machine Learning</span>
@@ -583,7 +487,6 @@
       </nav>
     </div>
 
-    <!-- Deep Learning nav -->
     <div class="sidebar__group sidebar__group--open" id="group-dl">
       <div class="sidebar__group-header">
         <span class="sidebar__group-label" data-scroll="dl-anchor" data-page="notes">Deep Learning</span>
@@ -599,44 +502,53 @@
       </nav>
     </div>
 
-    <!-- RecSys nav -->
     <div class="sidebar__group" id="group-recsys">
       <div class="sidebar__group-header">
         <span class="sidebar__group-label" data-scroll="recsys-anchor" data-page="notes">RecSys</span>
         <span class="sidebar__group-chevron" onclick="toggleGroup('group-recsys')">▼</span>
       </div>
-      <nav class="sidebar__nav">
-      </nav>
+      <nav class="sidebar__nav"></nav>
     </div>
 
-    <!-- LLM nav -->
     <div class="sidebar__group" id="group-llm">
       <div class="sidebar__group-header">
         <span class="sidebar__group-label" data-scroll="llm-anchor" data-page="notes">LLM</span>
         <span class="sidebar__group-chevron" onclick="toggleGroup('group-llm')">▼</span>
       </div>
-      <nav class="sidebar__nav">
-      </nav>
+      <nav class="sidebar__nav"></nav>
     </div>
 
-    <!-- Agentic AI nav -->
-    <div class="sidebar__group" id="group-agentic">
+    <div class="sidebar__group sidebar__group--open" id="group-agentic">
       <div class="sidebar__group-header">
         <span class="sidebar__group-label" data-scroll="agentic-anchor" data-page="notes">Agentic AI</span>
         <span class="sidebar__group-chevron" onclick="toggleGroup('group-agentic')">▼</span>
       </div>
       <nav class="sidebar__nav">
+        <a href="#agentic-intro" data-page="notes"><span class="dot dot--navy"></span>Introduction</a>
+        <a href="#agentic-design-patterns" data-page="notes"><span class="dot dot--navy"></span>Design Patterns</a>
+        <a href="#agentic-reflection" data-page="notes"><span class="dot dot--blue"></span>Reflection</a>
+        <a href="#agentic-tool-use" data-page="notes"><span class="dot dot--teal"></span>Tool Use</a>
+        <a href="#agentic-planning" data-page="notes"><span class="dot dot--purple"></span>Planning</a>
+        <a href="#agentic-multiagent" data-page="notes"><span class="dot dot--navy"></span>Multi-Agent</a>
+        <a href="#agentic-practical" data-page="notes"><span class="dot dot--orange"></span>Practical Tips</a>
       </nav>
     </div>
   </aside>
 
-  <!-- ══ MAIN ══ -->
   <main class="main" id="main-scroll">
 
     <!-- ════ HOMEPAGE ════ -->
     <div class="page page--active" id="page-home">
       <div class="homepage">
         <h2 class="homepage__name">Welcome.</h2>
+        <div class="homepage__sources">
+          <p class="homepage__sources-label">Source Courses</p>
+          <div class="homepage__links">
+            <a href="https://www.deeplearning.ai/courses/machine-learning-specialization/" class="course-pill course-pill--purple" target="_blank" rel="noopener noreferrer">deeplearning.ai · Machine Learning</a>
+            <a href="https://www.deeplearning.ai/courses/deep-learning-specialization/" class="course-pill course-pill--purple" target="_blank" rel="noopener noreferrer">deeplearning.ai · Deep Learning</a>
+            <a href="https://www.deeplearning.ai/courses/agentic-ai/" class="course-pill course-pill--navy" target="_blank" rel="noopener noreferrer">deeplearning.ai · Agentic AI</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -659,7 +571,6 @@
       <span class="badge">Gradient Boosting</span>
     </div>
 
-    <!-- ① LOGISTIC REGRESSION -->
     <section class="topic topic--open" id="logistic-regression">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">1</span>
@@ -670,21 +581,17 @@
         <p class="note">Regression model that <strong>outputs a probability</strong>.</p>
         <p class="note">Probability ensured by the <strong>sigmoid function</strong> (logistic function class). S-shaped curve, range 0–1.</p>
         <div class="formula-block">$$f(x) = \frac{1}{1 + e^{-x}}$$</div>
-
         <div class="sub-title">Log-Odds (z)</div>
         <p class="note">\( z = b + w_1x_1 + w_2x_2 + \cdots + w_nx_n \) &nbsp;(bias + weights · inputs)</p>
         <div class="formula-block">$$\hat{y} = \frac{1}{1 + e^{-z}}$$</div>
-
         <div class="sub-title">Why z is called "log-odds" — derivation</div>
         <div class="deriv-step"><span class="step-num">①</span><span>\( 1 + e^{-z} = \dfrac{1}{\hat{y}} \)</span></div>
         <div class="deriv-step"><span class="step-num">②</span><span>\( e^{-z} = \dfrac{1-\hat{y}}{\hat{y}} \)</span></div>
         <div class="deriv-step"><span class="step-num">③</span><span>\( -z = \log\!\left(\dfrac{1-\hat{y}}{\hat{y}}\right) \)</span></div>
         <div class="deriv-step"><span class="step-num">④</span><span>\( z = \log\!\left(\dfrac{\hat{y}}{1-\hat{y}}\right) \) — <strong>log-odds</strong></span></div>
-
         <div class="sub-title">Log-Loss (Cross-Entropy)</div>
         <p class="note">Used over squared loss because output is not linear. Near \(z=0\), small changes cause large swings in \(\hat{y}\).</p>
         <div class="formula-block blue">$$\text{log-loss} = -\frac{1}{N}\sum_{i=1}^{N}\left[y\log\hat{y} + (1-y)\log(1-\hat{y})\right]$$</div>
-
         <div class="sub-title blue">L2 Regularization</div>
         <div class="formula-block blue">$$\text{Loss} + \lambda \sum w_i^2 \qquad (\lambda = \text{regularization rate})$$</div>
         <ul class="notes-list">
@@ -695,7 +602,6 @@
       </div>
     </section>
 
-    <!-- ② DECISION TREE -->
     <section class="topic topic--blue topic--open" id="decision-tree">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">2</span>
@@ -742,7 +648,6 @@
       </div>
     </section>
 
-    <!-- ③ DECISION FOREST -->
     <section class="topic topic--green topic--open" id="decision-forest">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">3</span>
@@ -778,9 +683,6 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════
-         DEEP LEARNING SECTION DIVIDER
-    ════════════════════════════════ -->
     <div class="section-divider" id="dl-anchor">
       <hr class="section-divider__line"/>
       <span class="section-divider__label">Deep Learning (deeplearning.ai)</span>
@@ -803,7 +705,6 @@
       <span class="badge purple">Deep NNs</span>
     </div>
 
-    <!-- ④ NEURAL NETWORKS INTRO (Week 1) -->
     <section class="topic topic--purple topic--open" id="dl-intro">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">W1</span>
@@ -813,7 +714,6 @@
       <div class="topic__body">
         <p class="note">A <strong>neuron</strong> takes an input (e.g. size) and outputs a prediction (e.g. price). This is a Rectified Linear Unit (ReLU).</p>
         <p class="note">A <strong>neural network</strong> stacks many neurons — inputs feed into a <em>hidden layer</em> which feeds into the output. The network is <strong>densely connected</strong> — every input connects to every hidden unit, and the model chooses what to learn.</p>
-
         <div class="sub-title purple">Supervised Learning use cases</div>
         <table class="data-table">
           <thead><tr><th>Network type</th><th>Used for</th></tr></thead>
@@ -824,7 +724,6 @@
             <tr><td>Hybrid</td><td>Autonomous driving</td></tr>
           </tbody>
         </table>
-
         <div class="sub-title purple">Why now?</div>
         <ul class="notes-list">
           <li>Large NNs perform well on large data; small NNs ≈ traditional algos (SVM, log reg) on small data.</li>
@@ -834,7 +733,6 @@
       </div>
     </section>
 
-    <!-- ⑤ LR & LOSS FUNCTIONS (Week 2) -->
     <section class="topic topic--orange topic--open" id="dl-logreg">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">W2</span>
@@ -843,14 +741,8 @@
       </div>
       <div class="topic__body">
         <div class="sub-title orange">Binary Classification setup</div>
-        <p class="note">
-          \((x, y)\) where \(x \in \mathbb{R}^{n_x}\), \(y \in \{0,1\}\).
-          \(m\) training examples: \(\{(x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)})\}\)
-        </p>
-        <div class="formula-block orange">
-          \( X = \begin{bmatrix} \cdots \end{bmatrix}_{n \times m} \qquad Y = [y^{(1)}, y^{(2)}, \ldots, y^{(m)}]_{1 \times m} \)
-        </div>
-
+        <p class="note">\((x, y)\) where \(x \in \mathbb{R}^{n_x}\), \(y \in \{0,1\}\). \(m\) training examples: \(\{(x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)})\}\)</p>
+        <div class="formula-block orange">\( X = \begin{bmatrix} \cdots \end{bmatrix}_{n \times m} \qquad Y = [y^{(1)}, y^{(2)}, \ldots, y^{(m)}]_{1 \times m} \)</div>
         <div class="sub-title orange">Logistic Regression</div>
         <p class="note">\( \hat{y} = P(y=1 \mid x) \), &nbsp; \(0 \leq \hat{y} \leq 1\)</p>
         <p class="note">\( \hat{y} \approx (wx + b) \) passed through sigmoid: &nbsp; \( \sigma(z) = \dfrac{1}{1+e^{-z}} \)</p>
@@ -858,7 +750,6 @@
           <li>\(\sigma(z) \to 1\) when \(z\) is large</li>
           <li>\(\sigma(z) \to 0\) when \(z\) is very negative</li>
         </ul>
-
         <div class="sub-title orange">Loss Function (single example)</div>
         <p class="note">MSE makes gradient descent non-convex, so <strong>log-loss</strong> is used instead:</p>
         <div class="formula-block orange">$$L(\hat{y}, y) = -\left(y \log \hat{y} + (1-y)\log(1-\hat{y})\right)$$</div>
@@ -866,19 +757,15 @@
           <li>When \(y=0\): want \(-\log(1-\hat{y})\) small → \(\hat{y}\) should be small (close to 0)</li>
           <li>When \(y=1\): want \(-\log\hat{y}\) small → \(\hat{y}\) should be large (close to 1)</li>
         </ul>
-
         <div class="sub-title orange">Cost Function (all examples)</div>
         <div class="formula-block orange">$$J(w,b) = \frac{1}{m}\sum_{i=1}^{m} L(\hat{y}^{(i)}, y^{(i)})$$</div>
         <p class="note">Cost function = average of all loss functions applied to each training example.</p>
-
         <div class="sub-title orange">LR Cost Function — probabilistic view</div>
         <p class="note">\( P(y \mid x) = \hat{y}^y (1-\hat{y})^{(1-y)} \)</p>
-        <p class="note">Since log is strictly monotonically increasing: maximising \(\log P(y\mid x)\) = minimising \(-L\).</p>
         <div class="formula-block orange">$$\log P(y \mid x) = y\log\hat{y} + (1-y)\log(1-\hat{y}) = -L(\hat{y}, y)$$</div>
       </div>
     </section>
 
-    <!-- ⑥ GRADIENT DESCENT + DERIVATIVES (Week 2 cont.) -->
     <section class="topic topic--teal topic--open" id="dl-gradient">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">W2</span>
@@ -888,27 +775,16 @@
       <div class="topic__body">
         <div class="sub-title teal">Gradient Descent</div>
         <p class="note">Goal: find the <strong>global minimum</strong> of cost function \(J(w,b)\) — that's why cost functions need to be <strong>convex</strong>.</p>
-        <p class="note">At each step, find the steepest way down. Initialize at zero or random, then repeat:</p>
-        <div class="formula-block teal">
-          $$w := w - \alpha \frac{dJ(w)}{dw} \qquad b := b - \alpha \frac{dJ(w,b)}{db}$$
-          <br><small>(\(\alpha\) = learning rate)</small>
-        </div>
-
+        <div class="formula-block teal">$$w := w - \alpha \frac{dJ(w)}{dw} \qquad b := b - \alpha \frac{dJ(w,b)}{db}$$<br><small>(\(\alpha\) = learning rate)</small></div>
         <div class="sub-title teal">Derivatives</div>
-        <p class="note">Derivative = slope. When \(x\) moves \(\Delta x\), \(y\) moves \(\Delta y\): &nbsp; \(\text{slope} = \dfrac{\Delta y}{\Delta x}\)</p>
-        <p class="note">Example: \(f(a) = a^2 \Rightarrow \dfrac{df(a)}{da} = 2a\) — slope is different at each point.</p>
-
+        <p class="note">Derivative = slope. \(\text{slope} = \dfrac{\Delta y}{\Delta x}\). Example: \(f(a) = a^2 \Rightarrow \dfrac{df(a)}{da} = 2a\).</p>
         <div class="sub-title teal">Computation Graph</div>
-        <p class="note">Breaks a function into sequential steps to make derivatives easier. Example: \(J(a,b,c) = 3(a+bc)\)</p>
+        <p class="note">Breaks a function into sequential steps. Example: \(J(a,b,c) = 3(a+bc)\)</p>
         <div class="formula-block teal">
           \( u = bc, \quad v = a+u, \quad J = 3v \)<br><br>
-          \( \dfrac{dJ}{dv} = 3, \quad \dfrac{dJ}{da} = \dfrac{dJ}{dv}\cdot\dfrac{dv}{da} = 3\cdot1 = 3 \)<br><br>
-          \( \dfrac{dJ}{du} = 3, \quad \dfrac{dJ}{db} = c \cdot \dfrac{dJ}{du}, \quad \dfrac{dJ}{dc} = b \cdot \dfrac{dJ}{du} \)
+          \( \dfrac{dJ}{dv} = 3, \quad \dfrac{dJ}{da} = 3, \quad \dfrac{dJ}{db} = c \cdot 3, \quad \dfrac{dJ}{dc} = b \cdot 3 \)
         </div>
-
         <div class="sub-title teal">Logistic Regression Gradient Descent</div>
-        <p class="note">Forward pass: \(z = w_1x_1 + w_2x_2 + b \to \hat{y} = \sigma(z) \to L(\hat{y}, y)\)</p>
-        <p class="note">Key results from backprop through LR:</p>
         <div class="formula-block teal">
           \( \dfrac{dL}{dz} = \hat{y} - y \)<br><br>
           \( \dfrac{dL}{dw_1} = \dfrac{dL}{dz} \cdot x_1, \quad \dfrac{dL}{dw_2} = \dfrac{dL}{dz} \cdot x_2, \quad \dfrac{dL}{db} = \dfrac{dL}{dz} \)
@@ -916,7 +792,6 @@
       </div>
     </section>
 
-    <!-- ⑦ VECTORIZATION (Week 2 cont.) -->
     <section class="topic topic--blue topic--open" id="dl-vectorization">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">W2</span>
@@ -926,17 +801,13 @@
       <div class="topic__body">
         <div class="sub-title blue">Vectorization</div>
         <p class="note">Instead of a for loop to compute \(z = w^T x + b\), use NumPy's <code>np.dot</code> — much faster (SIMD).</p>
-
         <div class="sub-title blue">Vectorizing Logistic Regression</div>
-        <p class="note">Naive gradient descent has 2 for loops: one over \(m\) examples, one for dot product. <code>np.dot</code> eliminates the second.</p>
         <div class="formula-block blue">
-          \( Z = [z^{(1)}, z^{(2)}, \ldots, z^{(m)}] = w^T X + [b^{(1)}, b^{(2)}, \ldots, b^{(m)}] \)<br><br>
+          \( Z = w^T X + [b, b, \ldots, b] \)<br><br>
           \( dw = \dfrac{1}{m} \sum dx^T\,dz \qquad db = \dfrac{1}{m}\sum dz \)
         </div>
-
         <div class="sub-title blue">Broadcasting</div>
-        <p class="note">If we have an \(m \times n\) matrix, we can \(+\), \(-\), \(\times\), \(\div\) it by a \((1,n)\) or \((m,1)\) vector — Python copies it \(m\) or \(n\) times and does elementwise ops.</p>
-
+        <p class="note">An \(m \times n\) matrix can be +/−/×/÷ by a \((1,n)\) or \((m,1)\) vector — Python copies it \(m\) or \(n\) times and does elementwise ops.</p>
         <div class="sub-title blue">Tips for Python Vectors</div>
         <ul class="notes-list">
           <li>Avoid rank-1 arrays (shape \(= (n,)\)) — always explicitly use \((n,1)\) or \((1,n)\).</li>
@@ -945,7 +816,6 @@
       </div>
     </section>
 
-    <!-- ⑧ SHALLOW NEURAL NETWORKS (Week 3) -->
     <section class="topic topic--green topic--open" id="dl-shallow-nn">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">W3</span>
@@ -954,26 +824,23 @@
       </div>
       <div class="topic__body">
         <div class="callout purple">Stacking multiple sigmoids</div>
-
         <div class="sub-title green">NN Representation</div>
-        <p class="note">Notation: \(W^{[\ell]}_{\text{node}}\) — superscript = layer, subscript = node. Input layer not counted → a 2-input + 1-hidden network is called <strong>2-layer</strong>.</p>
+        <p class="note">Notation: \(W^{[\ell]}_{\text{node}}\) — superscript = layer, subscript = node. Input layer not counted.</p>
         <div class="formula-block green">
           \( z^{[1]} = W^{[1]T}a^{[0]} + b^{[1]} \)<br><br>
-          \( W^{T[1]} = 4\times3 \text{ matrix}, \quad a^{[0]} = 3\times1, \quad b^{[1]} = 4\times1, \quad z^{[1]} = 4\times1 \)<br><br>
-          \( z^{[2]} = W^{[2]}a^{[1]} + b^{[2]}, \quad W^{T[2]} = 1\times4, \quad a^{[1]} = 4\times1, \quad z^{[2]} = 1\times1 \)
+          \( W^{T[1]} = 4\times3, \quad a^{[0]} = 3\times1, \quad b^{[1]} = 4\times1, \quad z^{[1]} = 4\times1 \)
         </div>
-
         <div class="sub-title green">Activation Functions</div>
         <div class="two-col">
           <div>
             <div class="col-label">Sigmoid</div>
             <div class="formula-block green">\(\sigma(z) = \dfrac{1}{1+e^{-z}}\)</div>
-            <p class="note" style="font-size:0.82rem">Rarely used now. Better for binary classification output layer.</p>
+            <p class="note" style="font-size:0.82rem">Rarely used now. Better for binary output layer.</p>
           </div>
           <div>
             <div class="col-label">Tanh</div>
             <div class="formula-block green">\(\tanh(z) = \dfrac{e^z - e^{-z}}{e^z + e^{-z}}\)</div>
-            <p class="note" style="font-size:0.82rem">Centers mean of data → helps next layer. Almost always preferred over sigmoid.</p>
+            <p class="note" style="font-size:0.82rem">Centers mean of data. Almost always preferred over sigmoid.</p>
           </div>
           <div>
             <div class="col-label">ReLU (commonly used)</div>
@@ -986,19 +853,11 @@
             <p class="note" style="font-size:0.82rem">Small slope for \(z &lt; 0\).</p>
           </div>
         </div>
-        <p class="note">When \(z\) is very large or small, slope is close to zero → slows learning (vanishing gradient). This is why ReLU is preferred.</p>
-
-        <div class="sub-title green">Why non-linear activations?</div>
-        <p class="note">If \(a = g = \text{just } z\) (identity activation), the NN becomes linear — essentially just logistic regression. Non-linearity is what gives NNs expressive power.</p>
-
         <div class="sub-title green">Derivatives of Activation Functions</div>
         <div class="formula-block green">
-          Sigmoid: \(\quad \dfrac{da}{dz} = a(1-a)\)<br><br>
-          Tanh: \(\quad \dfrac{da}{dz} = 1 - (\tanh(z))^2\)<br><br>
-          ReLU: \(\quad g'(z) = \begin{cases} 0 & z < 0 \\ 1 & z > 0 \end{cases}\)<br><br>
-          Leaky ReLU: \(\quad g'(z) = \begin{cases} 0.01 & z < 0 \\ 1 & z \geq 0 \end{cases}\)
+          Sigmoid: \(\dfrac{da}{dz} = a(1-a)\) &nbsp;&nbsp; Tanh: \(\dfrac{da}{dz} = 1 - (\tanh z)^2\)<br><br>
+          ReLU: \(g'(z) = \begin{cases}0 & z{<}0 \\ 1 & z{>}0\end{cases}\) &nbsp;&nbsp; Leaky: \(g'(z) = \begin{cases}0.01 & z{<}0 \\ 1 & z{\geq}0\end{cases}\)
         </div>
-
         <div class="sub-title green">GD for NN — Forward &amp; Backprop</div>
         <div class="two-col">
           <div>
@@ -1007,32 +866,27 @@
               \( Z^{[1]} = W^{[1]}A^{[0]} + B^{[1]} \)<br>
               \( A^{[1]} = g^{[1]}(Z^{[1]}) \)<br>
               \( Z^{[2]} = W^{[2]}A^{[1]} + B^{[2]} \)<br>
-              \( A^{[2]} = g^{[2]}(Z^{[2]}) \) &nbsp;<small>(sigmoid for output)</small>
+              \( A^{[2]} = \sigma(Z^{[2]}) \)
             </div>
           </div>
           <div>
             <div class="col-label">Backpropagation</div>
             <div class="formula-block green">
               \( dZ^{[2]} = A^{[2]} - Y \)<br>
-              \( dW^{[2]} = \tfrac{1}{m}\,dZ^{[2]} \cdot A^{[1]T} \)<br>
-              \( dB^{[2]} = \tfrac{1}{m}\sum dZ^{[2]} \)<br>
+              \( dW^{[2]} = \tfrac{1}{m}\,dZ^{[2]} A^{[1]T} \)<br>
               \( dZ^{[1]} = W^{[2]T} dZ^{[2]} \cdot g'^{[1]}(Z^{[1]}) \)<br>
-              \( dW^{[1]} = \tfrac{1}{m}\,dZ^{[1]} \cdot X^T \)<br>
-              \( dB^{[1]} = \tfrac{1}{m}\sum dZ^{[1]} \)
+              \( dW^{[1]} = \tfrac{1}{m}\,dZ^{[1]} X^T \)
             </div>
           </div>
         </div>
-
         <div class="sub-title green">Random Initialization</div>
-        <p class="note">If all weights = 0, all nodes are symmetric (same computation) → useless to have multiple nodes.</p>
         <ul class="notes-list">
-          <li>OK to initialize <strong>b</strong> as zeros.</li>
-          <li>Initialize <strong>W</strong> randomly, multiply by <strong>0.01</strong> (small weights) so extreme ends of sigmoid/tanh are not reached (avoids slow learning from near-zero gradients).</li>
+          <li>If all weights = 0, all nodes are symmetric → useless to have multiple nodes.</li>
+          <li>OK to initialize <strong>b</strong> as zeros. Initialize <strong>W</strong> randomly × <strong>0.01</strong>.</li>
         </ul>
       </div>
     </section>
 
-    <!-- ⑨ DEEP NEURAL NETWORKS (Week 4) -->
     <section class="topic topic--purple topic--open" id="dl-deep-nn">
       <div class="topic__header" onclick="toggle(this)">
         <span class="topic__num">W4</span>
@@ -1040,24 +894,16 @@
         <span class="topic__chevron">▼</span>
       </div>
       <div class="topic__body">
-        <div class="sub-title purple">Deep L-layer NN</div>
-        <p class="note">A "deep" NN has many hidden layers (e.g. 4 layers). Notation: \(z^{[\ell]}, a^{[\ell]}\) computed for each layer \(\ell\).</p>
-
         <div class="sub-title purple">Getting Dimensions Right</div>
         <div class="formula-block purple">
           \( W^{[\ell]} \text{ shape: } (n^{[\ell]},\, n^{[\ell-1]}) \qquad b^{[\ell]} \text{ shape: } (n^{[\ell]},\, 1) \)<br><br>
-          \( \text{For 1 example: } z^{[\ell]} \text{ shape } (n^{[\ell]}, 1) = a^{[\ell]} \)<br><br>
-          \( \text{For m examples: } Z^{[\ell]} \text{ shape } (n^{[\ell]}, m) = A^{[\ell]} \)<br><br>
-          \( X \text{ shape: } (n^{[0]}, m) \)
+          \( Z^{[\ell]},\, A^{[\ell]} \text{ shape: } (n^{[\ell]}, m) \qquad X \text{ shape: } (n^{[0]}, m) \)
         </div>
-
         <div class="sub-title purple">Why Deep Representations?</div>
         <ul class="notes-list">
-          <li>Multiple hidden layers learn <strong>different aspects</strong> (e.g. edges → faces → people in vision).</li>
-          <li>Early layers detect simple features; later layers detect increasingly complex functions.</li>
-          <li><strong>Going deep</strong> is better than going wide — a shallow network needs exponentially more hidden units to compute the same function.</li>
+          <li>Multiple hidden layers learn <strong>different aspects</strong> (edges → faces → people in vision).</li>
+          <li><strong>Going deep</strong> is better than going wide — a shallow network needs exponentially more hidden units.</li>
         </ul>
-
         <div class="sub-title purple">Building a DNN — Layer \(\ell\) block</div>
         <div class="two-col">
           <div>
@@ -1065,8 +911,7 @@
             <div class="formula-block purple">
               Input: \(a^{[\ell-1]}\)<br>
               \( z^{[\ell]} = W^{[\ell]}a^{[\ell-1]} + b^{[\ell]} \)<br>
-              Output: \(a^{[\ell]}\)<br>
-              Cache: \(z^{[\ell]},\, W^{[\ell]},\, b^{[\ell]}\)
+              Output: \(a^{[\ell]}\) · Cache: \(z^{[\ell]}, W^{[\ell]}, b^{[\ell]}\)
             </div>
           </div>
           <div>
@@ -1078,13 +923,9 @@
             </div>
           </div>
         </div>
-        <p class="note">The cached \(z^{[\ell]}\) from forward pass is used in backward pass to compute \(g'^{[\ell]}(z^{[\ell]})\).</p>
       </div>
     </section>
 
-    <!-- ════════════════════════════════
-         RECSYS SECTION DIVIDER
-    ════════════════════════════════ -->
     <div class="section-divider" id="recsys-anchor">
       <hr class="section-divider__line"/>
       <span class="section-divider__label">Recommender Systems</span>
@@ -1104,11 +945,6 @@
       <span class="badge burnt">Two-Tower</span>
     </div>
 
-    <!-- RecSys topic cards will be added here -->
-
-    <!-- ════════════════════════════════
-         LLM SECTION DIVIDER
-    ════════════════════════════════ -->
     <div class="section-divider" id="llm-anchor">
       <hr class="section-divider__line"/>
       <span class="section-divider__label">Large Language Models</span>
@@ -1128,31 +964,310 @@
       <span class="badge cyan">RLHF</span>
     </div>
 
-    <!-- LLM topic cards will be added here -->
-
     <!-- ════════════════════════════════
-         AGENTIC AI SECTION DIVIDER
+         AGENTIC AI
     ════════════════════════════════ -->
     <div class="section-divider" id="agentic-anchor">
       <hr class="section-divider__line"/>
-      <span class="section-divider__label">Agentic AI</span>
+      <span class="section-divider__label">Agentic AI (deeplearning.ai — Andrew Ng)</span>
       <hr class="section-divider__line"/>
     </div>
 
     <header class="main__hero navy">
       <h2>Agentic AI</h2>
-      <p>Notes coming soon — Tool Use · ReAct · Planning · Memory · Multi-Agent Systems</p>
+      <p>Course notes — Agentic Design Patterns · Tool Use · Planning · Multi-Agent Systems &nbsp;·&nbsp;
+        <a href="https://www.deeplearning.ai/courses/agentic-ai/" target="_blank" rel="noopener noreferrer">deeplearning.ai/courses/agentic-ai ↗</a>
+      </p>
     </header>
 
     <div class="badge-row">
+      <span class="badge navy">Agentic Workflows</span>
+      <span class="badge navy">Reflection</span>
       <span class="badge navy">Tool Use</span>
-      <span class="badge navy">ReAct</span>
+      <span class="badge navy">MCP</span>
       <span class="badge navy">Planning</span>
-      <span class="badge navy">Memory</span>
       <span class="badge navy">Multi-Agent</span>
+      <span class="badge navy">Highly Autonomous</span>
+      <span class="badge navy">Evals</span>
     </div>
 
-    <!-- Agentic AI topic cards will be added here -->
+    <!-- 1. INTRODUCTION -->
+    <section class="topic topic--navy topic--open" id="agentic-intro">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">1</span>
+        <span class="topic__title">Introduction</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title navy">Zero-shot vs Agentic Workflow</div>
+        <div class="flow-diagram">
+          <div class="flow-column">
+            <div class="col-label">Zero-shot Workflow</div>
+            <div class="flow-box">prompt</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-annotation">output</div>
+          </div>
+          <div class="flow-column">
+            <div class="col-label">Agentic Workflow</div>
+            <div class="flow-box">LLM</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM + web search</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM + human review</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-box">LLM</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-annotation">output</div>
+          </div>
+        </div>
+
+        <div class="sub-title navy">Degrees of Autonomy</div>
+        <table class="data-table">
+          <thead><tr><th>Level</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>Less autonomous</td><td>Predetermined steps · Hard-coded tools</td></tr>
+            <tr><td>Semi-autonomous</td><td>Agents can choose tools · All tools predefined</td></tr>
+            <tr><td>Highly autonomous</td><td>Agents make decisions · Create tools on the fly</td></tr>
+          </tbody>
+        </table>
+        <p class="note" style="font-size:0.83rem;"><strong>Less autonomous:</strong> Prompt → LLM → Preselected tool → Action → LLM → output</p>
+        <p class="note" style="font-size:0.83rem;"><strong>More autonomous:</strong> Prompt → LLM + choice of tools → Action → LLM → output</p>
+
+        <div class="sub-title navy">Benefits of Agentic AI</div>
+        <ul class="notes-list">
+          <li>Better performance — agentic older model can perform similarly to a non-agentic newer-generation model.</li>
+          <li>Multiple LLMs running in parallel.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. DESIGN PATTERNS OVERVIEW -->
+    <section class="topic topic--navy topic--open" id="agentic-design-patterns">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">2</span>
+        <span class="topic__title">Agentic Design Patterns — Overview</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title navy">Suitable Tasks</div>
+        <ul class="notes-list">
+          <li>Step-by-step processes</li>
+          <li>Standard procedure to follow</li>
+          <li>Text asset only</li>
+          <li>Other cases are still possible but just harder</li>
+        </ul>
+
+        <div class="sub-title navy">Building Blocks</div>
+        <table class="data-table">
+          <thead><tr><th>Type</th><th>Examples</th></tr></thead>
+          <tbody>
+            <tr><td>Models</td><td>LLMs, other models (image to text, etc.)</td></tr>
+            <tr><td>Tools</td><td>API, information retrieval, code execution</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-title navy">Evaluation Cycle</div>
+        <div class="flow-diagram" style="flex-direction:row;align-items:center;gap:0.5rem;">
+          <div class="flow-box" style="font-size:0.68rem;padding:0.25rem 0.6rem;">Build workflow</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="font-size:0.68rem;padding:0.25rem 0.6rem;">Examine errors</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box" style="font-size:0.68rem;padding:0.25rem 0.6rem;">Define what to improve</div>
+        </div>
+        <ul class="notes-list" style="margin-top:0.5rem;">
+          <li><strong>Objective errors</strong> — can be fixed by adding rules</li>
+          <li><strong>Subjective errors</strong> — use LLM as a judge</li>
+        </ul>
+
+        <div class="sub-title navy">The 4 Agentic Design Patterns</div>
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Pattern</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>①</td><td>Reflection</td><td>Task LLM and a critic LLM</td></tr>
+            <tr><td>②</td><td>Tool Use</td><td>LLM using tools to accomplish task</td></tr>
+            <tr><td>③</td><td>Planning</td><td>LLM doing planning on what tasks to execute</td></tr>
+            <tr><td>④</td><td>Multi-agent Workflows</td><td>Multiple LLMs working together</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. REFLECTION -->
+    <section class="topic topic--blue topic--open" id="agentic-reflection">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P1</span>
+        <span class="topic__title">Reflection Design Pattern</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="callout">Example: Ask LLM to write a draft email, then pass the draft in the next prompt to get feedback, and use the feedback to write the final email.</div>
+
+        <div class="sub-title blue">Key Properties</div>
+        <ul class="notes-list">
+          <li>Reflection works better when <strong>additional input</strong> is given — e.g. passing error along with code.</li>
+          <li>Reflection is shown to provide <strong>better results</strong>.</li>
+          <li>Can use one model to do the task and <strong>another to critique</strong>.</li>
+        </ul>
+
+        <div class="sub-title blue">Evaluating Reflection</div>
+        <p class="note">Evaluate whether improvement is worth the extra cost:</p>
+        <ul class="notes-list">
+          <li><strong>Objective tasks</strong> — accuracy %</li>
+          <li><strong>Subjective tasks</strong> — LLM as a Judge</li>
+        </ul>
+        <div class="callout">LLM as a Judge works better for 1/0 answers. Instead of asking for a scale of 1–10, ask multiple 1/0 questions and sum them to get a score.</div>
+
+        <div class="sub-title blue">External Feedback</div>
+        <p class="note">Spectrum: <strong>No reflection</strong> &lt; <strong>With Reflection</strong> &lt; <strong>Reflection with feedback</strong></p>
+        <ul class="notes-list">
+          <li>Feedbacks are facts provided alongside task output to the reflection LLM.</li>
+          <li>Feedbacks are usually code-generated — e.g. fact checker.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. TOOL USE -->
+    <section class="topic topic--teal topic--open" id="agentic-tool-use">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P2</span>
+        <span class="topic__title">Tool Use</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <p class="note">Letting LLMs call functions — their performance can improve significantly.</p>
+        <div class="callout navy">Example: LLM does not have access to current time, but you can pass code to return current time &amp; LLM can use the tool to get the answer.</div>
+
+        <div class="sub-title teal">Tool Examples</div>
+        <ul class="notes-list">
+          <li>Web search</li>
+          <li>DB query</li>
+          <li>Custom functions</li>
+        </ul>
+        <p class="note">LLMs can choose whether or not to use a certain tool. <strong>Tools are executed by us</strong> (not by the LLM).</p>
+
+        <div class="sub-title teal">Code Execution</div>
+        <ul class="notes-list">
+          <li>Ask LLM to <strong>generate the code</strong> to create the tool — avoids hardcoding all possible needed tools.</li>
+          <li>Can also ask LLM to execute code, but run it in a <strong>sandbox environment</strong> to avoid catastrophic errors.</li>
+        </ul>
+
+        <div class="sub-title teal">MCP — Model Context Protocol</div>
+        <ul class="notes-list">
+          <li>MCP <strong>server</strong> is a wrapper for a tool.</li>
+          <li>MCP <strong>client</strong> is the app that is calling the tool.</li>
+        </ul>
+        <div class="formula-block teal" style="font-family:var(--serif);font-size:0.83rem;">
+          <strong>Example:</strong> &nbsp; Client = Claude Desktop &nbsp;·&nbsp; Server = Slack
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PLANNING -->
+    <section class="topic topic--purple topic--open" id="agentic-planning">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P3</span>
+        <span class="topic__title">Planning — Highly Autonomous Agents</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title purple">Planning with LLMs</div>
+        <ul class="notes-list">
+          <li>LLM creates a <strong>plan</strong> to execute the task.</li>
+          <li>Use system prompt to ask LLM to create a step-by-step plan and return it in <strong>JSON format</strong>.</li>
+          <li>Parse the plan JSON to execute steps in <strong>downstream components</strong>.</li>
+        </ul>
+
+        <div class="sub-title purple">Code Execution Alternative</div>
+        <p class="note">Instead of JSON, ask LLM to return <strong>executable code</strong>. This method outperforms planning in JSON or plain text.</p>
+
+        <div class="sub-title purple">Latency &amp; Cost Optimization</div>
+        <ul class="notes-list">
+          <li><strong>Latency</strong> — use a smaller model or a faster LLM provider.</li>
+          <li><strong>Cost</strong> — benchmark cost of each component and decide whether it's needed.</li>
+          <li>Try multiple LLMs and use evals to choose.</li>
+          <li>Split the task into smaller steps.</li>
+          <li>Fine-tune a model on internal data.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 6. MULTI-AGENT WORKFLOWS -->
+    <section class="topic topic--navy topic--open" id="agentic-multiagent">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">P4</span>
+        <span class="topic__title">Multi-Agent Workflows</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title navy">Why Multi-Agent?</div>
+        <ul class="notes-list">
+          <li>Breaking down an agent into <strong>multiple components</strong> helps maintain, improve, and reuse those agents.</li>
+          <li>Agents can be passed as <strong>"tools"</strong> for each other.</li>
+          <li>Planning communication patterns between agents is a complex task.</li>
+        </ul>
+
+        <div class="sub-title navy">Common Communication Patterns</div>
+        <div class="two-col">
+          <div>
+            <div class="col-label">Hierarchy</div>
+            <div class="formula-block navy" style="text-align:center;font-size:0.82rem;font-family:var(--serif);">
+              <strong style="font-family:var(--mono);">Manager</strong><br>
+              <span style="font-size:1rem;">↙ &nbsp; ↓ &nbsp; ↘</span><br>
+              <span style="font-family:var(--mono);font-size:0.75rem;">Agent &nbsp; Agent &nbsp; Agent</span><br>
+              <em style="font-size:0.7rem;color:var(--muted);">Manager delegates to sub-agents</em>
+            </div>
+          </div>
+          <div>
+            <div class="col-label">All-to-all</div>
+            <div class="formula-block navy" style="text-align:center;font-size:0.82rem;font-family:var(--serif);">
+              <strong style="font-family:var(--mono);">Manager</strong><br>
+              <span style="font-size:0.9rem;">↕ ↗↙ ↘↖</span><br>
+              <span style="font-family:var(--mono);font-size:0.75rem;">A ↔ B ↔ C</span><br>
+              <em style="font-size:0.7rem;color:var(--muted);">All agents communicate with each other</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. PRACTICAL TIPS -->
+    <section class="topic topic--orange topic--open" id="agentic-practical">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">4</span>
+        <span class="topic__title">Practical Tips for Building Agentic AI</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+        <div class="sub-title orange">Evaluations (10–20 examples)</div>
+        <ul class="notes-list">
+          <li>Eyeball example inputs &amp; outputs to find common error types, write code to get them fixed, meanwhile tracking via an <strong>eval function</strong>.</li>
+          <li>For example: use regex or simple code to determine the <strong>correctness of the output</strong>.</li>
+          <li>For subjective error types (e.g. missing certain points in essay generation), use <strong>LLM as a Judge</strong> to measure against gold standard failing points.</li>
+        </ul>
+
+        <div class="sub-title orange">Error Analysis</div>
+        <ul class="notes-list">
+          <li>Examine traces to identify <strong>which step in the flow</strong> to focus efforts on.</li>
+          <li>Manually count up the errors of each component.</li>
+          <li>Build <strong>component-level evals</strong>.</li>
+        </ul>
+
+        <div class="sub-title orange">Improving Components</div>
+        <ul class="notes-list">
+          <li><strong>Non-LLM components</strong> — tune hyperparameters (e.g. increasing number of search results).</li>
+          <li><strong>LLM components</strong> can be improved by:
+            <ul class="notes-list" style="margin-top:0.3rem;">
+              <li>Improving prompts — few-shot prompting, more explicit examples</li>
+              <li>Trying new models — try multiple LLMs &amp; use evals to choose</li>
+              <li>Splitting the task into smaller steps</li>
+              <li>Fine-tuning a model on internal data</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
 
     <footer class="main__footer">handwritten → html · Machine Learning · Deep Learning · RecSys · LLM · Agentic AI</footer>
 
@@ -1160,71 +1275,47 @@
   </main>
 
   <script>
-    /* ── Topic card toggle ── */
     function toggle(header) {
       header.closest('.topic').classList.toggle('topic--open');
     }
-
-    /* ── Sidebar group collapse ── */
     function toggleGroup(id) {
       document.getElementById(id).classList.toggle('sidebar__group--open');
     }
-
-    /* ── Page switching ── */
     function showPage(name) {
       const current = document.querySelector('.page--active');
       const next = document.getElementById('page-' + name);
-      if (current === next) return; // already on this page — don't reset scroll
+      if (current === next) return;
       current.classList.remove('page--active');
       next.classList.add('page--active');
-      // Only reset scroll when switching pages (e.g. home → notes)
       document.getElementById('main-scroll').scrollTop = 0;
-      // Update profile highlight
       document.getElementById('home-btn').classList.toggle('active', name === 'home');
-      // Clear nav active states when home
       if (name === 'home') {
         document.querySelectorAll('.sidebar__nav a').forEach(a => a.classList.remove('active'));
       }
     }
-
-    /* ── Shared scroll helper: show notes page then jump instantly to target ── */
     function scrollToSection(targetId) {
       const notesPage = document.getElementById('page-notes');
       const scroller  = document.getElementById('main-scroll');
       const alreadyOn = notesPage.classList.contains('page--active');
-
-      showPage('notes'); // no-op if already on notes (won't reset scroll)
-
+      showPage('notes');
       function doScroll() {
         const target = document.getElementById(targetId);
         if (target) scroller.scrollTo({ top: target.offsetTop - 24, behavior: alreadyOn ? 'smooth' : 'instant' });
       }
-
-      if (alreadyOn) {
-        doScroll(); // page already visible, scroll immediately
-      } else {
-        setTimeout(doScroll, 0); // wait one tick for page to render
-      }
+      if (alreadyOn) { doScroll(); } else { setTimeout(doScroll, 0); }
     }
-
-    /* ── Sidebar group labels: navigate to section ── */
     document.querySelectorAll('.sidebar__group-label[data-scroll]').forEach(label => {
       label.addEventListener('click', () => scrollToSection(label.getAttribute('data-scroll')));
     });
-
-    /* ── Nav links: switch to notes page then scroll ── */
     document.querySelectorAll('.sidebar__nav a[data-page]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
         scrollToSection(a.getAttribute('href').replace('#', ''));
       });
     });
-
-    /* ── Active nav highlighting on scroll ── */
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.sidebar__nav a');
     const scroller = document.getElementById('main-scroll');
-
     scroller.addEventListener('scroll', () => {
       if (!document.getElementById('page-notes').classList.contains('page--active')) return;
       let current = sections[0].id;
