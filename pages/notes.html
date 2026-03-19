@@ -380,10 +380,468 @@
       <hr class="section-divider__line"/>
     </div>
 
+    <!-- ════════════════════════════════════════════════════
+     RECSYS — Replace the existing RecSys placeholder
+     (from <header class="main__hero burnt"> to the next
+      <div class="section-divider" id="llm-anchor">)
+     with the block below.
+════════════════════════════════════════════════════ -->
+
     <header class="main__hero burnt">
       <h2>RecSys</h2>
-      <p>Notes coming soon — Collaborative Filtering · Content-Based · Matrix Factorization · Two-Tower Models</p>
+      <p>Notes from industry papers &amp; courses — Collaborative Filtering · Content-Based · Matrix Factorization · Two-Tower Models &nbsp;·&nbsp;
+        <a href="https://arxiv.org/abs/2306.12740" target="_blank" rel="noopener noreferrer">TransAct (Pinterest) ↗</a>
+      </p>
     </header>
+
+    <div class="badge-row">
+      <span class="badge burnt">Collaborative Filtering</span>
+      <span class="badge burnt">Content-Based</span>
+      <span class="badge burnt">Matrix Factorization</span>
+      <span class="badge burnt">Embeddings</span>
+      <span class="badge burnt">Two-Tower</span>
+      <span class="badge burnt">TransAct</span>
+      <span class="badge burnt">Transformer</span>
+      <span class="badge burnt">DCN v2</span>
+    </div>
+
+    <!-- ── Pinterest Paper: TransAct ── -->
+    <div class="section-divider">
+      <hr class="section-divider__line"/>
+      <span class="section-divider__label">Pinterest Paper</span>
+      <hr class="section-divider__line"/>
+    </div>
+
+    <section class="topic topic--burnt topic--open" id="recsys-transact">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">1</span>
+        <span class="topic__title">TransAct — Real-Time User Action Transformer</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <p class="note">Pinterest's ranking model that encodes <strong>real-time user actions</strong> (e.g. saves, clicks) via a Transformer to power the Homefeed ranker.</p>
+
+        <div class="sub-title burnt">Three Core Components</div>
+        <table class="data-table">
+          <thead><tr><th>Component</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Pinnability</strong></td><td>Homefeed ranking model</td></tr>
+            <tr><td><strong>Pinsage</strong></td><td>Pin embeddings</td></tr>
+            <tr><td><strong>Pinnerformer</strong></td><td>Pin–User embeddings</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sub-title burnt">Pinnability Architecture</div>
+        <p class="note">Features are processed in parallel streams before being concatenated and fed into a classifier:</p>
+        <div class="formula-block burnt" style="font-family:var(--serif);font-size:0.83rem;line-height:1.8;">
+          User non-real-time actions &nbsp;→&nbsp; <strong>Pinnerformer</strong><br>
+          Categorical features &nbsp;→&nbsp; <strong>Embeddings</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → concat → <strong>elector</strong><br>
+          Dense features &nbsp;→&nbsp; <strong>Batch Normalization</strong>
+        </div>
+
+        <div class="sub-title burnt">Model Stack</div>
+        <p class="note">Loss is <strong>weighted by head</strong> (head-1 … head-K):</p>
+        <div class="formula-block burnt" style="text-align:center;font-family:var(--mono);font-size:0.82rem;letter-spacing:0.03em;">
+          User real-time actions &nbsp;→&nbsp; <strong>TransAct</strong> &nbsp;→ emb<br><br>
+          elector &nbsp;→&nbsp; <strong>DCN v2</strong> &nbsp;←&nbsp; <strong>MLP</strong> &nbsp;(head-1 … head-K)
+        </div>
+
+        <div class="sub-title burnt">TransAct — Key Design Decisions</div>
+
+        <div class="deriv-step">
+          <span class="step-num">①</span>
+          <span><strong>User action embedding</strong> — each action is encoded as a concatenated vector of: pin embedding + action type embedding + timestamp.</span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">②</span>
+          <span><strong>Early Fusion</strong> — merges user &amp; item features at an early stage in the ranking system. Either <em>append</em> pinsage embedding as last interaction, or <em>concatenate</em> item embedding to user embedding.</span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">③</span>
+          <span><strong>Transformer architecture</strong> to encode &amp; aggregate user action sequences.</span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">④</span>
+          <span><strong>Random time-window masking</strong> — avoids sequences being too similar to recent actions (prevents recency bias).</span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">⑤</span>
+          <span><strong>Output compression</strong> — only top-K outputs are selected, which are concatenated with a MaxPool of all outputs. Keeps representation compact.</span>
+        </div>
+
+        <div class="sub-title burnt">Findings</div>
+        <ul class="notes-list">
+          <li>+1% gain in engagement.</li>
+          <li>Engagement <strong>drops if not retrained</strong> — model staleness is a real concern.</li>
+          <li>Diversity <strong>drops</strong> with TransAct (time masking helps a bit).</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ── Pinterest Paper: PinRec ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-pinrec">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">2</span>
+        <span class="topic__title">PinRec — Generative Retrieval for Pinterest</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <p class="note"><strong>PinRec</strong> is a <strong>Generative Retrieval Method</strong> with two key capabilities:</p>
+        <ul class="notes-list">
+          <li><strong>Outcome-conditioned generation</strong> — for different business objectives.</li>
+          <li><strong>Multi-token generation</strong> — for diversity.</li>
+        </ul>
+
+        <div class="sub-title burnt">Prior Work &amp; Motivation</div>
+        <ul class="notes-list">
+          <li>RNNs initially; now language models in academia.</li>
+          <li>In industry: sequential encoders for user representation (e.g. Pinnerformer).</li>
+          <li>Generative approach: using Transformers to <strong>generate sequences of semantic IDs</strong>.</li>
+          <li>Generative retrieval memo.</li>
+          <li>All prior methods produce a <strong>single item for a single objective</strong>.</li>
+        </ul>
+
+        <div class="sub-title burnt">PinRec Architecture</div>
+        <p class="note"><strong>Transformer decoder</strong> architecture:</p>
+        <div class="formula-block burnt" style="font-family:var(--serif);font-size:0.83rem;line-height:2;">
+          User interaction history
+          &nbsp;→&nbsp; Stack of Transformer layers
+          &nbsp;→&nbsp; sequence of hidden states from final layer<br>
+          \( h_{u,t} = \text{TransformerStack}(\mathcal{U}_u, 1{:}t) \)
+        </div>
+        <p class="note">Hidden states → <strong>output head (conditioned)</strong></p>
+
+        <div class="sub-title burnt">Conditioned Output Head</div>
+        <div class="formula-block burnt">
+          $$\hat{\imath}_{u,t} = O\!\left(h_{u,t},\, c_1, c_2 \ldots c_K\right)$$
+        </div>
+        <p class="note">\(c_i\) is the <strong>embedding representation of context</strong> — e.g. action type, surface type.</p>
+
+        <div class="sub-title burnt">Multi-Token Generation (Diversity)</div>
+        <p class="note">Multiple tokens are generated from a single head by <strong>conditioning the output head on embeddings for time offsets</strong>:</p>
+        <div class="formula-block burnt">
+          $$\hat{\imath}_{u,t+\delta} = O\!\left(h_{u,t},\, c_1, c_2 \ldots c_K,\, e_\delta\right)$$
+          $$\delta \in \{1, 2 \ldots K\}$$
+        </div>
+
+        <div class="sub-title burnt">Input Sequence &amp; Embeddings</div>
+        <p class="note">Input sequence is <strong>represented by embeddings</strong>. Semantic IDs were tested but performed lower.</p>
+
+        <table class="data-table">
+          <thead><tr><th>Embedding</th><th>Composition</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Pin embedding</strong></td><td>OmniSage emb + ID emb</td></tr>
+            <tr><td><strong>Query embedding</strong></td><td>OmniSearchSage emb</td></tr>
+            <tr><td><strong>Sequence token</strong></td><td>item emb + time emb + surface emb + etc.</td></tr>
+          </tbody>
+        </table>
+
+      </div>
+    </section>
+
+    <!-- ── Pinterest Reranking ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-reranking">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">3</span>
+        <span class="topic__title">Pinterest Reranking</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <div class="sub-title burnt">Ranking Pipeline</div>
+        <div class="formula-block burnt" style="font-family:var(--serif);font-size:0.83rem;line-height:2;text-align:center;">
+          Candidates &nbsp;→&nbsp; <strong>L0</strong> &nbsp;→&nbsp; <strong>Prerank</strong> &nbsp;→&nbsp; <strong>L2 Ranker</strong> &nbsp;→&nbsp; <strong>Rerank</strong> &nbsp;→&nbsp; Feed
+        </div>
+        <p class="note" style="font-size:0.8rem;text-align:center;color:var(--muted);">Retrieval stage feeds into the multi-stage ranking funnel.</p>
+
+        <div class="sub-title burnt">Key Properties</div>
+        <ul class="notes-list">
+          <li><strong>Early funnel design</strong> for the pre-ranking layer.</li>
+          <li>Trained on <strong>p-impressions</strong>.</li>
+          <li>Loss function combines BCE and KL-Distillation:</li>
+        </ul>
+        <div class="formula-block burnt">
+          $$\text{Loss} = L_{\text{BCE}} + w \cdot L_{\text{KL-Distillation}}$$
+        </div>
+        <p class="note">Distillation loss computed between <strong>Prerank score</strong> and <strong>L2 Ranker score</strong>.</p>
+
+        <div class="sub-title burnt">Two-Tower Architecture</div>
+        <ul class="notes-list">
+          <li><strong>Request-level</strong> tower — user embedding.</li>
+          <li><strong>Item-level</strong> tower — scores items with item features &amp; interaction features.</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ── OmniSearchSage ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-omnisearchsage">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">4</span>
+        <span class="topic__title">OmniSearchSage — Unified Representation Learning</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <p class="note">Unifies diverse techniques of representation learning, leading to support for <strong>multiple applications</strong>:</p>
+        <ul class="notes-list">
+          <li>Content-based model</li>
+          <li>Nice sequence model</li>
+        </ul>
+
+        <div class="sub-title burnt">Architecture Highlights</div>
+        <ul class="notes-list">
+          <li><strong>GNN</strong> — specialises in understanding relationship among entities in a graph; captures how interests evolve over time; content-based, converts text &amp; image to embedding.</li>
+          <li><strong>Multiple contrastive learning tasks</strong></li>
+          <li><strong>Seq model</strong> — captures user interests; evolves over time; content-based; converts text &amp; image to emb.</li>
+        </ul>
+
+        <div class="sub-title burnt">Replacing PinSage</div>
+        <p class="note">OmniSearchSage <strong>replaces PinSage</strong> — furnishes richer, multi-task aware embeddings (furnish = provide use cases / P2P).</p>
+
+        <div class="sub-title burnt">Contrastive Loss</div>
+        <div class="formula-block burnt">
+          $$L(q, P, N) = -\log\!\left(\frac{e^{s(q,P)}}{\displaystyle e^{s(q,P)} + \sum_{n \in N} e^{s(q,n)}}\right)$$
+        </div>
+        <ul class="notes-list">
+          <li>\(q\) → query &nbsp;·&nbsp; \(P\) → positive &nbsp;·&nbsp; \(N\) → set of negatives embs.</li>
+          <li>\(s(q, v)\) = similarity / score in emb space.</li>
+        </ul>
+        <div class="formula-block burnt">
+          $$s(q, v) = \Lambda q^T v = \log Q(u) \quad \text{(correction for sampling bias)}$$
+        </div>
+        <p class="note" style="font-size:0.8rem;color:var(--muted);">\(\Lambda\) = temperature hyperparameter &nbsp;·&nbsp; correction for sample bias.</p>
+
+      </div>
+    </section>
+
+    <!-- ── HSTU ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-hstu">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">5</span>
+        <span class="topic__title">HSTU — Hierarchical Sequential Transduction Units</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <p class="note">Actions speak louder than words — HSTU encodes user action sequences for <strong>Ranking &amp; Retrieval as a Generative Recommendation</strong> task.</p>
+
+        <div class="sub-title burnt">Key Contributions</div>
+        <ul class="notes-list">
+          <li>Reformulating Ranking &amp; Retrieval as a <strong>Generative Recommender</strong> task.</li>
+          <li>Introducing <strong>HSTU encoder</strong>.</li>
+          <li>Proof that scaling laws apply to recommender systems (with more compute, performance should increase).</li>
+          <li>Validation against toy dataset, public dataset &amp; A/B testing in production.</li>
+        </ul>
+
+        <div class="sub-title burnt">Reformulating as Sequential Transduction</div>
+        <p class="note">Task: given a sequence of actions, predict the next item.</p>
+        <div class="formula-block burnt" style="font-size:0.83rem;font-family:var(--serif);line-height:1.9;">
+          \( q_i \) → content &nbsp;·&nbsp; \( a_i \) → action &nbsp;·&nbsp; \( x_i \) → input token &nbsp;·&nbsp; \( y_i \) → output token<br>
+          \( n_2 \neq \) # contents user interacted with<br>
+          Input: \((\phi_0, a_0),\, (\phi_1, a_1) \ldots (\phi_{n-1}, a_{n-1})\)<br>
+          Output: \(\phi_1,\, \phi_2 \ldots \phi_n\)
+        </div>
+
+        <div class="sub-title burnt">HSTU — Conditioned Next Token</div>
+        <div class="formula-block burnt">
+          $$\phi_i' = \phi_i \quad \text{if } a_i \text{ is true, else undefined} \quad \text{(conditional)}$$
+        </div>
+        <p class="note">Instead of predicting a single next item, predict a <strong>sequence of future actions</strong>:</p>
+        <div class="formula-block burnt">
+          $$\phi_1, a_0, \phi_1, a_1, \ldots \phi_{n-1}, a_{n-1}, \phi_n$$
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Shopify Generative Recommender (2025) ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-shopify-gr-2025">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">7</span>
+        <span class="topic__title">Shopify Generative Recommender (2025)</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <p class="note">Recommends next product — given a buyer journey, recommend next product from the same store.</p>
+
+        <div class="sub-title burnt">Key Observations</div>
+        <ul class="notes-list">
+          <li>Framing the problem as <strong>autoregressive task</strong> saves from extensive feature engineering &amp; operational costs of simply training on raw event sequences.</li>
+          <li>Raw event sequences can learn patterns that are difficult to explicitly build features for — like subtle intent, long-term preferences, seasonality.</li>
+        </ul>
+
+        <div class="sub-title burnt">Recent Changes</div>
+        <ul class="notes-list">
+          <li>Added new data sources for user activity data — time encoding &amp; improved negative sampling.</li>
+          <li>Model — optimised <strong>CUDA kernels</strong>.</li>
+        </ul>
+
+        <div class="sub-title burnt">Model Improvements</div>
+        <ul class="notes-list">
+          <li><strong>Encoding timestamps</strong></li>
+          <li><strong>RoPE</strong> inspired rotary encoding</li>
+          <li><strong>Relative Attention Bias</strong> (relative position bias)</li>
+        </ul>
+
+        <div class="sub-title burnt">Negative Sampling</div>
+        <ul class="notes-list">
+          <li><strong>Shared negatives</strong> — in a batch (increased from local to 600K).</li>
+          <li><strong>Positive-aware hard negatives</strong> — in a batch (negatives from local to 600K, <em>de-duplicated &amp; true</em>).</li>
+          <li><strong>Boosting</strong> — CR is used as one of the retrieval methods; coverage so that CR retrieves products that other methods missed, by treating other model's predictions as hard negatives.</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ── Shopify GR (2024) ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-shopify-gr-2024">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">8</span>
+        <span class="topic__title">Shopify's GR (2024)</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <div class="sub-title burnt">HSTU Architecture</div>
+        <ul class="notes-list">
+          <li><strong>Generative Recommender</strong></li>
+          <li>Everything is an <strong>event</strong> — each event is either a target event or an auxiliary event.</li>
+          <li><strong>Causal masking</strong> — each event is a token, no hierarchical representation.</li>
+        </ul>
+
+        <div class="sub-title burnt">Tiger Architecture</div>
+        <ul class="notes-list">
+          <li><strong>Encoder–decoder</strong> architecture</li>
+          <li><strong>Semantic IDs</strong></li>
+          <li><strong>Event encoding</strong> — encode to smaller space</li>
+          <li><strong>Collisions</strong></li>
+        </ul>
+
+        <div class="sub-title burnt">Foundation Model Approach</div>
+        <p class="note">Use HSTU to build a <strong>foundation model</strong> which is then fine-tuned for specific tasks.</p>
+
+      </div>
+    </section>
+
+    <!-- ── Two-Tower & Negative Sampling ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-two-tower">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">9</span>
+        <span class="topic__title">Two-Tower &amp; Negative Sampling</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <div class="sub-title burnt">Two-Tower Architecture</div>
+        <p class="note">Used for <strong>retrieval</strong>. Two independent DNNs — one for the user, one for the item — produce embeddings whose dot product is the score.</p>
+
+        <div class="formula-block burnt" style="font-family:var(--serif);font-size:0.83rem;line-height:2;text-align:center;">
+          user features \(X_i\) → <strong>DNN</strong> → \(u(X_i)\) &nbsp;&nbsp;·&nbsp;&nbsp; item features \(Y_i\) → <strong>DNN</strong> → \(v(Y_i)\)<br>
+          <em style="font-size:0.78rem;">user tower &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; item tower</em>
+        </div>
+
+        <p class="note">For true \((x_i, y_i)\) interactions, \(s(x,y)\) should be <strong>greater</strong> than for negative interactions — the model learns to generate embeddings that are <strong>closer for true pairs</strong>.</p>
+
+        <div class="sub-title burnt">Softmax Loss</div>
+        <div class="formula-block burnt">
+          $$\ell = -r_i \cdot \log\!\left(\frac{e^{s(x_i,\, y_i)}}{\displaystyle\sum_{j \in H} e^{s(x_i,\, y_j)}}\right)$$
+        </div>
+        <ul class="notes-list">
+          <li>\(r_i\) = reward (0 or 1)</li>
+          <li>\(y_j\) → all negatives</li>
+        </ul>
+
+        <div class="sub-title burnt">Negative Sampling Strategies</div>
+
+        <div class="deriv-step">
+          <span class="step-num">①</span>
+          <span>
+            <strong>Random NS</strong> — randomly pick from \(H\) till desired negative sample size is reached.<br>
+            <em>Con:</em> need to go through the whole corpus.
+          </span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">②</span>
+          <span>
+            <strong>Batch Negative Sampling</strong> — sample from mini-batch.<br>
+            <em>Con:</em> suffers from <strong>popularity bias</strong> — filters out popular items, suggests long-tail false positives.<br>
+            To correct the sampling bias → <strong>log Q correction</strong> corrects the model logit:
+            $$s'(x_i, y_i) = s(x_i, y_i) - \log Q(i)$$
+            $$Q_i = \frac{\text{count}(i)}{\sum_j \text{count}(j)} \quad \text{(sampling probability of } i\text{)}$$
+            Mix additional negatives with BNS.
+          </span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">③</span>
+          <span>
+            <strong>Mixed Negative Sampling</strong> — for batch \(B\), add \(B'\)-sized negative samples uniformly sampled from corpus.<br>
+            \(B'\) is a hyperparameter that needs to be tuned.
+          </span>
+        </div>
+
+        <div class="deriv-step">
+          <span class="step-num">④</span>
+          <span>
+            <strong>Hard Negative Mining</strong> — sample from negative items with <strong>high predicted scores</strong>.<br>
+            Model converges faster.
+          </span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── MMoE (Shared Bottom Model) ── -->
+    <section class="topic topic--burnt topic--open" id="recsys-mmoe">
+      <div class="topic__header" onclick="toggle(this)">
+        <span class="topic__num">6</span>
+        <span class="topic__title">Multimodal Mixure of Experts (MMoE)</span>
+        <span class="topic__chevron">▼</span>
+      </div>
+      <div class="topic__body">
+
+        <div class="sub-title burnt">Shared Bottom Model</div>
+        <div class="formula-block burnt">
+          $$y_k = h^k\!\left(f(x)\right)$$
+        </div>
+        <ul class="notes-list">
+          <li>\(K\) tasks &nbsp;·&nbsp; \(K\) towers &nbsp;·&nbsp; # of shared networks \(K \leq 5\) task towers.</li>
+          <li>\(f(x)\) → shared bottom network.</li>
+          <li>\(h^k\) → task-specific tower.</li>
+        </ul>
+
+        <div class="sub-title burnt">MMoE Model</div>
+        <p class="note">Instead of a single shared bottom, use a <strong>task-specific combination of expert networks</strong>:</p>
+        <div class="formula-block burnt">
+          $$y_k = h^k\!\left(f^k(x)\right)$$
+        </div>
+        <ul class="notes-list">
+          <li>\(f_i\) → expert network (cn experts).</li>
+          <li>\(g\) → gating network &nbsp;·&nbsp; \(g(x)_i\) → logit of \(g\)'s output &nbsp;·&nbsp; \(\sum g(x)_i = 1\) (all weights of gating network sum to 1).</li>
+          <li>\(\Sigma g(x)_i \cdot f_i(x)\) → instead of shared bottom, we have <strong>task-specific component network</strong> → cheaper network with logic.</li>
+        </ul>
+
+        <div class="sub-title burnt">Task-Specific Expert Combination</div>
+        <div class="formula-block burnt">
+          $$f^k(x) = \sum_{i=1}^{n} g^k(x)_i \cdot f_i(x)$$
+        </div>
+        <div class="formula-block burnt">
+          $$g_k(x) = \text{softmax}(W_{g_k} \cdot x)$$
+        </div>
+        <p class="note" style="font-size:0.8rem;color:var(--muted);">\(n\) = number of experts &nbsp;·&nbsp; \(g_k\) = task-specific gating network with softmax output summing to 1.</p>
+
+      </div>
+    </section>
 
     <div class="badge-row">
       <span class="badge burnt">Collaborative Filtering</span>
