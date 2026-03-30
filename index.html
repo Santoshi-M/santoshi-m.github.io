@@ -35,72 +35,90 @@
 
     <hr class="sidebar__divider"/>
 
-    <div class="sidebar__group sidebar__group--open" id="group-ml">
+    <div class="sidebar__group sidebar__group--open" id="group-notes">
       <div class="sidebar__group-header">
-        <span class="sidebar__group-label" data-scroll="ml-anchor" data-page="notes">Machine Learning</span>
-        <span class="sidebar__group-chevron" onclick="toggleGroup('group-ml')">▼</span>
+        <span class="sidebar__group-label" data-scroll="notes-overview" data-page="notes">Notes</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-notes')">▼</span>
       </div>
       <nav class="sidebar__nav">
-        <a href="#logistic-regression" data-page="notes"><span class="dot dot--red"></span>Logistic Regression</a>
-        <a href="#decision-tree" data-page="notes"><span class="dot dot--blue"></span>Decision Tree</a>
-        <a href="#decision-forest" data-page="notes"><span class="dot dot--green"></span>Decision Forest</a>
+        <div class="sidebar__group sidebar__group--open" id="group-ml">
+          <div class="sidebar__group-header">
+            <span class="sidebar__group-label" data-scroll="ml-anchor" data-page="notes">Machine Learning</span>
+            <span class="sidebar__group-chevron" onclick="toggleGroup('group-ml')">▼</span>
+          </div>
+          <nav class="sidebar__nav">
+            <a href="#logistic-regression" data-page="notes"><span class="dot dot--red"></span>Logistic Regression</a>
+            <a href="#decision-tree" data-page="notes"><span class="dot dot--blue"></span>Decision Tree</a>
+            <a href="#decision-forest" data-page="notes"><span class="dot dot--green"></span>Decision Forest</a>
+          </nav>
+        </div>
+
+        <div class="sidebar__group sidebar__group--open" id="group-dl">
+          <div class="sidebar__group-header">
+            <span class="sidebar__group-label" data-scroll="dl-anchor" data-page="notes">Deep Learning</span>
+            <span class="sidebar__group-chevron" onclick="toggleGroup('group-dl')">▼</span>
+          </div>
+          <nav class="sidebar__nav">
+            <a href="#dl-intro" data-page="notes"><span class="dot dot--purple"></span>Neural Networks Intro</a>
+            <a href="#dl-logreg" data-page="notes"><span class="dot dot--orange"></span>LR &amp; Loss Functions</a>
+            <a href="#dl-gradient" data-page="notes"><span class="dot dot--teal"></span>Gradient Descent</a>
+            <a href="#dl-vectorization" data-page="notes"><span class="dot dot--blue"></span>Vectorization</a>
+            <a href="#dl-shallow-nn" data-page="notes"><span class="dot dot--green"></span>Shallow Neural Nets</a>
+            <a href="#dl-deep-nn" data-page="notes"><span class="dot dot--purple"></span>Deep Neural Nets</a>
+          </nav>
+        </div>
+
+        <div class="sidebar__group sidebar__group--open" id="group-recsys">
+          <div class="sidebar__group-header">
+            <span class="sidebar__group-label" data-scroll="recsys-anchor" data-page="notes">RecSys</span>
+            <span class="sidebar__group-chevron" onclick="toggleGroup('group-recsys')">▼</span>
+          </div>
+          <nav class="sidebar__nav">
+            <a href="#recsys-transact" data-page="notes"><span class="dot dot--burnt"></span>TransAct (Pinterest)</a>
+            <a href="#recsys-pinrec" data-page="notes"><span class="dot dot--burnt"></span>PinRec (Pinterest)</a>
+            <a href="#recsys-reranking" data-page="notes"><span class="dot dot--burnt"></span>Reranking (Pinterest)</a>
+            <a href="#recsys-omnisearchsage" data-page="notes"><span class="dot dot--burnt"></span>OmniSearchSage (Pinterest)</a>
+            <a href="#recsys-hstu" data-page="notes"><span class="dot dot--burnt"></span>HSTU (Facebook)</a>
+            <a href="#recsys-shopify-gr-2025" data-page="notes"><span class="dot dot--burnt"></span>Shopify GR (2025)</a>
+            <a href="#recsys-shopify-gr-2024" data-page="notes"><span class="dot dot--burnt"></span>Shopify GR (2024)</a>
+            <a href="#recsys-two-tower" data-page="notes"><span class="dot dot--burnt"></span>Two-Tower Model</a>
+            <a href="#recsys-mmoe" data-page="notes"><span class="dot dot--burnt"></span>MMoE</a>
+          </nav>
+        </div>
+
+        <div class="sidebar__group" id="group-llm">
+          <div class="sidebar__group-header">
+            <span class="sidebar__group-label" data-scroll="llm-anchor" data-page="notes">LLM</span>
+            <span class="sidebar__group-chevron" onclick="toggleGroup('group-llm')">▼</span>
+          </div>
+          <nav class="sidebar__nav"></nav>
+        </div>
+
+        <div class="sidebar__group sidebar__group--open" id="group-agentic">
+          <div class="sidebar__group-header">
+            <span class="sidebar__group-label" data-scroll="agentic-anchor" data-page="notes">Agentic AI</span>
+            <span class="sidebar__group-chevron" onclick="toggleGroup('group-agentic')">▼</span>
+          </div>
+          <nav class="sidebar__nav">
+            <a href="#agentic-intro" data-page="notes"><span class="dot dot--navy"></span>Introduction</a>
+            <a href="#agentic-design-patterns" data-page="notes"><span class="dot dot--navy"></span>Design Patterns</a>
+            <a href="#agentic-reflection" data-page="notes"><span class="dot dot--blue"></span>Reflection</a>
+            <a href="#agentic-tool-use" data-page="notes"><span class="dot dot--teal"></span>Tool Use</a>
+            <a href="#agentic-planning" data-page="notes"><span class="dot dot--purple"></span>Planning</a>
+            <a href="#agentic-multiagent" data-page="notes"><span class="dot dot--navy"></span>Multi-Agent</a>
+            <a href="#agentic-practical" data-page="notes"><span class="dot dot--orange"></span>Practical Tips</a>
+          </nav>
+        </div>
       </nav>
     </div>
 
-    <div class="sidebar__group sidebar__group--open" id="group-dl">
+    <div class="sidebar__group" id="group-projects">
       <div class="sidebar__group-header">
-        <span class="sidebar__group-label" data-scroll="dl-anchor" data-page="notes">Deep Learning</span>
-        <span class="sidebar__group-chevron" onclick="toggleGroup('group-dl')">▼</span>
+        <span class="sidebar__group-label" data-page="projects">Projects</span>
+        <span class="sidebar__group-chevron" onclick="toggleGroup('group-projects')">▼</span>
       </div>
       <nav class="sidebar__nav">
-        <a href="#dl-intro" data-page="notes"><span class="dot dot--purple"></span>Neural Networks Intro</a>
-        <a href="#dl-logreg" data-page="notes"><span class="dot dot--orange"></span>LR &amp; Loss Functions</a>
-        <a href="#dl-gradient" data-page="notes"><span class="dot dot--teal"></span>Gradient Descent</a>
-        <a href="#dl-vectorization" data-page="notes"><span class="dot dot--blue"></span>Vectorization</a>
-        <a href="#dl-shallow-nn" data-page="notes"><span class="dot dot--green"></span>Shallow Neural Nets</a>
-        <a href="#dl-deep-nn" data-page="notes"><span class="dot dot--purple"></span>Deep Neural Nets</a>
-      </nav>
-    </div>
-
-    <div class="sidebar__group sidebar__group--open" id="group-recsys">
-      <div class="sidebar__group-header">
-        <span class="sidebar__group-label" data-scroll="recsys-anchor" data-page="notes">RecSys</span>
-        <span class="sidebar__group-chevron" onclick="toggleGroup('group-recsys')">▼</span>
-      </div>
-      <nav class="sidebar__nav">
-        <a href="#recsys-transact" data-page="notes"><span class="dot dot--burnt"></span>TransAct (Pinterest)</a>
-        <a href="#recsys-pinrec" data-page="notes"><span class="dot dot--burnt"></span>PinRec (Pinterest)</a>
-        <a href="#recsys-reranking" data-page="notes"><span class="dot dot--burnt"></span>Reranking (Pinterest)</a>
-        <a href="#recsys-omnisearchsage" data-page="notes"><span class="dot dot--burnt"></span>OmniSearchSage (Pinterest)</a>
-        <a href="#recsys-hstu" data-page="notes"><span class="dot dot--burnt"></span>HSTU (Facebook)</a>
-        <a href="#recsys-shopify-gr-2025" data-page="notes"><span class="dot dot--burnt"></span>Shopify GR (2025)</a>
-        <a href="#recsys-shopify-gr-2024" data-page="notes"><span class="dot dot--burnt"></span>Shopify GR (2024)</a>
-        <a href="#recsys-two-tower" data-page="notes"><span class="dot dot--burnt"></span>Two-Tower Model</a>
-        <a href="#recsys-mmoe" data-page="notes"><span class="dot dot--burnt"></span>MMoE</a>
-      </nav>
-    </div>
-
-    <div class="sidebar__group" id="group-llm">
-      <div class="sidebar__group-header">
-        <span class="sidebar__group-label" data-scroll="llm-anchor" data-page="notes">LLM</span>
-        <span class="sidebar__group-chevron" onclick="toggleGroup('group-llm')">▼</span>
-      </div>
-      <nav class="sidebar__nav"></nav>
-    </div>
-
-    <div class="sidebar__group sidebar__group--open" id="group-agentic">
-      <div class="sidebar__group-header">
-        <span class="sidebar__group-label" data-scroll="agentic-anchor" data-page="notes">Agentic AI</span>
-        <span class="sidebar__group-chevron" onclick="toggleGroup('group-agentic')">▼</span>
-      </div>
-      <nav class="sidebar__nav">
-        <a href="#agentic-intro" data-page="notes"><span class="dot dot--navy"></span>Introduction</a>
-        <a href="#agentic-design-patterns" data-page="notes"><span class="dot dot--navy"></span>Design Patterns</a>
-        <a href="#agentic-reflection" data-page="notes"><span class="dot dot--blue"></span>Reflection</a>
-        <a href="#agentic-tool-use" data-page="notes"><span class="dot dot--teal"></span>Tool Use</a>
-        <a href="#agentic-planning" data-page="notes"><span class="dot dot--purple"></span>Planning</a>
-        <a href="#agentic-multiagent" data-page="notes"><span class="dot dot--navy"></span>Multi-Agent</a>
-        <a href="#agentic-practical" data-page="notes"><span class="dot dot--orange"></span>Practical Tips</a>
+        <a href="#projects-overview" data-page="projects"><span class="dot dot--purple"></span>Overview</a>
       </nav>
     </div>
   </aside>
@@ -108,7 +126,7 @@
   <!-- ════ MAIN CONTENT AREA ════ -->
   <main class="main" id="main-scroll">
     <!--
-      Pages are loaded dynamically from pages/home.html and pages/notes.html.
+      Pages are loaded dynamically from `pages/home.html`, `pages/notes.html`, and `pages/projects.html`.
       The .page--active class controls which is visible.
     -->
     <div class="page page--active" id="page-home">
@@ -116,6 +134,9 @@
     </div>
     <div class="page" id="page-notes">
       <!-- injected by loadPage('notes') -->
+    </div>
+    <div class="page" id="page-projects">
+      <!-- injected by loadPage('projects') -->
     </div>
   </main>
 
@@ -182,8 +203,11 @@
         scroller.scrollTop = 0;
       }
 
-      if (name === 'home') {
+      if (name !== 'notes') {
         document.querySelectorAll('.sidebar__nav a').forEach(a => a.classList.remove('active'));
+      }
+
+      if (name === 'home') {
         renderQuote();
       }
 
@@ -222,13 +246,29 @@
     }
 
     // ── Sidebar nav wiring ─────────────────────────────────────────────
-    document.querySelectorAll('.sidebar__group-label[data-scroll]').forEach(label => {
-      label.addEventListener('click', () => scrollToSection(label.getAttribute('data-scroll')));
+    document.querySelectorAll('.sidebar__group-label[data-page]').forEach(label => {
+      label.addEventListener('click', () => {
+        const page = label.getAttribute('data-page');
+        const target = label.getAttribute('data-scroll');
+        if (page === 'notes' && target) {
+          scrollToSection(target);
+        } else if (page) {
+          showPage(page, target || null);
+        }
+      });
     });
     document.querySelectorAll('.sidebar__nav a[data-page]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
-        scrollToSection(a.getAttribute('href').replace('#', ''));
+        const page = a.getAttribute('data-page');
+        const target = a.getAttribute('href').replace('#', '');
+        if (page === 'notes') {
+          scrollToSection(target);
+        } else if (page) {
+          showPage(page, target || null);
+          document.querySelectorAll('.sidebar__nav a').forEach(link => link.classList.remove('active'));
+          a.classList.add('active');
+        }
       });
     });
 
