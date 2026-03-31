@@ -37,7 +37,7 @@
 
     <div class="sidebar__group sidebar__group--open" id="group-notes">
       <div class="sidebar__group-header">
-        <span class="sidebar__group-label" data-scroll="notes-overview" data-page="notes">Notes</span>
+        <a href="#notes-overview" class="sidebar__group-label" data-scroll="notes-overview" data-page="notes">Notes</a>
         <span class="sidebar__group-chevron" onclick="toggleGroup('group-notes')">▼</span>
       </div>
       <nav class="sidebar__nav">
@@ -112,13 +112,15 @@
       </nav>
     </div>
 
-    <div class="sidebar__group" id="group-projects">
+    <div class="sidebar__group sidebar__group--open" id="group-projects">
       <div class="sidebar__group-header">
         <span class="sidebar__group-label" data-page="projects">Projects</span>
         <span class="sidebar__group-chevron" onclick="toggleGroup('group-projects')">▼</span>
       </div>
       <nav class="sidebar__nav">
-        <a href="#projects-overview" data-page="projects"><span class="dot dot--purple"></span>Overview</a>
+        <a href="#project-contextual-recommendations" data-page="projects"><span class="dot dot--purple"></span>Contextual Recommendations</a>
+        <a href="#project-publisher-recommendations" data-page="projects"><span class="dot dot--purple"></span>Publisher Recommendations</a>
+        <a href="#project-dynamic-button-placement" data-page="projects"><span class="dot dot--purple"></span>Dynamic Button Placement</a>
       </nav>
     </div>
   </aside>
@@ -138,6 +140,10 @@
     <div class="page" id="page-projects">
       <!-- injected by loadPage('projects') -->
     </div>
+
+    <footer class="main__footer">
+      <p>&copy; 2026 Santoshi M. All rights reserved.</p>
+    </footer>
   </main>
 
   <script>
@@ -247,7 +253,8 @@
 
     // ── Sidebar nav wiring ─────────────────────────────────────────────
     document.querySelectorAll('.sidebar__group-label[data-page]').forEach(label => {
-      label.addEventListener('click', () => {
+      label.addEventListener('click', e => {
+        e.preventDefault();
         const page = label.getAttribute('data-page');
         const target = label.getAttribute('data-scroll');
         if (page === 'notes' && target) {

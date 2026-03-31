@@ -1,27 +1,152 @@
 <div id="projects-overview"></div>
 <header class="main__hero purple">
   <h2>Projects</h2>
-  <p>Selected builds, experiments, and work in progress.</p>
+  <p>Selected builds, experiments, and technical case studies.</p>
 </header>
 
 <div class="badge-row">
-  <span class="badge purple">Portfolio</span>
-  <span class="badge purple">Experiments</span>
-  <span class="badge purple">Case Studies</span>
+  <span class="badge purple">Recommender Systems</span>
+  <span class="badge purple">Ranking</span>
+  <span class="badge purple">Personalization</span>
 </div>
-
-<section class="topic topic--purple topic--open" id="projects-coming-soon">
+<section class="topic topic--purple topic--open" id="project-contextual-recommendations">
   <div class="topic__header">
-    <span class="topic__num">01</span>
-    <span class="topic__title">Coming Soon</span>
+    <span class="topic__num">P1</span>
+    <span class="topic__title">Contextual Recommendations</span>
     <span class="topic__chevron">▼</span>
   </div>
   <div class="topic__body">
-    <p class="note">This section is ready for project write-ups, demos, links, and short case studies.</p>
+    <p class="note">A contextual recommendation system for news pages, designed to use the user’s immediate reading context to surface more relevant related content.</p>
+
+    <div class="callout purple">Built by adapting the existing 3-layer recommendation stack so ranking could respond to the specific page a user was actively consuming.</div>
+
+    <div class="sub-title purple">Challenge</div>
+    <p class="note">News Pages are high-intent surfaces: the user has already chosen a specific story and expects follow-up recommendations to stay closely related. Previously, these pages reused the generic homepage ranking setup, so the system did not account for the current page context and often missed the chance to deepen the session.</p>
+
     <ul class="notes-list">
-      <li>Add personal and academic projects</li>
-      <li>Link to GitHub repositories and demos</li>
-      <li>Summarize impact, stack, and outcomes</li>
+      <li>The existing ranking flow ignored the seed page the user was currently reading.</li>
+      <li>The goal was to improve thematic relevance without rebuilding the recommendation system from scratch.</li>
+      <li>The team also needed a better way to measure “relatedness,” not just engagement.</li>
     </ul>
+
+    <div class="sub-title purple">Approach</div>
+    <ul class="notes-list">
+      <li><strong>Candidate generation:</strong> expanded the pool with contextual embedding retrieval, topic-based matching, and item-to-item collaborative signals.</li>
+      <li><strong>Scoring:</strong> trained a dedicated model on News Page click data instead of relying on homepage behavior alone.</li>
+      <li><strong>Reranking:</strong> prioritized relevance and contextual alignment, with lighter diversity constraints for tighter topical consistency.</li>
+      <li><strong>Infrastructure:</strong> partnered with Backend to pass <code>pageid</code> into the online ranking stack and support the required feature fetches.</li>
+    </ul>
+
+    <figure class="project-figure">
+      <img src="images/contextual-recommendation-pipeline.svg" alt="Recommendation pipeline diagram showing Candidate Generation, Filtering, Scoring, and Business Rules." loading="lazy"/>
+      <figcaption>Contextual recommendation ranking pipeline</figcaption>
+    </figure>
+
+    <div class="sub-title purple">Engineering Trade-offs</div>
+    <p class="note">The main trade-off was balancing immediate context with long-term user preference. We deliberately pushed the system toward stronger page-level relatedness while tuning the final reranking layer to avoid losing broader personalization quality.</p>
+
+    <div class="sub-title purple">Impact</div>
+    <ul class="notes-list">
+      <li>Offline AUC improved by an absolute 5%.</li>
+      <li>DAU increased by more than 3%.</li>
+      <li>CPV increased by more than 10%.</li>
+      <li>Relevance improved by more than 20%.</li>
+    </ul>
+
+    <div class="sub-title purple">Other Considerations</div>
+    <p class="note">Beyond the model gains, it was also key to work with Product Management to define <strong>Relatedness</strong> as a core metric and build supporting dashboards, giving the team a clearer real-time view of contextual quality.</p>
+  </div>
+</section>
+
+<section class="topic topic--purple topic--open" id="project-publisher-recommendations">
+  <div class="topic__header">
+    <span class="topic__num">P2</span>
+    <span class="topic__title">Personalizing Publisher Recommendations at Scale</span>
+    <span class="topic__chevron">▼</span>
+  </div>
+  <div class="topic__body">
+    <p class="note">A technical deep dive into evolving a static publisher widget into a personalized
+          recommendation pipeline with reusable infrastructure, lightweight filtering, and scalable ranking.</p>
+
+    <div class="callout purple">Built as a fast MVP by reusing the existing article-ranking stack and adapting it for publisher discovery.</div>
+
+    <div class="sub-title purple">Challenge</div>
+    <p class="note">The Suggested Publishers widget was a static list of a few highly regarded news and content publishers for each market. 
+        That meant, all the users in a particular market would see the same list of publishers irrespective of their preferences, ordered identically. 
+        As we know, relevance is the primary driver of Retention (LTV) and Daily Active Users (DAU), thus this was a missed opportunity to take advantage of the deep user understanding signals we have learned for the warm users in the ecosystem and generate personalised recommendations to increase user satisfaction. </p>
+
+    <ul class="notes-list">
+      <li>Stagnant Engagement: Rule-based systems limits discovery, while an intelligent system surfaces niche publishers, increasing the coverage of the entire publisher pool.</li>
+      <li>Top-of-Funnel Conversion: Relevant interests lead to feed views, which are the primary drivers of long-term satisfaction.</li>
+      <li>The goal was to improve discovery quality without building a new system from scratch.</li>
+    </ul>
+
+    <div class="sub-title purple">Approach</div>
+    <ul class="notes-list">
+      <li><strong>Candidate generation:</strong> map top-ranked articles back to their source publishers.</li>
+      <li><strong>Filtering:</strong> remove already-followed, hidden, or blocked publishers.</li>
+      <li><strong>Scoring:</strong> rank candidates using click, like, and long-dwell signals.</li>
+      <li><strong>Reranking:</strong> balance user relevance with platform-level goals using soft boosts.</li>
+    </ul>
+
+    <div class="sub-title purple">Engineering Trade-offs</div>
+    <p class="note">The first version reused existing infrastructure to ship quickly. This reduced implementation cost and operational overhead, while accepting some bias inherited from the original recommender.</p>
+
+    <div class="sub-title purple">Impact</div>
+    <ul class="notes-list">
+      <li>Delivered an MVP in roughly one week.</li>
+      <li>Improved click-through rate on discovery surfaces.</li>
+      <li>Increased exposure and engagement for less prominent publishers.</li>
+    </ul>
+
+    <div class="sub-title purple">Next Step</div>
+    <p class="note">A future iteration could use embedding-based retrieval and learned rankers to better capture semantic similarity between user intent and publisher content.</p>
+  </div>
+</section>
+
+<section class="topic topic--purple topic--open" id="project-dynamic-button-placement">
+  <div class="topic__header">
+    <span class="topic__num">P3</span>
+    <span class="topic__title">Dynamic Button Placement</span>
+    <span class="topic__chevron">▼</span>
+  </div>
+  <div class="topic__body">
+    <p class="note">A machine learning-driven UX project that dynamically placed the Continue Reading button on Article Pages based on real-time user behavior.</p>
+
+    <div class="callout purple">Shifted the experience from fixed, rule-based placement to intelligent behavior-based timing optimized for engagement and latency.</div>
+
+    <div class="sub-title purple">Challenge</div>
+    <p class="note">The Continue Reading button is a critical engagement lever on Article Pages. Previously, it appeared at the same static position for every user, which often felt either too early or too late. At large scale, even small UX friction can reduce DAU and ad revenue, so the goal was to make placement adaptive without disrupting the reading flow.</p>
+
+    <ul class="notes-list">
+      <li>The static experience treated all readers the same despite different reading patterns and intent levels.</li>
+      <li>The system needed to personalize button placement without introducing visible UI lag.</li>
+      <li>The project began with a clear objective but no concrete roadmap, so both product and technical direction had to be defined from scratch.</li>
+    </ul>
+
+    <div class="sub-title purple">Approach</div>
+    <ul class="notes-list">
+      <li><strong>ML pipeline:</strong> built an end-to-end lifecycle covering session data collection, model training, and live inference.</li>
+      <li><strong>Real-time decisioning:</strong> predicted the optimal button placement from in-session reading behavior fast enough for production UX constraints.</li>
+      <li><strong>Cross-functional alignment:</strong> wrote the technical and product specifications to unblock execution and keep frontend and backend teams aligned.</li>
+    </ul>
+
+    <figure class="project-figure">
+      <img src="images/reader-score-generation-pipeline.svg" alt="Reader Score Generation Pipeline diagram showing hourly data pipeline, daily clustering, hourly inference, cluster centers, and hourly export." loading="lazy"/>
+      <figcaption>Reader Score Generation Pipeline</figcaption>
+    </figure>
+
+    <div class="sub-title purple">Engineering Trade-offs</div>
+    <p class="note">The main trade-off was <strong>latency versus accuracy</strong>. The model needed enough signal to make useful placement decisions, but inference also had to return within milliseconds. A slower model would cause the button to appear late, creating a worse experience than the original static version, so we prioritized a lightweight, high-throughput serving pipeline that could scale to million scale DAU traffic.</p>
+
+    <div class="sub-title purple">Impact</div>
+    <ul class="notes-list">
+      <li>Moved the project from a vague concept to a live A/B test and production-ready implementation.</li>
+      <li>The experiment showed a statistically significant increase in DAU.</li>
+      <li>Replaced rigid manual placement rules with an automated system that adapts to millions of unique user reading patterns.</li>
+    </ul>
+
+    <div class="sub-title purple">Key Lessons</div>
+    <p class="note">The project reinforced that ownership often extends beyond code: documenting assumptions early, aligning teams at the spec stage, and maintaining end-to-end visibility across data, modeling, and inference were all essential for shipping a performant ML-powered UX feature.</p>
   </div>
 </section>
